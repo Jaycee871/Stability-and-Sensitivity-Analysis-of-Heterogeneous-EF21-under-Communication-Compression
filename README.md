@@ -56,6 +56,25 @@ These are finite-grid computational boundaries for Empirical Law 4.3, not univer
 
 See `docs/phase2_findings.md`, `docs/phase3_findings.md`, `results/phase2_summary.json`, and `results/phase3_summary.json` for the audited findings and interpretation guardrails.
 
+## Optional Wolfram symbolic bridge
+
+The Python implementation remains the reproducibility baseline. An optional Wolfram Language layer under `wolfram/` provides an independent engine for:
+
+- symbolic simplification of the controlled cubic,
+- scale-invariance and homogeneous-limit checks,
+- discriminant exploration,
+- independent numerical roots and retention values,
+- restricted Wolfram Cloud API queries.
+
+The shared cases in `wolfram/reference_cases.json` can be evaluated by Wolfram and then cross-checked against Python:
+
+```bash
+wolframscript -file wolfram/export_reference.wl
+python scripts/compare_wolfram_reference.py wolfram/outputs/wolfram_reference.json
+```
+
+The Cloud API template defaults to private access and deliberately exposes no arbitrary Wolfram-expression evaluation. See `wolfram/README.md` for deployment details.
+
 ## Primary outcomes
 
 For each `(tau, epsilon)` cell we compute:
