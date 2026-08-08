@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {"tau": 1.0, "epsilon": 0.05, "kappa_bar": 2.0},
+    {"tau": 0.50, "epsilon": 0.20, "kappa_bar": 2.0},
+    {"tau": 0.05, "epsilon": 0.95, "kappa_bar": 2.0},
+    {"tau": 1.0, "epsilon": 0.50, "kappa_bar": 10.0},
+    {"tau": 0.18, "epsilon": 0.95, "kappa_bar": 10.0},
+    {"tau": 0.05, "epsilon": 0.95, "kappa_bar": 10.0},
+    {"tau": 1.0, "epsilon": 0.80, "kappa_bar": 100.0},
+    {"tau": 0.05, "epsilon": 0.95, "kappa_bar": 100.0}
+  ]
+}
