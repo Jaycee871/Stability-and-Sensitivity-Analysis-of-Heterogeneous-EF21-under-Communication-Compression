@@ -38,6 +38,12 @@ jobs:
           python scripts/analyze_phase4.py
           --pairs 200
           --output /tmp/phase4-summary.json
+      - name: Phase 5 paper asset smoke build
+        run: >-
+          python scripts/build_paper_assets.py
+          --tau-points 17
+          --epsilon-points 13
+          --output-dir /tmp/paper-assets
       - name: Hugging Face authentication check
         env:
           HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}
