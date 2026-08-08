@@ -6,7 +6,7 @@ A computational extension of the reproduced two-agent heterogeneous EF21 result 
 
 **How do agent heterogeneity and communication compression jointly affect the optimal contraction rate of EF21 when average conditioning is held fixed?**
 
-The key design choice is to isolate heterogeneity from average problem difficulty. We normalize
+The study isolates heterogeneity from average problem difficulty by using
 
 - `n = 2`,
 - `L1 = L2 = L = 1`,
@@ -21,25 +21,40 @@ mu1 = 2 * mu_bar / (1 + tau)
 mu2 = 2 * mu_bar * tau / (1 + tau)
 ```
 
-so changing `tau` changes heterogeneity while keeping `(mu1 + mu2)/2` constant. This prevents a slower rate caused by worsening average conditioning from being misidentified as a heterogeneity effect.
+so changing `tau` changes heterogeneity while keeping `(mu1 + mu2)/2` constant.
 
-## Phase 2 status
+## Phase 3 status
 
-The controlled landscape has now been evaluated at
+The dense controlled analysis now evaluates
 
 ```text
 kappa_bar in {2, 10, 100}
-96 tau values x 95 epsilon values x 3 strata = 27,360 cells
+381 tau values x 189 epsilon values x 3 strata = 216,027 cells
 ```
 
-First computational findings:
+### Main computational findings
 
-1. **Stronger heterogeneity increases the normalized contraction penalty** throughout all three sampled conditioning strata.
-2. **Compression amplifies the relative heterogeneity penalty** on the sampled grid: normalized penalty is nondecreasing with `epsilon` within numerical tolerance.
-3. **The relative penalty is largest in the better-conditioned stratum.** At `tau=0.05, epsilon=0.95`, the normalized penalties are approximately 5.07% (`kappa_bar=2`), 1.70% (`kappa_bar=10`), and 0.20% (`kappa_bar=100`).
-4. **Absolute and normalized penalties peak in different compression regimes.** Absolute gaps peak around `epsilon=0.07--0.11`, whereas normalized penalties peak at the highest studied compression level, `epsilon=0.95`.
+1. **Stronger heterogeneity increases the normalized contraction penalty** throughout all three studied conditioning strata.
+2. **Compression amplifies the relative heterogeneity burden.** At `tau=0.05`, moving from `epsilon=0.01` to `0.95` multiplies the normalized penalty by about 3.84x (`kappa_bar=2`), 3.12x (`kappa_bar=10`), and 3.03x (`kappa_bar=100`).
+3. **The smaller heterogeneity penalty at poor conditioning does not imply better convergence.** In the `kappa_bar=100` dense grid, every cell has `rho_star >= 0.95` and about 63.5% have `rho_star >= 0.99`.
+4. **Contraction-margin retention gives an interpretable operating guideline.** Define
 
-These are numerical characterizations of Empirical Law 4.3, not claims of a new theorem. See `docs/phase2_findings.md` and `results/phase2_summary.json` for the audited results and interpretation guardrails.
+```text
+R = (1 - rho_star) / (1 - rho_homogeneous)
+  = 1 - normalized_penalty.
+```
+
+At `epsilon=0.95`, retaining at least 99% of the homogeneous contraction margin requires approximately
+
+```text
+kappa_bar=2   : tau >= 0.41
+kappa_bar=10  : tau >= 0.18
+kappa_bar=100 : all studied tau >= 0.05 satisfy the target
+```
+
+These are finite-grid computational boundaries for Empirical Law 4.3, not universal analytic thresholds.
+
+See `docs/phase2_findings.md`, `docs/phase3_findings.md`, `results/phase2_summary.json`, and `results/phase3_summary.json` for the audited findings and interpretation guardrails.
 
 ## Primary outcomes
 
@@ -49,7 +64,8 @@ For each `(tau, epsilon)` cell we compute:
 - cubic-law contraction factor `rho_star`,
 - homogeneous Theorem 3.1 baseline at the same `L` and `mu_bar`,
 - absolute heterogeneity penalty,
-- normalized heterogeneity penalty relative to the remaining contraction margin.
+- normalized heterogeneity penalty relative to the remaining contraction margin,
+- contraction-margin retention used for practical boundary construction.
 
 ## Minimal reproducible run
 
@@ -61,9 +77,10 @@ pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python scripts/run_grid.py --output outputs/stability_grid.csv
 python scripts/analyze_phase2.py
+python scripts/analyze_phase3.py
 ```
 
-The Phase 2 runner writes numerical summaries and three SVG figures under `outputs/phase2/` and `figures/phase2/`.
+The Phase 2 and Phase 3 runners write numerical summaries, CSV tables, and SVG figures under `outputs/` and `figures/`.
 
 ## Research questions
 
@@ -72,8 +89,8 @@ The Phase 2 runner writes numerical summaries and three SVG figures under `outpu
 3. `(tau, epsilon) -> rho_star`: stability landscape.
 4. Heterogeneity penalty relative to the homogeneous theoretical baseline.
 5. Interaction between heterogeneity, compression, and average conditioning.
-6. Robustness of observed monotonic patterns under denser and off-grid validation.
-7. Practical parameter-selection regions, only after robustness checks.
+6. How much homogeneous contraction margin is retained across the parameter landscape?
+7. Which compression levels are compatible with a chosen retention target for an observed heterogeneity ratio?
 
 ## Provenance
 
