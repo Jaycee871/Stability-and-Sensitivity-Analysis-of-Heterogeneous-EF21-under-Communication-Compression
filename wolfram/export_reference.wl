@@ -37,7 +37,7 @@ results = Map[
 report = <|
   "engine" -> "Wolfram Language",
   "version" -> $Version,
-  "symbolic_report" -> AssociationMap[ToString[InputForm[#]] &, SymbolicReport[]],
+  "symbolic_report" -> Map[ToString[InputForm[#]] &, SymbolicReport[]],
   "cases" -> results
 |>;
 
