@@ -1,10 +1,15 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
+import sys
 
-from ef21_stability.robustness import (
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from ef21_stability.robustness import (  # noqa: E402
     boundary_convergence_table,
     paired_offgrid_validation,
 )
