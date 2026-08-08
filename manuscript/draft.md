@@ -1,18 +1,20 @@
 # Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression
 
-**Working manuscript draft — Phase 5**
+**Working manuscript draft — Phase 6**
 
-> Status: structured first draft. Numerical statements are tied to the audited repository outputs. Literature citations are intentionally left as placeholders until the Zotero reference pass.
+> Status: structured manuscript draft with core literature citations, audited numerical statements, and explicit claim guardrails. Bibliography source: `manuscript/references.bib`.
 
 ## Abstract
 
-Error-feedback methods permit communication-efficient distributed optimization under lossy compression, but the interaction between compression and heterogeneous local curvature remains difficult to characterize. The recent work *A Tight Theory of Error Feedback Algorithms in Distributed Optimization* introduced an empirical cubic convergence law for the two-agent heterogeneous setting. Building on an independent reproduction of that result, this study performs a controlled stability and sensitivity analysis of the inherited cubic law while holding average conditioning fixed. We parameterize heterogeneity by the ratio `tau = mu2 / mu1` and compression by the contraction error `epsilon`, with `n=2`, `L1=L2=1`, and fixed average strong convexity. Across three average-conditioning strata (`kappa_bar = 2, 10, 100`), a dense 216,027-cell analysis shows that stronger heterogeneity increases the normalized contraction penalty and that heavier compression amplifies this relative burden. At `epsilon=0.95`, retaining at least 99% of the homogeneous contraction margin requires approximately `tau >= 0.4076` for `kappa_bar=2` and `tau >= 0.1799` for `kappa_bar=10`, while the full audited domain `tau>=0.05` satisfies the same relative criterion for `kappa_bar=100`. This apparent robustness at poor conditioning is not faster convergence: all audited `kappa_bar=100` cells are already in a slow-convergence regime. Deterministic off-grid stress tests support the numerical trends, and an independent Wolfram symbolic audit shows that, for each of the three fixed conditioning strata, the cubic discriminant is strictly positive on the open controlled domain, implying three distinct real roots and excluding root-collision transitions there. The resulting characterization converts a reproduced empirical law into an interpretable map of heterogeneity–compression interactions, operating boundaries, and numerical robustness without claiming a general convergence theorem.
+Error-feedback methods permit communication-efficient distributed optimization under lossy compression, but the interaction between compression and heterogeneous local curvature remains difficult to characterize. The recent work *A Tight Theory of Error Feedback Algorithms in Distributed Optimization* introduced an empirical cubic convergence law for the two-agent heterogeneous setting [@thomsen2026tight]. Building on an independent reproduction of that result, this study performs a controlled stability and sensitivity analysis of the inherited cubic law while holding average conditioning fixed. We parameterize heterogeneity by the ratio `tau = mu2 / mu1` and compression by the contraction error `epsilon`, with `n=2`, `L1=L2=1`, and fixed average strong convexity. Across three average-conditioning strata (`kappa_bar = 2, 10, 100`), a dense 216,027-cell analysis shows that stronger heterogeneity increases the normalized contraction penalty and that heavier compression amplifies this relative burden. At `epsilon=0.95`, retaining at least 99% of the homogeneous contraction margin requires approximately `tau >= 0.4076` for `kappa_bar=2` and `tau >= 0.1799` for `kappa_bar=10`, while the full audited domain `tau>=0.05` satisfies the same relative criterion for `kappa_bar=100`. This apparent robustness at poor conditioning is not faster convergence: all audited `kappa_bar=100` cells are already in a slow-convergence regime. Deterministic off-grid stress tests support the numerical trends, and an independent Wolfram symbolic audit shows that, for each of the three fixed conditioning strata, the cubic discriminant is strictly positive on the open controlled domain, implying three distinct real roots and excluding root-collision transitions there. The resulting characterization converts a reproduced empirical law into an interpretable map of heterogeneity–compression interactions, operating boundaries, and numerical robustness without claiming a general convergence theorem.
 
 ## 1. Introduction
 
-Communication compression is central to distributed optimization when workers repeatedly transmit vectors to a central server. Contractive compressors can reduce communication cost, but compression introduces persistent error that can accumulate across iterations. Error-feedback methods address this problem by storing and reinjecting compression residuals, thereby recovering convergence behavior that would otherwise be degraded.
+Communication is a major bottleneck in large-scale distributed optimization, motivating aggressive quantization and sparsification of worker updates. Error feedback originated as a practical mechanism for carrying compression residuals across iterations and was later given theoretical convergence guarantees for compressed stochastic optimization [@seide2014onebit; @stich2018sparsified; @karimireddy2019error].
 
-Recent theory has sharpened the understanding of error feedback under homogeneous regularity assumptions. In contrast, heterogeneous workers can have different smoothness and strong-convexity parameters, which changes both the dynamics and the sharp worst-case rate. The reproduced source paper addresses this difficult regime through several empirical laws supported by performance-estimation and numerical evidence. In particular, its Empirical Law 4.3 describes the optimal two-agent contraction factor as the largest admissible real root of a cubic polynomial.
+EF21 provided a redesigned error-feedback mechanism with distributed convergence guarantees under standard assumptions and contractive compression, including heterogeneous-data settings [@richtarik2021ef21]. More recently, Thomsen, Taylor, and Dieuleveut developed tight rate analyses for classic Error Feedback and EF21, including optimal step sizes and Lyapunov constructions, while explicitly separating proved statements from empirical laws in technically harder heterogeneous regimes [@thomsen2026tight]. Their Empirical Law 4.3 describes the optimal two-agent heterogeneous contraction factor as the largest admissible real root of a cubic polynomial.
+
+The source analysis is closely connected to the performance-estimation-program framework, which formulates worst-case first-order method analysis as an optimization problem and can yield tight semidefinite characterizations [@drori2014performance; @taylor2017exact]. In the reproduced source work, performance estimation and numerical evidence support the heterogeneous cubic law, but a general analytic proof is not supplied [@thomsen2026tight].
 
 The present work does not attempt to prove the full heterogeneous empirical law. Instead, it asks a narrower computational question:
 
@@ -37,11 +39,11 @@ Consider a finite-sum distributed objective
 
 `f(x) = (1/n) sum_i f_i(x)`
 
-with a central server and local workers. Each local function is characterized by a smoothness constant `L_i` and strong-convexity constant `mu_i`. Communication is compressed by a contractive operator with error level `epsilon in (0,1)`.
+with a central server and local workers. Each local function is characterized by a smoothness constant `L_i` and strong-convexity constant `mu_i`. Communication is compressed by a contractive operator with error level `epsilon in (0,1)`, consistent with the contractive-compression setting used in EF21 and the reproduced source paper [@richtarik2021ef21; @thomsen2026tight].
 
 ### 2.2 Two-agent heterogeneous empirical law
 
-For `n=2`, the inherited empirical law expresses the optimal contraction factor `rho_star` as the largest admissible real root of
+For `n=2`, Empirical Law 4.3 of the reproduced source paper expresses the optimal contraction factor `rho_star` as the largest admissible real root of [@thomsen2026tight]
 
 `Q(rho) = rho^3 - A rho^2 + B rho - s^4`,
 
@@ -61,11 +63,11 @@ and
 
 with `Sigma_i = L_i + mu_i` and `Delta_i = L_i - mu_i`.
 
-The empirical optimal step size for two workers is
+The inherited empirical optimal step size for two workers is
 
 `eta_star = 4 / [(L1+mu1)+(L2+mu2)] * (1-s)/(1+s)`.
 
-The present paper treats these expressions as inherited objects to characterize.
+The present paper treats these expressions as inherited objects to characterize computationally and symbolically.
 
 ## 3. Methods
 
@@ -107,9 +109,9 @@ These strata represent progressively harder average conditioning while keeping t
 
 For each `(tau, epsilon, kappa_bar)` configuration, the analysis computes:
 
-- empirical optimal step size `eta_star`;
+- inherited empirical optimal step size `eta_star`;
 - largest admissible real cubic root `rho_star`;
-- homogeneous Theorem 3.1 baseline `rho_homogeneous` at the same `L`, `mu_bar`, and `epsilon`;
+- homogeneous Theorem 3.1 baseline `rho_homogeneous` at the same `L`, `mu_bar`, and `epsilon` [@thomsen2026tight];
 - absolute heterogeneity penalty
 
   `H_abs = rho_star - rho_homogeneous`;
@@ -234,7 +236,7 @@ The positive-discriminant result narrows the interpretation further. Within the 
 
 ## 6. Limitations
 
-1. The study characterizes an inherited empirical cubic law; it does not prove Empirical Law 4.3 in full generality.
+1. The study characterizes an inherited empirical cubic law; it does not prove Empirical Law 4.3 in full generality [@thomsen2026tight].
 2. The main parameterization fixes `n=2` and `L1=L2=1`.
 3. Numerical monotonicity statements are restricted to the audited domain `tau in [0.05,1]` and `epsilon in [0.01,0.95]`.
 4. The symbolic discriminant statement is currently established only for the three fixed conditioning strata `kappa_bar in {2,10,100}`.
@@ -255,10 +257,8 @@ This study extends a reproduced two-agent heterogeneous EF21 result by replacing
 - **Figure S1:** symbolic root-structure note — `figureS1_symbolic_root_structure.svg`
 - **Table 1:** key results by conditioning stratum — `table1_key_results.csv`
 
-## References — pending Zotero pass
+Full publication-style captions are maintained in `manuscript/figure_captions.md`.
 
-- [REF-ORIGINAL] *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*.
-- [REF-EF21] Original EF21 paper.
-- [REF-ERROR-FEEDBACK] Foundational error-feedback literature.
-- [REF-PEP] Performance estimation literature used by the source paper.
-- [REF-COMPRESSION] Contractive-compressor distributed optimization literature.
+## References
+
+Bibliographic metadata and citation keys are maintained in `manuscript/references.bib`.
