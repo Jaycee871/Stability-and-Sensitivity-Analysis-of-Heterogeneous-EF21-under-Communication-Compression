@@ -5,3 +5,4 @@ __pycache__/
 outputs/*.csv
 outputs/*.png
 outputs/*.pdf
+paper_assets/
