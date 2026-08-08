@@ -33,6 +33,11 @@ jobs:
           --epsilon-points 31
           --output-dir /tmp/phase3
           --figure-dir /tmp/phase3-figures
+      - name: Phase 4 robustness smoke test
+        run: >-
+          python scripts/analyze_phase4.py
+          --pairs 200
+          --output /tmp/phase4-summary.json
       - name: Hugging Face authentication check
         env:
           HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}

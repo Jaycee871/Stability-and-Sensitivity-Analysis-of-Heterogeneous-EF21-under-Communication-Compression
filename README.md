@@ -23,46 +23,44 @@ mu2 = 2 * mu_bar * tau / (1 + tau)
 
 so changing `tau` changes heterogeneity while keeping `(mu1 + mu2)/2` constant.
 
-## Phase 3 status
+## Phase 4 status
 
-The dense controlled analysis now evaluates
+The dense controlled analysis remains
 
 ```text
 kappa_bar in {2, 10, 100}
 381 tau values x 189 epsilon values x 3 strata = 216,027 cells
 ```
 
-### Main computational findings
+and Phase 4 adds deterministic off-grid robustness, boundary-convergence checks, and an independent Wolfram symbolic audit.
+
+### Main findings
 
 1. **Stronger heterogeneity increases the normalized contraction penalty** throughout all three studied conditioning strata.
 2. **Compression amplifies the relative heterogeneity burden.** At `tau=0.05`, moving from `epsilon=0.01` to `0.95` multiplies the normalized penalty by about 3.84x (`kappa_bar=2`), 3.12x (`kappa_bar=10`), and 3.03x (`kappa_bar=100`).
 3. **The smaller heterogeneity penalty at poor conditioning does not imply better convergence.** In the `kappa_bar=100` dense grid, every cell has `rho_star >= 0.95` and about 63.5% have `rho_star >= 0.99`.
-4. **Contraction-margin retention gives an interpretable operating guideline.** Define
+4. **The 99% contraction-margin guideline is stable under grid refinement.** At `epsilon=0.95`, bisection gives
 
 ```text
-R = (1 - rho_star) / (1 - rho_homogeneous)
-  = 1 - normalized_penalty.
+kappa_bar=2  : tau* ~= 0.4076217487
+kappa_bar=10 : tau* ~= 0.1798561595
+kappa_bar=100: the full audited tau >= 0.05 domain satisfies the target
 ```
 
-At `epsilon=0.95`, retaining at least 99% of the homogeneous contraction margin requires approximately
+5. **Random off-grid checks support the same monotonic patterns.** Phase 4 evaluates 20,000 deterministic paired samples per conditioning stratum inside the audited domain. No substantive monotonicity violation is observed, and cubic-root residuals remain near machine precision (`~2e-15`).
+6. **Wolfram reveals analytic root structure for the three fixed conditioning strata.** For `kappa_bar in {2,10,100}`, the factored cubic discriminant is a positive prefactor times a bivariate polynomial in `s=sqrt(epsilon)` and `tau` whose 63 coefficients are all strictly positive. Therefore the discriminant is positive for `0<s<1`, `tau>0`, and the inherited empirical-law cubic has three distinct real roots throughout each tested open controlled domain.
 
-```text
-kappa_bar=2   : tau >= 0.41
-kappa_bar=10  : tau >= 0.18
-kappa_bar=100 : all studied tau >= 0.05 satisfy the target
-```
+The off-grid monotonicity and retention statements remain computational claims on the audited domain. The discriminant sign result is analytic only for the three fixed conditioning strata and is not promoted to a general convergence theorem.
 
-These are finite-grid computational boundaries for Empirical Law 4.3, not universal analytic thresholds.
-
-See `docs/phase2_findings.md`, `docs/phase3_findings.md`, `results/phase2_summary.json`, and `results/phase3_summary.json` for the audited findings and interpretation guardrails.
+See `docs/phase2_findings.md`, `docs/phase3_findings.md`, `docs/phase4_findings.md`, and the corresponding JSON summaries under `results/`.
 
 ## Optional Wolfram symbolic bridge
 
-The Python implementation remains the reproducibility baseline. An optional Wolfram Language layer under `wolfram/` provides an independent engine for:
+The Python implementation remains the reproducibility baseline. The Wolfram Language layer under `wolfram/` provides an independent engine for:
 
 - symbolic simplification of the controlled cubic,
 - scale-invariance and homogeneous-limit checks,
-- discriminant exploration,
+- discriminant factorization,
 - independent numerical roots and retention values,
 - restricted Wolfram Cloud API queries.
 
@@ -73,7 +71,7 @@ wolframscript -file wolfram/export_reference.wl
 python scripts/compare_wolfram_reference.py wolfram/outputs/wolfram_reference.json
 ```
 
-The Cloud API template defaults to private access and deliberately exposes no arbitrary Wolfram-expression evaluation. See `wolfram/README.md` for deployment details.
+Phase 4's symbolic root-structure audit is encoded in `wolfram/phase4_discriminant_checks.wl`.
 
 ## Primary outcomes
 
@@ -97,9 +95,8 @@ python -m unittest discover -s tests -v
 python scripts/run_grid.py --output outputs/stability_grid.csv
 python scripts/analyze_phase2.py
 python scripts/analyze_phase3.py
+python scripts/analyze_phase4.py
 ```
-
-The Phase 2 and Phase 3 runners write numerical summaries, CSV tables, and SVG figures under `outputs/` and `figures/`.
 
 ## Research questions
 
@@ -109,7 +106,8 @@ The Phase 2 and Phase 3 runners write numerical summaries, CSV tables, and SVG f
 4. Heterogeneity penalty relative to the homogeneous theoretical baseline.
 5. Interaction between heterogeneity, compression, and average conditioning.
 6. How much homogeneous contraction margin is retained across the parameter landscape?
-7. Which compression levels are compatible with a chosen retention target for an observed heterogeneity ratio?
+7. Are the numerical thresholds robust off-grid and under grid refinement?
+8. What symbolic structure of the inherited cubic can be certified without claiming a full proof of Empirical Law 4.3?
 
 ## Provenance
 
