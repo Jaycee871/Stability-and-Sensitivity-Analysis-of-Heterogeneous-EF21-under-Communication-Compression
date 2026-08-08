@@ -32,17 +32,18 @@ class GuidelineTests(unittest.TestCase):
 
     def test_99pct_boundary_at_heavy_compression(self):
         taus = np.linspace(0.05, 1.0, 381)
-        epsilons = [0.95]
+        epsilons = [0.94, 0.95]
         expected = {2.0: 0.4100, 10.0: 0.1800, 100.0: 0.0500}
         for kappa, target_tau in expected.items():
             rows, _ = summarize_stratum(kappa, taus, epsilons)
-            boundary = guideline_boundaries(
+            boundaries = guideline_boundaries(
                 rows,
                 taus,
                 epsilons,
                 kappa_bar=kappa,
                 retention_targets=[0.99],
-            )[0]
+            )
+            boundary = next(row for row in boundaries if abs(row.epsilon - 0.95) < 1e-12)
             self.assertAlmostEqual(boundary.minimum_tau, target_tau, places=12)
 
     def test_98pct_boundary_is_less_restrictive_than_99pct(self):
