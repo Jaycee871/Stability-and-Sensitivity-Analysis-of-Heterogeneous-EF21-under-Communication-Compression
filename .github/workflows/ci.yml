@@ -26,3 +26,10 @@ jobs:
           --epsilon-points 11
           --output-dir /tmp/phase2
           --figure-dir /tmp/phase2-figures
+      - name: Phase 3 guideline smoke test
+        run: >-
+          python scripts/analyze_phase3.py
+          --tau-points 31
+          --epsilon-points 31
+          --output-dir /tmp/phase3
+          --figure-dir /tmp/phase3-figures
