@@ -33,3 +33,21 @@ jobs:
           --epsilon-points 31
           --output-dir /tmp/phase3
           --figure-dir /tmp/phase3-figures
+      - name: Hugging Face authentication check
+        env:
+          HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${HF_TOKEN1:-}" ]; then
+            echo "HF_TOKEN1 is not available to this workflow."
+            exit 1
+          fi
+          status=$(curl -sS -o /tmp/hf_whoami.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${HF_TOKEN1}" \
+            https://huggingface.co/api/whoami-v2)
+          if [ "$status" != "200" ]; then
+            echo "Hugging Face authentication failed with HTTP ${status}."
+            exit 1
+          fi
+          echo "Hugging Face authentication OK"
