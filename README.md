@@ -23,9 +23,35 @@ mu2 = 2 * mu_bar * tau / (1 + tau)
 
 so changing `tau` changes heterogeneity while keeping `(mu1 + mu2)/2` constant.
 
-## Phase 4 status
+## Phase 5 status
 
-The dense controlled analysis remains
+The research scope is now locked and the project has entered manuscript assembly. `manuscript/draft.md` contains the first complete paper skeleton, while `scripts/build_paper_assets.py` regenerates the main journal figures and key-results table directly from the audited analysis code.
+
+The paper-asset build produces:
+
+```text
+Figure 1  contraction landscape
+Figure 2  normalized heterogeneity penalty
+Figure 3  compression x conditioning interaction
+Figure 4  99% contraction-margin retention boundary
+Figure 5  boundary convergence under grid refinement
+Figure S1 symbolic root-structure summary
+Table 1   key results by conditioning stratum
+```
+
+Run
+
+```bash
+python scripts/build_paper_assets.py
+```
+
+to regenerate the manuscript assets under `paper_assets/`.
+
+See `docs/phase5_manuscript_plan.md` for the claim discipline, section map, and figure rationale.
+
+## Audited results carried into the manuscript
+
+The dense controlled analysis evaluates
 
 ```text
 kappa_bar in {2, 10, 100}
@@ -52,7 +78,7 @@ kappa_bar=100: the full audited tau >= 0.05 domain satisfies the target
 
 The off-grid monotonicity and retention statements remain computational claims on the audited domain. The discriminant sign result is analytic only for the three fixed conditioning strata and is not promoted to a general convergence theorem.
 
-See `docs/phase2_findings.md`, `docs/phase3_findings.md`, `docs/phase4_findings.md`, and the corresponding JSON summaries under `results/`.
+See `docs/phase2_findings.md`, `docs/phase3_findings.md`, `docs/phase4_findings.md`, `docs/phase5_manuscript_plan.md`, and the corresponding JSON summaries under `results/`.
 
 ## Optional Wolfram symbolic bridge
 
@@ -96,6 +122,7 @@ python scripts/run_grid.py --output outputs/stability_grid.csv
 python scripts/analyze_phase2.py
 python scripts/analyze_phase3.py
 python scripts/analyze_phase4.py
+python scripts/build_paper_assets.py
 ```
 
 ## Research questions
