@@ -19,3 +19,10 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Grid smoke test
         run: python scripts/run_grid.py --tau-points 10 --epsilon-points 10 --output /tmp/stability_grid.csv
+      - name: Phase 2 landscape smoke test
+        run: >-
+          python scripts/analyze_phase2.py
+          --tau-points 12
+          --epsilon-points 11
+          --output-dir /tmp/phase2
+          --figure-dir /tmp/phase2-figures

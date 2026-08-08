@@ -23,6 +23,24 @@ mu2 = 2 * mu_bar * tau / (1 + tau)
 
 so changing `tau` changes heterogeneity while keeping `(mu1 + mu2)/2` constant. This prevents a slower rate caused by worsening average conditioning from being misidentified as a heterogeneity effect.
 
+## Phase 2 status
+
+The controlled landscape has now been evaluated at
+
+```text
+kappa_bar in {2, 10, 100}
+96 tau values x 95 epsilon values x 3 strata = 27,360 cells
+```
+
+First computational findings:
+
+1. **Stronger heterogeneity increases the normalized contraction penalty** throughout all three sampled conditioning strata.
+2. **Compression amplifies the relative heterogeneity penalty** on the sampled grid: normalized penalty is nondecreasing with `epsilon` within numerical tolerance.
+3. **The relative penalty is largest in the better-conditioned stratum.** At `tau=0.05, epsilon=0.95`, the normalized penalties are approximately 5.07% (`kappa_bar=2`), 1.70% (`kappa_bar=10`), and 0.20% (`kappa_bar=100`).
+4. **Absolute and normalized penalties peak in different compression regimes.** Absolute gaps peak around `epsilon=0.07--0.11`, whereas normalized penalties peak at the highest studied compression level, `epsilon=0.95`.
+
+These are numerical characterizations of Empirical Law 4.3, not claims of a new theorem. See `docs/phase2_findings.md` and `results/phase2_summary.json` for the audited results and interpretation guardrails.
+
 ## Primary outcomes
 
 For each `(tau, epsilon)` cell we compute:
@@ -33,8 +51,6 @@ For each `(tau, epsilon)` cell we compute:
 - absolute heterogeneity penalty,
 - normalized heterogeneity penalty relative to the remaining contraction margin.
 
-The initial study uses `mu_bar = 0.1` (`kappa_bar = 10`) and will later repeat the same controlled analysis across selected conditioning strata such as `kappa_bar in {2, 10, 100}`.
-
 ## Minimal reproducible run
 
 ```bash
@@ -44,18 +60,20 @@ pip install -r requirements.txt
 
 python -m unittest discover -s tests -v
 python scripts/run_grid.py --output outputs/stability_grid.csv
+python scripts/analyze_phase2.py
 ```
 
-The default grid contains 9,120 cells (`96 tau` values x `95 epsilon` values).
+The Phase 2 runner writes numerical summaries and three SVG figures under `outputs/phase2/` and `figures/phase2/`.
 
-## Planned analyses
+## Research questions
 
-1. `tau -> rho_star` heterogeneity sensitivity at fixed compression levels.
-2. `epsilon -> rho_star` compression sensitivity at fixed heterogeneity levels.
-3. `(tau, epsilon) -> rho_star` stability landscape.
+1. `tau -> rho_star`: heterogeneity sensitivity at fixed compression levels.
+2. `epsilon -> rho_star`: compression sensitivity at fixed heterogeneity levels.
+3. `(tau, epsilon) -> rho_star`: stability landscape.
 4. Heterogeneity penalty relative to the homogeneous theoretical baseline.
-5. Interaction patterns and practical parameter-selection regions.
-6. Robustness across fixed average condition-number strata.
+5. Interaction between heterogeneity, compression, and average conditioning.
+6. Robustness of observed monotonic patterns under denser and off-grid validation.
+7. Practical parameter-selection regions, only after robustness checks.
 
 ## Provenance
 
