@@ -119,6 +119,7 @@ def build_manuscript() -> str:
     captions_text = (ROOT / "manuscript" / "figure_captions.md").read_text(encoding="utf-8")
     references = (ROOT / "manuscript" / "reference_list.md").read_text(encoding="utf-8")
     abstract, body = extract_draft_body(draft)
+    abstract = replace_citations(abstract)
     captions = parse_captions(captions_text)
     body = insert_figure_captions(body, captions)
 
