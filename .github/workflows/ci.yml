@@ -45,6 +45,12 @@ jobs:
           --tau-mu-points 7
           --epsilon-points 7
           --output-dir /tmp/phase11
+      - name: Phase 12 regularity mismatch smoke test
+        run: >-
+          python scripts/analyze_phase12.py
+          --tau-points 7
+          --epsilon-points 7
+          --output /tmp/phase12-summary.json
       - name: Phase 5 full-resolution paper asset build
         run: >-
           python scripts/build_paper_assets.py
