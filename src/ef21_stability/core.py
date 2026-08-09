@@ -76,14 +76,26 @@ def cubic_coefficients(config: TwoAgentConfig) -> np.ndarray:
 
 
 def optimal_contraction_factor(config: TwoAgentConfig, tol: float = 1e-8) -> float:
-    """Return the largest admissible real root of the empirical cubic."""
+    """Return the largest real root of the inherited empirical cubic.
+
+    The equal-smoothness path is a special case of the Phase 13 generic
+    root-structure certificate. Root selection therefore follows Empirical
+    Law 4.3 literally: take the largest real root and then validate that it
+    belongs to the contraction interval.
+    """
     coeffs = cubic_coefficients(config)
     roots = np.roots(coeffs)
     real = roots[np.abs(roots.imag) <= tol].real
-    valid = real[(real >= -tol) & (real <= 1.0 + tol)]
-    if len(valid) == 0:
-        raise RuntimeError(f"no admissible real root for config={config!r}; roots={roots!r}")
-    return float(np.max(valid))
+    if len(real) == 0:
+        raise RuntimeError(f"no real root for config={config!r}; roots={roots!r}")
+
+    rho = float(np.max(real))
+    if not (-tol <= rho <= 1.0 + tol):
+        raise RuntimeError(
+            "largest real empirical-cubic root lies outside the contraction interval: "
+            f"config={config!r}; largest_real_root={rho!r}; roots={roots!r}"
+        )
+    return rho
 
 
 def homogeneous_theorem_rate(epsilon: float, L: float, mu: float) -> tuple[float, float]:
