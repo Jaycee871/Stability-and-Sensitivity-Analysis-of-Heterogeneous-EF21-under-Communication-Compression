@@ -38,6 +38,13 @@ jobs:
           python scripts/analyze_phase4.py
           --pairs 200
           --output /tmp/phase4-summary.json
+      - name: Phase 11 full heterogeneity smoke test
+        run: >-
+          python scripts/analyze_phase11.py
+          --tau-l-points 7
+          --tau-mu-points 7
+          --epsilon-points 7
+          --output-dir /tmp/phase11
       - name: Phase 5 full-resolution paper asset build
         run: >-
           python scripts/build_paper_assets.py
