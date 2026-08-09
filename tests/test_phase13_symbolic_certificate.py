@@ -1,6 +1,16 @@
 import json
+import math
 from pathlib import Path
 import unittest
+
+import numpy as np
+
+from ef21_stability.core import TwoAgentConfig, cubic_coefficients, optimal_contraction_factor
+from ef21_stability.full_heterogeneity import (
+    FullHeterogeneityConfig,
+    cubic_coefficients_full,
+    optimal_contraction_factor_full,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +57,53 @@ class Phase13SymbolicCertificateTests(unittest.TestCase):
         )
         self.assertIn("conditional on the inherited Empirical Law 4.3 cubic", doc)
         self.assertIn("does **not** prove the empirical law itself", doc)
+
+    def test_full_heterogeneity_selector_is_literal_largest_real_root(self) -> None:
+        cases = (
+            (2.0, 1.0, 0.05, 0.95),
+            (2.0, 0.40, 0.08, 0.40),
+            (10.0, 0.05, 0.90, 0.95),
+            (10.0, 0.40, 0.70, 0.50),
+            (100.0, 0.05, 1.0, 0.95),
+            (100.0, 0.50, 0.50, 0.20),
+        )
+        for kappa, tau_L, tau_mu, epsilon in cases:
+            config = FullHeterogeneityConfig(
+                epsilon=epsilon,
+                tau_L=tau_L,
+                tau_mu=tau_mu,
+                L_bar=1.0,
+                mu_bar=1.0 / kappa,
+            )
+            roots = np.roots(cubic_coefficients_full(config))
+            self.assertTrue(np.all(np.abs(roots.imag) < 1e-7))
+            real = roots.real
+            self.assertTrue(np.all(real > 0.0))
+            self.assertTrue(np.all(real < 1.0))
+            expected = float(np.max(real))
+            actual = optimal_contraction_factor_full(config)
+            self.assertAlmostEqual(actual, expected, places=13)
+            self.assertGreater(actual, math.sqrt(epsilon))
+
+    def test_equal_smoothness_selector_obeys_same_root_contract(self) -> None:
+        for kappa in (2.0, 10.0, 100.0):
+            for tau in (0.05, 0.30, 1.0):
+                config = TwoAgentConfig(
+                    epsilon=0.73,
+                    tau=tau,
+                    L=1.0,
+                    mu_bar=1.0 / kappa,
+                )
+                try:
+                    config.validate()
+                except ValueError:
+                    continue
+                roots = np.roots(cubic_coefficients(config))
+                self.assertTrue(np.all(np.abs(roots.imag) < 1e-7))
+                expected = float(np.max(roots.real))
+                self.assertAlmostEqual(
+                    optimal_contraction_factor(config), expected, places=13
+                )
 
 
 if __name__ == "__main__":
