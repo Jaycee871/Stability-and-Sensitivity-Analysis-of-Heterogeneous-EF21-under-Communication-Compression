@@ -1,6 +1,6 @@
 # MDPI policy snapshot for submission planning
 
-Checked for Phase 7 on 2026-08-09.
+Checked for Phase 8 on 2026-08-09.
 
 ## Target Special Issue
 
@@ -45,6 +45,18 @@ Sources:
 - https://www.mdpi.com/ethics
 - https://www.mdpi.com/about/announcements/5687
 
+## 2026 formatting and template status
+
+MDPI announced a revised article layout/template for volumes published in 2026, effective from 19 December 2025, and directs authors to use the newest template available from the journal Instructions for Authors page. MDPI accepts both Microsoft Word and LaTeX manuscripts. Current MDPI journal instructions also permit free-format initial submission when all required manuscript sections are present.
+
+Sources checked for Phase 8:
+
+- https://www.mdpi.com/authors/services
+- https://staging.core.mdpi.com/news/14150
+- current MDPI journal Instructions for Authors pages describing Word/LaTeX and free-format submission
+
 ## Formatting strategy
 
-The repository currently maintains a free-format research draft plus reproducible figures and bibliography. Final conversion to the current *Mathematics* Word or LaTeX template should be performed only after author metadata and public archive identifiers are fixed, so formatting work does not need to be repeated after substantive metadata changes.
+Phase 8 therefore generates a complete **MDPI-compatible free-format submission source** containing author-information placeholders, Abstract, Keywords, Introduction, Methods, Results, Discussion, Limitations, Conclusions, figures/tables with captions, Author Contributions, Funding, Data Availability, Acknowledgments, Conflicts of Interest, and numbered References.
+
+Transfer into the current *Mathematics* Word or LaTeX house template is deliberately deferred until the final author list, affiliations, corresponding author, funding statement, and public archive identifier are fixed. This prevents repeated template editing while preserving a package that is already suitable for editorial pre-check and internal review.
