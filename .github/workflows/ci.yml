@@ -67,6 +67,24 @@ jobs:
         with:
           name: phase9-claim-evidence-audit
           path: /tmp/phase9
+      - name: Phase 10 manuscript scope lint
+        run: >-
+          python scripts/lint_manuscript_scope.py
+          --output /tmp/phase10/manuscript_scope_lint.json
+      - name: Assemble Phase 10 reviewer package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/phase10
+          cp submission/reviewer_premortem.md /tmp/phase10/
+          cp submission/novelty_statement.md /tmp/phase10/
+          cp manuscript/terminology_guardrails.md /tmp/phase10/
+          cp /tmp/phase9/claim_evidence_matrix.md /tmp/phase10/
+      - name: Upload Phase 10 reviewer pre-mortem
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase10-reviewer-premortem
+          path: /tmp/phase10
       - name: Hugging Face authentication check
         env:
           HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}
