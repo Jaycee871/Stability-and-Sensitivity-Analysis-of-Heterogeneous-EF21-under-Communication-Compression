@@ -9,10 +9,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 FORBIDDEN_PATTERNS = {
-    "prove_empirical_law": r"\b(?:we\s+)?prove(?:s|d)?\s+(?:the\s+)?Empirical\s+Law\s+4\.3\b",
+    "prove_empirical_law": r"(?<!not )\b(?:we\s+)?prove(?:s|d)?\s+(?:the\s+)?Empirical\s+Law\s+4\.3\b",
     "general_ef21_theorem": r"\bwe\s+(?:prove|establish|derive)\s+(?:a\s+)?general\s+EF21\s+(?:convergence\s+)?theorem\b",
     "universal_stability_threshold": r"\b(?:is|are|gives?|yields?)\s+(?:a\s+)?universal\s+stability\s+thresholds?\b",
-    "global_monotonicity_claim": r"\b(?:we\s+)?prove(?:s|d)?\s+global\s+monotonicity\b",
+    "global_monotonicity_claim": r"(?<!not )\b(?:we\s+)?prove(?:s|d)?\s+global\s+monotonicity\b",
     "arbitrary_n_claim": r"\b(?:for|across)\s+arbitrary\s+(?:n|numbers?\s+of\s+workers?)\b",
 }
 
