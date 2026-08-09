@@ -51,6 +51,15 @@ jobs:
           --tau-points 7
           --epsilon-points 7
           --output /tmp/phase12-summary.json
+      - name: Phase 14 literature novelty-audit guardrail
+        run: >-
+          python scripts/validate_phase14_literature_audit.py
+          --output /tmp/phase14/phase14_literature_audit_validation.json
+      - name: Upload Phase 14 literature audit state
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase14-literature-audit-state
+          path: /tmp/phase14
       - name: Phase 5 full-resolution paper asset build
         run: >-
           python scripts/build_paper_assets.py
