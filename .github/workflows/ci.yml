@@ -57,6 +57,16 @@ jobs:
         with:
           name: phase8-mdpi-submission-package
           path: /tmp/mdpi-submission-package
+      - name: Phase 9 claim-to-evidence audit
+        run: >-
+          python scripts/audit_claim_registry.py
+          --output-json /tmp/phase9/phase9_claim_audit.json
+          --output-md /tmp/phase9/claim_evidence_matrix.md
+      - name: Upload Phase 9 claim-evidence audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase9-claim-evidence-audit
+          path: /tmp/phase9
       - name: Hugging Face authentication check
         env:
           HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}

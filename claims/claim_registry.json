@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "manuscript": "manuscript/draft.md",
+  "claims": [
+    {
+      "id": "C01",
+      "short_claim": "The dense controlled study contains 216,027 configurations.",
+      "evidence_level": "computational",
+      "manuscript_match": "216,027",
+      "evidence": [
+        {"source": "results/phase3_summary.json", "path": "parameterization.total_cells", "expected": 216027}
+      ],
+      "guardrail": "Finite audited parameter grid; not an exhaustive statement over the continuous domain."
+    },
+    {
+      "id": "C02",
+      "short_claim": "Maximum normalized heterogeneity penalties are approximately 5.07%, 1.70%, and 0.20% for kappa_bar=2,10,100.",
+      "evidence_level": "computational",
+      "manuscript_match": "5.07%",
+      "evidence": [
+        {"source": "results/phase2_summary.json", "path": "strata.0.max_normalized_penalty", "expected": 0.050735736426212354, "tolerance": 1e-14},
+        {"source": "results/phase2_summary.json", "path": "strata.1.max_normalized_penalty", "expected": 0.016990131036983214, "tolerance": 1e-14},
+        {"source": "results/phase2_summary.json", "path": "strata.2.max_normalized_penalty", "expected": 0.0020054918884285923, "tolerance": 1e-14}
+      ],
+      "guardrail": "Grid maxima of the inherited empirical cubic law, not global analytic maxima."
+    },
+    {
+      "id": "C03",
+      "short_claim": "Compression from epsilon=0.01 to 0.95 amplifies normalized heterogeneity penalty by about 3.84x, 3.12x, and 3.03x at tau=0.05.",
+      "evidence_level": "computational",
+      "manuscript_match": "3.84x",
+      "evidence": [
+        {"source": "results/phase3_summary.json", "path": "compression_amplification_at_tau_0_05.0.ratio", "expected": 3.841472865355666, "tolerance": 1e-12},
+        {"source": "results/phase3_summary.json", "path": "compression_amplification_at_tau_0_05.1.ratio", "expected": 3.1196789225846735, "tolerance": 1e-12},
+        {"source": "results/phase3_summary.json", "path": "compression_amplification_at_tau_0_05.2.ratio", "expected": 3.032856014084366, "tolerance": 1e-12}
+      ],
+      "guardrail": "Endpoint ratio on the audited tau=0.05 slice; not a universal multiplicative law."
+    },
+    {
+      "id": "C04",
+      "short_claim": "For kappa_bar=100, all dense-grid cells have rho_star>=0.95 and about 63.5% have rho_star>=0.99.",
+      "evidence_level": "computational",
+      "manuscript_match": "63.5%",
+      "evidence": [
+        {"source": "results/phase3_summary.json", "path": "slow_region_summary.2.fraction_rho_ge_0_95", "expected": 1.0},
+        {"source": "results/phase3_summary.json", "path": "slow_region_summary.2.fraction_rho_ge_0_99", "expected": 0.6349206349206349, "tolerance": 1e-14}
+      ],
+      "guardrail": "Describes baseline slowness; must not be interpreted as robustness or faster convergence."
+    },
+    {
+      "id": "C05",
+      "short_claim": "At epsilon=0.95 and 99% margin retention, continuous tau boundaries are 0.4076217486520454, 0.17985615951449502, and 0.05 for kappa_bar=2,10,100.",
+      "evidence_level": "computational",
+      "manuscript_match": "0.4076217486520454",
+      "evidence": [
+        {"source": "results/phase4_summary.json", "path": "boundary_convergence.0.continuous_boundary", "expected": 0.4076217486520454, "tolerance": 1e-14},
+        {"source": "results/phase4_summary.json", "path": "boundary_convergence.1.continuous_boundary", "expected": 0.17985615951449502, "tolerance": 1e-14},
+        {"source": "results/phase4_summary.json", "path": "boundary_convergence.2.continuous_boundary", "expected": 0.05, "tolerance": 1e-14},
+        {"source": "results/phase4_summary.json", "path": "boundary_convergence.2.domain_fully_satisfies", "expected": true}
+      ],
+      "guardrail": "Bisection operating boundary for the inherited cubic within the audited domain; not a universal stability threshold."
+    },
+    {
+      "id": "C06",
+      "short_claim": "Twenty thousand off-grid paired checks per conditioning stratum show no substantive monotonicity violation at the 1e-9 interpretation tolerance, with root residuals around 2e-15.",
+      "evidence_level": "computational-robustness",
+      "manuscript_match": "20,000",
+      "evidence": [
+        {"source": "results/phase4_summary.json", "path": "offgrid_validation.0.pairs", "expected": 20000},
+        {"source": "results/phase4_summary.json", "path": "offgrid_validation.1.pairs", "expected": 20000},
+        {"source": "results/phase4_summary.json", "path": "offgrid_validation.2.pairs", "expected": 20000},
+        {"source": "results/phase4_summary.json", "path": "offgrid_validation.2.max_epsilon_monotonicity_violation", "expected": 3.695096587093741e-10, "tolerance": 1e-20},
+        {"source": "results/phase4_summary.json", "path": "offgrid_validation.2.max_root_residual", "expected": 2.220446049250313e-15, "tolerance": 1e-25}
+      ],
+      "guardrail": "Numerical stress test only. One positive ordering residual is ~3.7e-10 and is explicitly treated as below the 1e-9 numerical interpretation tolerance."
+    },
+    {
+      "id": "C07",
+      "short_claim": "For each tested conditioning stratum, the discriminant factor has a 63-coefficient bivariate polynomial with all coefficients strictly positive.",
+      "evidence_level": "analytic-symbolic",
+      "manuscript_match": "63 coefficients",
+      "evidence": [
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.0.coefficient_count", "expected": 63},
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.0.strictly_positive_polynomial_coefficients", "expected": true},
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.1.coefficient_count", "expected": 63},
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.1.strictly_positive_polynomial_coefficients", "expected": true},
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.2.coefficient_count", "expected": 63},
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.2.strictly_positive_polynomial_coefficients", "expected": true}
+      ],
+      "guardrail": "Analytic sign result only for fixed kappa_bar in {2,10,100}; not arbitrary conditioning."
+    },
+    {
+      "id": "C08",
+      "short_claim": "The inherited cubic has three distinct real roots on each tested open controlled domain.",
+      "evidence_level": "analytic-symbolic",
+      "manuscript_match": "three distinct real roots",
+      "evidence": [
+        {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.analytic_consequence", "expected_contains": "three distinct real roots"}
+      ],
+      "guardrail": "Root-structure statement does not prove Empirical Law 4.3 as a convergence theorem."
+    },
+    {
+      "id": "C09",
+      "short_claim": "The heterogeneous cubic and optimal-step-size expressions are inherited from Empirical Law 4.3 rather than newly derived as a general theorem here.",
+      "evidence_level": "inherited-literature",
+      "manuscript_match": "Empirical Law 4.3",
+      "evidence": [
+        {"source": "manuscript/references.bib", "expected_contains": "A Tight Theory of Error Feedback Algorithms in Distributed Optimization"}
+      ],
+      "guardrail": "Always cite Thomsen, Taylor, and Dieuleveut and preserve the empirical-law label."
+    }
+  ]
+}
