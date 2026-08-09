@@ -10,6 +10,16 @@ from .core import (
     optimal_contraction_factor,
     run_grid,
 )
+from .full_heterogeneity import (
+    FullHeterogeneityConfig,
+    analyze_full_config,
+    cubic_coefficients_full,
+    empirical_eta_star_full,
+    fixed_average_pair,
+    optimal_contraction_factor_full,
+    regularity_parameters,
+    run_full_grid,
+)
 
 __all__ = [
     "TwoAgentConfig",
@@ -20,4 +30,12 @@ __all__ = [
     "homogeneous_theorem_rate",
     "optimal_contraction_factor",
     "run_grid",
+    "FullHeterogeneityConfig",
+    "analyze_full_config",
+    "cubic_coefficients_full",
+    "empirical_eta_star_full",
+    "fixed_average_pair",
+    "optimal_contraction_factor_full",
+    "regularity_parameters",
+    "run_full_grid",
 ]
