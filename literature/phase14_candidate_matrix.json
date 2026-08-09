@@ -1,0 +1,70 @@
+{
+  "phase": 14,
+  "study": "adversarial_literature_novelty_audit",
+  "status": "PENDING_EXTERNAL_AUDIT",
+  "external_search_engine": "Undermind",
+  "claims": {
+    "N1": {
+      "label": "weighted_variance_mismatch_coordinate",
+      "status": "PENDING_EXTERNAL_AUDIT",
+      "strongest_candidate_id": null,
+      "manual_equivalence_verified": false,
+      "notes": "Do not promote a novelty claim before adversarial literature search and manual source inspection."
+    },
+    "N2": {
+      "label": "aligned_proportional_heterogeneity_invariance",
+      "status": "PENDING_EXTERNAL_AUDIT",
+      "strongest_candidate_id": null,
+      "manual_equivalence_verified": false,
+      "notes": "Search for scaled-local-objective and equal-local-condition-ratio results, not only EF21 terminology."
+    },
+    "N3": {
+      "label": "monotonic_mismatch_penalty_in_largest_root",
+      "status": "PENDING_EXTERNAL_AUDIT",
+      "strongest_candidate_id": null,
+      "manual_equivalence_verified": false,
+      "notes": "Compare exact contraction/spectral-radius monotonicity, not generic statements that heterogeneity hurts convergence."
+    },
+    "N4": {
+      "label": "generic_cubic_root_structure",
+      "status": "PENDING_EXTERNAL_AUDIT",
+      "strongest_candidate_id": null,
+      "manual_equivalence_verified": false,
+      "notes": "Inspect exact polynomial/root results in EF21, error-feedback, compression, and PEP literature."
+    }
+  },
+  "candidates": [],
+  "required_candidate_fields": [
+    "candidate_id",
+    "citation",
+    "identifier",
+    "url",
+    "publication_year",
+    "venue",
+    "paper_family",
+    "exact_location",
+    "local_Li_heterogeneity",
+    "local_mui_heterogeneity",
+    "both_Li_and_mui",
+    "fixed_average_conditioning",
+    "heterogeneity_measure",
+    "algebraic_mapping_to_K1K2",
+    "aligned_invariance_overlap",
+    "root_sensitivity_overlap",
+    "cubic_root_structure_overlap",
+    "classification",
+    "confidence",
+    "novelty_threat",
+    "manual_source_checked",
+    "notes"
+  ],
+  "allowed_candidate_classifications": ["A", "B", "C", "D"],
+  "allowed_claim_statuses_after_audit": [
+    "CLEAR_TO_PROMOTE",
+    "PROMOTE_WITH_PRIOR_ART_POSITIONING",
+    "REQUIRES_MANUAL_EQUIVALENCE_CHECK",
+    "NOVELTY_CLAIM_MUST_BE_NARROWED",
+    "DO_NOT_CLAIM_NOVELTY"
+  ],
+  "guardrail": "An empty or incomplete candidate matrix is not evidence of novelty. No Phase 11-13 novelty language should be promoted into the manuscript until the external search and manual A/B-candidate adjudication are complete."
+}
