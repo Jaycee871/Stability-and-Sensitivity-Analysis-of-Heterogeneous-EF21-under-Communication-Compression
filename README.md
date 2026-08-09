@@ -6,7 +6,7 @@ A computational and mathematical extension of the reproduced two-agent heterogen
 
 **How do local regularity heterogeneity and communication compression jointly affect the inherited optimal contraction factor of EF21 when average conditioning is held fixed?**
 
-The project now contains two nested controlled designs.
+The project contains nested controlled designs and progressively stronger computational/algebraic audits.
 
 ### Phases 1–10: equal-smoothness baseline
 
@@ -27,7 +27,7 @@ mu2 = 2 * mu_bar * tau / (1 + tau)
 
 so changing `tau` changes strong-convexity heterogeneity while keeping `(mu1 + mu2)/2` constant.
 
-### Phases 11–12: full regularity heterogeneity
+### Phases 11–13: full regularity heterogeneity
 
 The extension fixes both arithmetic means
 
@@ -55,9 +55,9 @@ mu2 = tau_mu * mu1
 
 Invalid cells violating `mu_i <= L_i` are explicitly masked rather than coerced.
 
-## Phase 12 status — regularity mismatch structure
+## Phase 12 — regularity mismatch structure
 
-Phase 12 reduces the apparent two-dimensional heterogeneity dependence to a much cleaner structural coordinate.
+Phase 12 reduces the apparent two-dimensional heterogeneity dependence to a cleaner structural coordinate.
 
 For the inherited Empirical Law 4.3, define
 
@@ -93,7 +93,7 @@ K1 - K2 =
 
 Therefore `K1 >= K2`, with equality exactly when `tau_L=tau_mu`.
 
-Along this aligned path, `L_i` and `mu_i` may both be heterogeneous, but the two local condition ratios remain aligned. The inherited cubic coefficients then coincide with the homogeneous controlled coefficients at the same average conditioning and compression. In other words, **proportional regularity heterogeneity is invisible to the inherited two-agent cubic; mismatch between smoothness and strong-convexity heterogeneity is the active structural deviation.**
+Along this aligned path, `L_i` and `mu_i` may both be heterogeneous, but the local condition ratios remain aligned. The inherited cubic coefficients then coincide with the homogeneous controlled coefficients at the same average conditioning and compression. In other words, **proportional regularity heterogeneity is invisible to the inherited two-agent cubic; mismatch between smoothness and strong-convexity heterogeneity is the active structural deviation.**
 
 The default Phase 12 dense audit requests
 
@@ -102,9 +102,59 @@ The default Phase 12 dense audit requests
 = 273,885 cells
 ```
 
-of which `258,400` are regularity-admissible. The exact identities reproduce to machine precision. No valid audited cell has a heterogeneity penalty below `-1e-10`, and the sampled implicit derivative `d rho_star/d K1` is positive throughout the audited grid.
+of which `258,400` are regularity-admissible. The exact identities reproduce to machine precision.
 
-See `docs/phase11_full_heterogeneity.md`, `docs/phase12_mismatch_structure.md`, and `results/phase12_summary.json`.
+## Phase 13 — generic symbolic root structure and sensitivity
+
+Phase 13 upgrades the Phase 12 numerical root-sensitivity observation to a conditional analytic statement about the inherited cubic.
+
+Positive local regularity and the weighted-moment representation imply
+
+```text
+0 < K2 < 1
+K2 <= K1 < 1
+0 < s < 1,  s = sqrt(epsilon)
+```
+
+for the studied `kappa_bar>1` setting.
+
+Wolfram `Reduce` certifies on this generic `(s,K1,K2)` domain that:
+
+- `Discriminant[Q,rho] <= 0` is infeasible, so the cubic has three distinct real roots;
+- `rho <= 0 && Q(rho)==0` is infeasible;
+- `rho >= 1 && Q(rho)==0` is infeasible;
+- `Q(1) <= 0` is infeasible;
+- `Q(s) = K2*(s-1)^3*s^2 < 0`.
+
+Therefore all three roots lie in `(0,1)`, and the selected largest root satisfies
+
+```text
+rho_star > s.
+```
+
+The exact implicit derivative is
+
+```text
+d rho_star / d K1
+= ((1-s)^2/(1+s))*s*rho_star*(rho_star-s) / Q'(rho_star)
+```
+
+and `Q'(rho_star)>0` at the largest simple root. Hence
+
+```text
+d rho_star / d K1 > 0.
+```
+
+Combining this with the Phase 12 identity `K1>=K2` proves, **conditional on the inherited Empirical Law 4.3 cubic**, that the controlled predicted contraction factor is minimized on the aligned path `tau_L=tau_mu`; any admissible regularity mismatch with `K1>K2` strictly worsens the inherited largest-root contraction factor.
+
+The Wolfram proof script and evaluated certificate are stored in
+
+```text
+wolfram/phase13_full_structure_proof.wl
+results/phase13_symbolic_certificate.json
+```
+
+See `docs/phase13_symbolic_root_sensitivity.md` for the proof chain and claim guardrail.
 
 ## Phase 5 manuscript assets
 
@@ -122,7 +172,7 @@ Figure S1 symbolic root-structure summary
 Table 1   key results by conditioning stratum
 ```
 
-The main manuscript has **not yet been rewritten to promote Phase 11–12 findings**. Those findings remain staged until the full symbolic and literature audits are complete.
+The main manuscript has **not yet been rewritten to promote Phase 11–13 findings**. Those findings remain staged until the targeted literature novelty audit is complete.
 
 Run
 
@@ -159,7 +209,7 @@ kappa_bar=100: the full audited tau >= 0.05 domain satisfies the target
 5. **Random off-grid checks support the same monotonic patterns.** Phase 4 evaluates 20,000 deterministic paired samples per conditioning stratum inside the audited domain. No substantive monotonicity violation is observed, and cubic-root residuals remain near machine precision (`~2e-15`).
 6. **Wolfram reveals analytic root structure for the three fixed conditioning strata.** For `kappa_bar in {2,10,100}`, the factored cubic discriminant is a positive prefactor times a bivariate polynomial in `s=sqrt(epsilon)` and `tau` whose 63 coefficients are all strictly positive. Therefore the discriminant is positive for `0<s<1`, `tau>0`, and the inherited empirical-law cubic has three distinct real roots throughout each tested open controlled domain.
 
-The off-grid monotonicity and retention statements remain computational claims on the audited domain. The discriminant sign result is analytic only for the three fixed equal-smoothness conditioning strata and is not promoted to a general convergence theorem.
+The Phase 13 generic certificate now subsumes the root-reality conclusion at the cubic-coordinate level; the Phase 4 result remains useful as an independent fixed-stratum factorization audit.
 
 ## Optional Wolfram symbolic bridge
 
@@ -167,7 +217,7 @@ The Python implementation remains the reproducibility baseline. The Wolfram Lang
 
 - symbolic simplification of the controlled cubic,
 - scale-invariance and homogeneous-limit checks,
-- discriminant factorization,
+- discriminant factorization and generic `Reduce` certificates,
 - independent numerical roots and retention values,
 - restricted Wolfram Cloud API queries.
 
@@ -178,11 +228,11 @@ wolframscript -file wolfram/export_reference.wl
 python scripts/compare_wolfram_reference.py wolfram/outputs/wolfram_reference.json
 ```
 
-Phase 4's symbolic root-structure audit is encoded in `wolfram/phase4_discriminant_checks.wl`. Phase 12 prepares the next symbolic target: prove or delimit the full-heterogeneity root-sensitivity sign conditions after reducing the regularity surface to `K1-K2`.
+Phase 4's fixed-stratum symbolic audit is encoded in `wolfram/phase4_discriminant_checks.wl`. Phase 13's generic root and sensitivity audit is encoded in `wolfram/phase13_full_structure_proof.wl`.
 
 ## Primary outcomes
 
-For each controlled cell we compute or audit:
+For each controlled cell or analytic coordinate domain we compute or audit:
 
 - empirical optimal step size `eta_star`,
 - cubic-law contraction factor `rho_star`,
@@ -192,7 +242,8 @@ For each controlled cell we compute or audit:
 - full-heterogeneity regularity feasibility,
 - inherited cubic coordinates `K1` and `K2`,
 - exact mismatch gap `K1-K2`,
-- cubic discriminant and selected-root sensitivity.
+- generic cubic discriminant/root-location structure,
+- analytic selected-root sensitivity with respect to `K1`.
 
 ## Minimal reproducible run
 
@@ -209,6 +260,9 @@ python scripts/analyze_phase4.py
 python scripts/analyze_phase11.py
 python scripts/analyze_phase12.py
 python scripts/build_paper_assets.py
+
+# optional independent symbolic engine
+wolframscript -file wolfram/phase13_full_structure_proof.wl
 ```
 
 ## Research questions
@@ -219,10 +273,10 @@ python scripts/build_paper_assets.py
 4. Which full-heterogeneity cells are excluded by local regularity `mu_i <= L_i`?
 5. Why does aligned proportional heterogeneity leave the inherited cubic unchanged?
 6. Can `K1-K2` be interpreted as the sufficient mismatch coordinate at fixed average conditioning?
-7. Can positivity of `d rho_star/dK1` be proved over the full admissible domain?
-8. Does the full-heterogeneity cubic discriminant admit a tractable symbolic positivity certificate?
-9. Has an equivalent mismatch/weighted-variance characterization already appeared in distributed-optimization literature?
-10. Which Phase 11–12 claims are strong enough to promote into the final manuscript after symbolic and literature review?
+7. What generic root structure makes the largest-root sensitivity analytically positive?
+8. Has an equivalent mismatch/weighted-variance characterization already appeared in distributed-optimization literature?
+9. Is the Phase 13 conditional analytic result novel relative to prior EF21/error-feedback theory?
+10. Which Phase 11–13 findings should be promoted into the final manuscript after the literature audit?
 
 ## Provenance
 

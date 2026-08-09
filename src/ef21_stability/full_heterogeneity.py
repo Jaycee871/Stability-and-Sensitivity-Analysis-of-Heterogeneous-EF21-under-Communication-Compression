@@ -101,13 +101,27 @@ def cubic_coefficients_full(config: FullHeterogeneityConfig) -> np.ndarray:
 def optimal_contraction_factor_full(
     config: FullHeterogeneityConfig, tol: float = 1e-8
 ) -> float:
+    """Return the largest real root of the inherited empirical cubic.
+
+    Phase 13 proves that every real root lies in (0,1) on the admissible
+    controlled domain with kappa_bar>1. The implementation therefore follows
+    the Empirical Law 4.3 wording directly: select the largest real root first,
+    then validate that selected root lies in the contraction interval instead
+    of silently discarding real roots outside it.
+    """
     coeffs = cubic_coefficients_full(config)
     roots = np.roots(coeffs)
     real = roots[np.abs(roots.imag) <= tol].real
-    valid = real[(real >= -tol) & (real <= 1.0 + tol)]
-    if len(valid) == 0:
-        raise RuntimeError(f"no admissible real root for config={config!r}; roots={roots!r}")
-    return float(np.max(valid))
+    if len(real) == 0:
+        raise RuntimeError(f"no real root for config={config!r}; roots={roots!r}")
+
+    rho = float(np.max(real))
+    if not (-tol <= rho <= 1.0 + tol):
+        raise RuntimeError(
+            "largest real empirical-cubic root lies outside the contraction interval: "
+            f"config={config!r}; largest_real_root={rho!r}; roots={roots!r}"
+        )
+    return rho
 
 
 def analyze_full_config(config: FullHeterogeneityConfig) -> dict[str, float]:
