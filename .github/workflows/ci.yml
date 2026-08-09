@@ -47,6 +47,16 @@ jobs:
         with:
           name: phase5-paper-assets
           path: /tmp/paper-assets
+      - name: Phase 8 MDPI submission package build
+        run: >-
+          python scripts/build_submission_package.py
+          --output-dir /tmp/mdpi-submission-package
+          --paper-assets-dir /tmp/paper-assets
+      - name: Upload Phase 8 MDPI submission package
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8-mdpi-submission-package
+          path: /tmp/mdpi-submission-package
       - name: Hugging Face authentication check
         env:
           HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}
