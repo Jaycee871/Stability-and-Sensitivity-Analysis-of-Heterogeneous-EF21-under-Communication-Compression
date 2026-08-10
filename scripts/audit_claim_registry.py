@@ -100,9 +100,10 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines = [
         "# Claim-to-Evidence Matrix",
         "",
+        f"Registry version: **{report['registry_version']}**  ",
         f"Verified claims: **{report['claims_passed']}/{report['claims_total']}**",
         "",
-        "This audit links manuscript-level claims to version-controlled evidence. It does not upgrade computational observations into theorems; each row retains its scope guardrail.",
+        "This audit links manuscript-level claims to version-controlled evidence. It does not upgrade computational observations into theorems or turn scoped literature closure into universal novelty; each row retains its own evidence level and guardrail.",
         "",
         "| ID | Evidence level | Claim | Evidence | Guardrail |",
         "|---|---|---|---|---|",
@@ -121,10 +122,16 @@ def render_markdown(report: dict[str, Any]) -> str:
             "",
             "## Interpretation hierarchy",
             "",
-            "- **Inherited-literature** claims reproduce or parameterize statements from the cited source paper and must retain the original empirical/theoretical status.",
-            "- **Computational** claims are tied to audited finite grids, bisection procedures, or deterministic off-grid stress tests.",
-            "- **Analytic-symbolic** claims follow from exact symbolic factorization for the explicitly tested fixed-conditioning strata.",
-            "- No row in this registry is permission to claim a general proof of Empirical Law 4.3 or a method-agnostic communication-complexity theorem.",
+            "- **Inherited-literature** claims reproduce, quote, or parameterize statements/objects from the cited source paper and must retain the original empirical/theoretical status.",
+            "- **Algebraic-inherited-interpretation** claims expose an exact equivalent representation of inherited quantities; explanatory value is not theorem-level novelty.",
+            "- **Algebraic-controlled** claims are exact consequences of the project's fixed-average n=2 parameterization applied to the inherited cubic coefficients.",
+            "- **Computational** and **computational-full-regularity** claims are tied to explicit finite grids, bisection procedures, or generated cells.",
+            "- **Computational-robustness** claims are deterministic off-grid stress tests and remain numerical evidence.",
+            "- **Analytic-symbolic-fixed-strata** claims are exact symbolic statements restricted to the listed conditioning strata.",
+            "- **Analytic-symbolic-generic-cubic** claims are exact statements on the stated generic `(s,K1,K2)` domain of the inherited cubic, not proofs of the empirical law itself.",
+            "- **Analytic-symbolic-controlled-consequence** claims combine the generic cubic certificate with the controlled mismatch factorization and remain restricted to inherited n=2 Empirical Law 4.3.",
+            "- **Literature-audit** claims record the scope and outcome of primary-source checks; a closed named chain is not universal proof of bibliographic novelty.",
+            "- No row in this registry is permission to claim a general proof of Empirical Law 4.3, a method-agnostic communication-complexity theorem, or absolute bibliographic precedence.",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -133,7 +140,7 @@ def render_markdown(report: dict[str, Any]) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--registry", type=Path, default=Path("claims/claim_registry.json"))
-    parser.add_argument("--output-json", type=Path, default=Path("results/phase9_claim_audit.json"))
+    parser.add_argument("--output-json", type=Path, default=Path("results/phase21_claim_audit.json"))
     parser.add_argument("--output-md", type=Path, default=Path("docs/claim_evidence_matrix.md"))
     args = parser.parse_args()
 
@@ -148,6 +155,7 @@ def main() -> None:
     md_path.write_text(render_markdown(report), encoding="utf-8")
 
     print(json.dumps({
+        "registry_version": report["registry_version"],
         "claims_total": report["claims_total"],
         "claims_passed": report["claims_passed"],
         "all_claims_verified": report["all_claims_verified"],
