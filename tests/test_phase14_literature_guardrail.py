@@ -20,15 +20,35 @@ class Phase14LiteratureGuardrailTests(unittest.TestCase):
             )
         )
 
-    def test_pending_matrix_is_valid_but_not_novelty_evidence(self) -> None:
+    def _synthetic_pending_payload(self) -> dict:
+        payload = json.loads(json.dumps(self.payload))
+        payload["status"] = "PENDING_EXTERNAL_AUDIT"
+        payload["candidates"] = []
+        for claim in payload["claims"].values():
+            claim["status"] = "PENDING_EXTERNAL_AUDIT"
+            claim["strongest_candidate_id"] = None
+            claim["manual_equivalence_verified"] = False
+        return payload
+
+    def test_current_matrix_is_a_valid_post_search_guardrail_state(self) -> None:
         report = MODULE.validate(self.payload)
+        self.assertTrue(report["valid"])
+        self.assertEqual(
+            report["status"], "PARTIAL_EXTERNAL_AUDIT_N1_N2_ADJUDICATED"
+        )
+        self.assertEqual(report["candidate_count"], 7)
+        self.assertIn("source adjudication", report["interpretation"])
+
+    def test_synthetic_pending_matrix_is_valid_but_not_novelty_evidence(self) -> None:
+        payload = self._synthetic_pending_payload()
+        report = MODULE.validate(payload)
         self.assertTrue(report["valid"])
         self.assertEqual(report["status"], "PENDING_EXTERNAL_AUDIT")
         self.assertEqual(report["candidate_count"], 0)
         self.assertIn("not evidence", report["interpretation"])
 
     def test_claim_cannot_be_promoted_while_overall_audit_is_pending(self) -> None:
-        payload = json.loads(json.dumps(self.payload))
+        payload = self._synthetic_pending_payload()
         payload["claims"]["N1"]["status"] = "CLEAR_TO_PROMOTE"
         report = MODULE.validate(payload)
         self.assertFalse(report["valid"])
@@ -37,7 +57,7 @@ class Phase14LiteratureGuardrailTests(unittest.TestCase):
         )
 
     def test_direct_candidate_requires_manual_source_check_before_promotion(self) -> None:
-        payload = json.loads(json.dumps(self.payload))
+        payload = self._synthetic_pending_payload()
         payload["status"] = "EXTERNAL_SEARCH_COMPLETE"
         required = payload["required_candidate_fields"]
         candidate = {field: "unknown" for field in required}
@@ -64,7 +84,7 @@ class Phase14LiteratureGuardrailTests(unittest.TestCase):
                 "confidence": "medium",
                 "novelty_threat": "critical",
                 "manual_source_checked": False,
-                "notes": "test candidate"
+                "notes": "test candidate",
             }
         )
         payload["candidates"] = [candidate]
