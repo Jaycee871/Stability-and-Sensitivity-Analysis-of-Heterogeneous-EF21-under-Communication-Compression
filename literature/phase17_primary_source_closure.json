@@ -1,0 +1,176 @@
+{
+  "phase": 17,
+  "study": "primary_source_reference_closure",
+  "scope": "Named EF/error-feedback citation chain identified by the source paper and the Phase 16 cross-model audit",
+  "status": "NAMED_REFERENCE_CHAIN_CLOSED",
+  "universal_novelty_certified": false,
+  "manuscript_gate": {
+    "scoped_contribution_wording": "ALLOWED",
+    "absolute_novelty_wording": "BLOCKED",
+    "allowed_examples": [
+      "we derive an explicit fixed-average factorization",
+      "we show that proportional regularity heterogeneity leaves the inherited cubic unchanged",
+      "we establish a conditional largest-root sensitivity result for the inherited cubic"
+    ],
+    "blocked_terms": ["first", "novel", "for the first time", "no prior work"]
+  },
+  "claims": {
+    "N1a": {
+      "status": "INHERITED_ALGEBRAIC_REINTERPRETATION_NO_NOVELTY",
+      "summary": "K1-K2 = Var_w(q_i) is an exact rewrite of inherited Empirical Law 4.3 coefficients."
+    },
+    "N1b": {
+      "status": "READY_FOR_SCOPED_CONTRIBUTION_WORDING",
+      "summary": "The fixed-(L_bar,mu_bar) factorization in (kappa_bar,tau_L,tau_mu), including the (tau_L-tau_mu)^2 factor, has no equivalent in the closed named source chain."
+    },
+    "N2": {
+      "status": "READY_FOR_SCOPED_CONTRIBUTION_WORDING",
+      "summary": "No named source-chain paper states an equivalent proportional-heterogeneity invariance for the inherited cubic."
+    },
+    "N3": {
+      "status": "READY_FOR_SCOPED_CONTRIBUTION_WORDING_WITH_METHOD_PRIOR_ART",
+      "summary": "No named source-chain paper proves d rho*/dK1 > 0 for this inherited cubic coordinate. Generic root/spectral monotonicity techniques are prior art and must not be claimed as new."
+    },
+    "N4": {
+      "status": "READY_FOR_SCOPED_CONTRIBUTION_WORDING_WITH_METHOD_PRIOR_ART",
+      "summary": "No named source-chain paper supplies the generic discriminant/root-location certificate for Empirical Law 4.3. Polynomial root-location techniques themselves are not claimed as new."
+    }
+  },
+  "sources": [
+    {
+      "id": "S01_Tho26",
+      "citation": "Thomsen, Taylor, Dieuleveut (2026), A Tight Theory of Error Feedback Algorithms in Distributed Optimization, arXiv:2605.31594",
+      "role": "ANCHOR",
+      "primary_source_checked": true,
+      "evidence_location": "Introduction/Table 1; Empirical Law 4.3; Appendix B.3",
+      "regularity_structure": "Simultaneous local L_i and mu_i appear in the inherited n=2 empirical law.",
+      "overlap": "Defines K1, K2, and the cubic; does not provide the Phase 12 fixed-average factorization or Phase 13 generic root-sensitivity certificate.",
+      "classification": "ANCHOR"
+    },
+    {
+      "id": "S02_Zheng19",
+      "citation": "Zheng, Huang, Kwok (2019), Communication-Efficient Distributed Blockwise Momentum SGD with Error-Feedback, arXiv:1905.10936",
+      "role": "RELATED_EF_VARIANT",
+      "primary_source_checked": true,
+      "evidence_location": "Section 3.1, Assumptions 1-3",
+      "regularity_structure": "Nonconvex distributed SGD; Assumption 1 uses a single global L-smooth objective F and no local strong-convexity constants mu_i.",
+      "overlap": "No simultaneous local (L_i,mu_i) regularity mismatch, no K1/K2 cubic, no N1b-N4 equivalent.",
+      "classification": "D"
+    },
+    {
+      "id": "S03_LiLi22",
+      "citation": "Li and Li (2022/2023), Analysis of Error Feedback in Federated Non-Convex Optimization with Biased Compression, arXiv:2211.14292 / ICML 2023",
+      "role": "RELATED_FEDERATED_EF",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract and problem scope",
+      "regularity_structure": "Nonconvex federated optimization with data heterogeneity and partial participation; no simultaneous local strong-convexity constants mu_i.",
+      "overlap": "Data heterogeneity/stale error compensation, not paired local regularity mismatch or cubic root structure.",
+      "classification": "D"
+    },
+    {
+      "id": "S04_Tang21",
+      "citation": "Tang, Li, Liu, Yan (2021), ErrorCompensatedX: error compensation for variance reduced algorithms, arXiv:2108.02102",
+      "role": "RELATED_ERROR_COMPENSATION",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract and main algorithmic scope",
+      "regularity_structure": "Variance-reduced distributed learning/error compensation; the variance object is stochastic-gradient history rather than local regularity dispersion.",
+      "overlap": "No K1/K2, no fixed-average (L_i,mu_i) factorization, no inherited cubic sensitivity result.",
+      "classification": "D"
+    },
+    {
+      "id": "S05_Fat23",
+      "citation": "Fatkhullin, Tyurin, Richtarik (2023), Momentum Provably Improves Error Feedback!, arXiv:2305.15155",
+      "role": "RELATED_EF21_STOCHASTIC",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract/problem regime",
+      "regularity_structure": "Canonical stochastic nonconvex setting with smoothness and bounded variance assumptions; no simultaneous local mu_i regularity family.",
+      "overlap": "Momentum/sample-complexity contribution, not N1b-N4 structure.",
+      "classification": "D"
+    },
+    {
+      "id": "S06_Con22",
+      "citation": "Condat, Yi, Richtarik (2022), EF-BV: A Unified Theory of Error Feedback and Variance Reduction Mechanisms for Biased and Unbiased Compression in Distributed Optimization, arXiv:2205.04180",
+      "role": "RELATED_EF21_FRAMEWORK",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract/main framework",
+      "regularity_structure": "Unifies biased/unbiased compressor parameters and variance reduction; its variance parameters belong to the compressor/randomness mechanism.",
+      "overlap": "No weighted variance of q_i=(L_i-mu_i)/(L_i+mu_i), no aligned regularity invariance, no Empirical-Law-4.3 cubic analysis.",
+      "classification": "C"
+    },
+    {
+      "id": "S07_Fat25",
+      "citation": "Fatkhullin, Sokolov, Gorbunov, Li, Richtarik (2025), EF21 with Bells & Whistles: Six Algorithmic Extensions of Modern Error Feedback, JMLR 26(189), arXiv:2110.03294",
+      "role": "RELATED_EF21_EXTENSIONS",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract and EF21 extension scope",
+      "regularity_structure": "Smooth nonconvex and PL regimes supporting partial participation, stochastic approximation, variance reduction, proximal, momentum, and bidirectional compression; no paired local mu_i regularity mismatch coordinate identified.",
+      "overlap": "Algorithmic extensions and rate bounds, not N1b-N4.",
+      "classification": "C"
+    },
+    {
+      "id": "S08_EControl23",
+      "citation": "Gao, Islamov, Stich (2023), EControl: Fast Distributed Optimization with Compression and Error Control, arXiv:2311.05645",
+      "role": "IMPORTANT_NEAR_NEIGHBOR",
+      "primary_source_checked": true,
+      "evidence_location": "Section 3, Assumptions 1-2, equations (3)-(4)",
+      "regularity_structure": "Allows local smoothness constants L_i, but strong convexity is imposed only on the average objective f with a single global mu; individual f_i may even be nonconvex.",
+      "overlap": "Strong evidence that EControl does not instantiate simultaneous local (L_i,mu_i) regularity heterogeneity required for N1b-N2.",
+      "classification": "C"
+    },
+    {
+      "id": "S09_Grunt25",
+      "citation": "Gruntkowska, Gaponov, Tovmasyan, Richtarik (2025/2026), Error Feedback for Muon and Friends, arXiv:2510.00643 / ICLR 2026",
+      "role": "RELATED_NON_EUCLIDEAN_EF21",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract/theory scope",
+      "regularity_structure": "Non-Euclidean smooth and (L0,L1)-smooth regimes, including layer-wise generalized smoothness; not simultaneous Euclidean local (L_i,mu_i) strong-convexity heterogeneity.",
+      "overlap": "Different geometry and optimizer family; no N1b-N4 equivalent.",
+      "classification": "D"
+    },
+    {
+      "id": "S10_Egger25",
+      "citation": "Egger, Bitar, Wachter-Zeh, Weinberger, Gunduz (2025), BICompFL: Stochastic Federated Learning with Bi-Directional Compression, arXiv:2502.00206",
+      "role": "RELATED_BIDIRECTIONAL_COMPRESSION",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract/theoretical scope",
+      "regularity_structure": "Stochastic/Bayesian federated learning and communication-cost analysis; not EF21 local regularity-parameter heterogeneity.",
+      "overlap": "No K1/K2 or cubic regularity-mismatch structure.",
+      "classification": "D"
+    },
+    {
+      "id": "S11_Redie26",
+      "citation": "Redie, Arablouei, Werner (2026), SA-PEF: Step-Ahead Partial Error Feedback for Efficient Federated Learning, arXiv:2601.20738 / TMLR 2026",
+      "role": "RELATED_FEDERATED_EF",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract/main guarantee",
+      "regularity_structure": "Nonconvex objectives, data heterogeneity, partial participation, and a residual contraction factor controlled by a step-ahead parameter; no local strong-convexity family mu_i.",
+      "overlap": "Its rho_r is a residual recursion quantity, not the inherited Empirical Law 4.3 largest cubic root rho_star.",
+      "classification": "D"
+    },
+    {
+      "id": "S12_Tian26",
+      "citation": "Tian, Li, Liu, Shi (2026), EF21-RR: Fast O(1/T) rate for non-convex federated optimization with error feedback, Automatica 183:112655",
+      "role": "RELATED_EF21_RANDOM_RESHUFFLING",
+      "primary_source_checked": true,
+      "evidence_location": "Abstract, introduction, main nonconvex/PL results",
+      "regularity_structure": "Nonconvex stochastic federated optimization with a global PL extension; no simultaneous local (L_i,mu_i) regularity family.",
+      "overlap": "Rate/sample-efficiency result, not N1b-N4 algebraic or cubic-root prior art.",
+      "classification": "D"
+    }
+  ],
+  "closure_result": {
+    "named_sources_checked": 12,
+    "direct_equivalents_to_N1b_N4": 0,
+    "anchor_count": 1,
+    "class_C_count": 3,
+    "class_D_count": 8,
+    "interpretation": "The named source-paper citation chain no longer contains an unresolved candidate that matches N1b-N4 at the stated theorem/equation level. This is not a proof of universal novelty outside the named chain."
+  },
+  "remaining_guardrails": [
+    "Treat N1a as inherited algebraic interpretation only.",
+    "Cite Thomsen-Taylor-Dieuleveut as the source of K1, K2, and the cubic.",
+    "Do not claim root-location, Jury/Routh, discriminant, or implicit-function techniques themselves are new.",
+    "Do not use first/novel/no-prior-work language without a stronger bibliographic claim audit.",
+    "The quarantined cross-model [[ef21-stability-analysis]] reference remains unusable until a concrete source is located."
+  ]
+}
