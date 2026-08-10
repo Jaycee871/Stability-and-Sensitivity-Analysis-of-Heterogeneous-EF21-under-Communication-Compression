@@ -25,6 +25,8 @@ class PaperAssetTests(unittest.TestCase):
                     "11",
                     "--epsilon-points",
                     "9",
+                    "--phase19-points",
+                    "11",
                 ],
                 cwd=ROOT,
                 check=True,
@@ -33,18 +35,23 @@ class PaperAssetTests(unittest.TestCase):
             )
 
             manifest = json.loads((output / "manifest.json").read_text())
-            self.assertEqual(manifest["study"], "phase5_paper_assets")
-            self.assertEqual(manifest["grid"]["total_cells"], 11 * 9 * 3)
-            self.assertEqual(len(manifest["figures"]), 6)
+            self.assertEqual(manifest["study"], "phase20_integrated_paper_assets")
+            self.assertEqual(manifest["baseline_grid"]["total_cells"], 11 * 9 * 3)
+            self.assertEqual(manifest["full_regularity_grid"]["tau_L_points"], 11)
+            self.assertEqual(len(manifest["figures"]), 9)
 
-            for filename in manifest["figures"]:
-                path = output / "figures" / filename
-                self.assertTrue(path.exists(), filename)
-                self.assertGreater(path.stat().st_size, 100, filename)
+            for relative in manifest["figures"]:
+                path = output / relative
+                self.assertTrue(path.exists(), relative)
+                self.assertGreater(path.stat().st_size, 100, relative)
 
-            table = output / "tables" / manifest["table"]
+            table = output / manifest["table"]
             self.assertTrue(table.exists())
             self.assertGreater(table.stat().st_size, 100)
+
+            full_data = output / manifest["full_regularity_data"]
+            self.assertTrue(full_data.exists())
+            self.assertGreater(full_data.stat().st_size, 100)
 
             boundaries = manifest["continuous_99pct_boundaries_at_epsilon_095"]
             self.assertAlmostEqual(
