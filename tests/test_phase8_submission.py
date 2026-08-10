@@ -19,7 +19,7 @@ class Phase8SubmissionTests(unittest.TestCase):
     def test_citations_are_resolved(self) -> None:
         manuscript = MODULE.build_manuscript()
         self.assertNotIn("[@", manuscript)
-        for number in range(1, 8):
+        for number in range(1, 11):
             self.assertIn(f"{number}.", manuscript)
 
     def test_required_sections_present(self) -> None:
@@ -28,7 +28,7 @@ class Phase8SubmissionTests(unittest.TestCase):
             "## Abstract",
             "## 1. Introduction",
             "## 3. Methods",
-            "### 3.8 AI-assisted research workflow",
+            "### 3.9 AI-assisted research workflow",
             "## 4. Results",
             "## 5. Discussion",
             "## 6. Limitations",
