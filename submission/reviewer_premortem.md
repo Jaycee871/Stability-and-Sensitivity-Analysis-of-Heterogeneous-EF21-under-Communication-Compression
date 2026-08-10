@@ -1,139 +1,195 @@
-# Phase 10 — Reviewer Pre-Mortem
+# Phase 22 — Reviewer Pre-Mortem 2.0
 
-This document anticipates likely technical and editorial objections before submission. It is not a rebuttal letter; it is a quality-control checklist for strengthening the manuscript without broadening the research scope.
+This document anticipates the strongest technical, methodological, and editorial objections to the current full-regularity manuscript. It is not a rebuttal letter. It is an adversarial quality-control layer: every prepared response must remain within the evidence level registered in `claims/claim_registry.json`.
 
-## 1. “Is this only a reproduction paper?”
+## 1. “Is this still only a reproduction paper?”
 
-**Risk:** The source cubic law is inherited from Thomsen, Taylor, and Dieuleveut, so a reviewer may question novelty.
+**Risk:** The cubic, `K1`, `K2`, and the empirical optimal step size all originate in Thomsen, Taylor, and Dieuleveut.
 
-**Prepared response:** The reproduction is the validated starting point, not the manuscript contribution. The extension introduces a controlled fixed-average heterogeneity path, maps the joint `(tau, epsilon, kappa_bar)` response over 216,027 configurations, defines contraction-margin retention, constructs operating boundaries, stress-tests those boundaries off-grid and under resolution refinement, and adds an independent fixed-stratum symbolic root-structure result. None of those outputs is the original six-claim reproduction itself.
+**Prepared response:** Yes, the inherited empirical law is the starting object, and the manuscript says so explicitly. The extension is the controlled characterization around that object: the equal-smoothness compression–heterogeneity baseline, the full `(tau_L,tau_mu)` fixed-average parameterization, the exact mismatch factorization, aligned-path invariance, generic inherited-cubic root localization and sensitivity, and reproducible publication figures. The manuscript never relabels the source cubic as its own theorem.
 
-**Evidence:** C01–C08 in `claims/claim_registry.json`; `docs/phase2_findings.md` through `docs/phase5_manuscript_plan.md`.
+**Evidence:** C01–C18 in `claims/claim_registry.json`; especially C09 and C11–C17.
 
-**Manuscript firewall:** Always describe the cubic and empirical optimal step size as **inherited**. Describe the controlled parameterization, retention analysis, robustness audit, and symbolic fixed-stratum result as the extension.
-
----
-
-## 2. “Why analyze an empirical law instead of proving it?”
-
-**Risk:** A mathematically oriented reviewer may ask for a proof of Empirical Law 4.3.
-
-**Prepared response:** The source paper itself labels the general heterogeneous two-agent result empirical. The present study deliberately addresses a different question: conditional mathematical/computational characterization of that inherited law. This is analogous to sensitivity analysis of a validated model: the conclusions are explicitly conditional on the inherited cubic characterization. A full proof would be a different and substantially larger project.
-
-**Evidence:** C09; source-paper citation `thomsen2026tight`.
-
-**Manuscript firewall:** Never use “prove Empirical Law 4.3,” “establish the heterogeneous EF21 theorem,” or equivalent language.
+**Firewall:** The words **inherited**, **Empirical Law 4.3**, and the conditional scope must remain visible wherever the cubic is interpreted.
 
 ---
 
-## 3. “Why only two agents?”
+## 2. “Is `K1-K2 = Var_w(q_i)` merely elementary algebra?”
+
+**Risk:** A reviewer may correctly observe that the weighted-variance identity follows immediately from the source definitions of `K1` and `K2`.
+
+**Prepared response:** Correct. The manuscript explicitly classifies this as an **inherited algebraic reinterpretation**, not a theorem-level contribution. Its purpose is explanatory: it identifies `K1` as a weighted second moment and `K2` as the squared weighted mean of the local condition-shape coordinate. The scoped structural contribution begins with the fixed-average factorization in `(kappa_bar,tau_L,tau_mu)`, not with the variance identity itself.
+
+**Evidence:** C12; `literature/phase17_primary_source_closure.json` → `claims.N1a.status`.
+
+**Firewall:** Never write that the project “introduces a new variance measure” or that N1a itself is novel.
+
+---
+
+## 3. “Is the `(tau_L-tau_mu)^2` factorization mathematically deep enough?”
+
+**Risk:** The exact factorization may be viewed as a change of variables rather than a stand-alone theoretical breakthrough.
+
+**Prepared response:** The paper does not sell the factorization in isolation. Its value is the structural chain it unlocks under a controlled experimental design: fixed arithmetic means make the empirical step size and `K2` invariant; the remaining coefficient dependence is a nonnegative mismatch gap; the gap vanishes exactly on proportional regularity scaling; and the generic cubic sensitivity converts that algebraic gap into an ordered rate consequence. The contribution is the combined controlled characterization, not the complexity of one algebraic manipulation.
+
+**Evidence:** C11, C13, C14, C16, C17.
+
+**Firewall:** Use “derive,” “factor,” and “show,” not claims of a new general optimization theorem.
+
+---
+
+## 4. “Why analyze an empirical law instead of proving Empirical Law 4.3 itself?”
+
+**Risk:** A mathematically oriented reviewer may demand proof of the source empirical law.
+
+**Prepared response:** The study deliberately solves a different problem: conditional structural and sensitivity analysis of the inherited cubic. Phase 13 proves exact algebraic and root-structure consequences **if that inherited cubic is taken as the object being characterized**. A proof that the cubic equals the true worst-case EF21 convergence factor for every heterogeneous problem would require a separate PEP/interpolation or Lyapunov argument and is outside the scope claimed here.
+
+**Evidence:** C09, C15–C17; `results/phase13_symbolic_certificate.json` guardrail.
+
+**Firewall:** Never say “we prove Empirical Law 4.3” or “we establish the heterogeneous EF21 convergence theorem.”
+
+---
+
+## 5. “Why only two agents?”
 
 **Risk:** Limited external validity.
 
-**Prepared response:** The two-agent restriction is structural rather than arbitrary: Empirical Law 4.3 supplies the explicit cubic only for `n=2`. The study intentionally avoids replacing a well-defined inherited object with an unsupported extrapolation to larger `n`. The two-agent setting is used as a controlled laboratory for separating compression, average conditioning, and local-curvature imbalance.
+**Prepared response:** The two-agent restriction is inherited from the explicit empirical cubic being studied. The manuscript chooses a well-defined `n=2` mathematical object rather than extrapolating unsupported formulas to arbitrary worker count. Related PEP symmetry work motivates why low-agent cases can reveal structure, but it does not authorize generalization of the present cubic.
 
-**Evidence:** Methods Section 3.1; C09.
+**Evidence:** C09, C14–C17; Methods §2.2 and §3.5.
 
-**Limitation to retain:** No claims about arbitrary worker count.
-
----
-
-## 4. “Why set `L1=L2=1`?”
-
-**Risk:** Reviewer may view equal smoothness scales as overly restrictive.
-
-**Prepared response:** Fixing `L1=L2` and normalizing the common scale isolates heterogeneity in strong convexity while avoiding simultaneous changes in scale and average conditioning. Scale invariance was independently checked, so `L=1` is a normalization rather than a hidden performance assumption. The purpose is controlled attribution, not maximal parameter coverage.
-
-**Evidence:** Phase 1 scale-invariance tests; Phase 4 Wolfram scale-invariance result.
-
-**Limitation to retain:** The conclusions do not cover independent heterogeneity in both `L_i` and `mu_i`.
+**Limitation:** No arbitrary-`n` claim.
 
 ---
 
-## 5. “Is ‘stability analysis’ the correct term?”
+## 6. “Does the full-regularity grid include impossible local objectives?”
 
-**Risk:** In control/dynamical-systems language, “stability” can imply a Lyapunov or asymptotic-stability theorem.
+**Risk:** Independent variation of `tau_L` and `tau_mu` can create `mu_i>L_i`.
 
-**Prepared response:** Here “stability” refers to the robustness and parameter sensitivity of the inherited contraction-rate characterization: root admissibility, contraction-margin loss, operating-boundary stability under grid refinement, and absence of root-collision transitions on the tested fixed-conditioning domains. The manuscript does **not** claim a new Lyapunov-stability theorem for EF21.
+**Prepared response:** Such cells are explicitly excluded. The full audit requests `273,885` cells and retains `258,400` that satisfy `0<mu_i<=L_i`; `15,485` invalid regularity cells are masked rather than coerced. The figures preserve the mask.
 
-**Action:** Keep the terminology definition in `manuscript/terminology_guardrails.md` available for Introduction/Methods wording during final template transfer.
+**Evidence:** C10; `results/phase12_summary.json`.
 
----
-
-## 6. “Why choose 99% contraction-margin retention?”
-
-**Risk:** The threshold can appear arbitrary.
-
-**Prepared response:** Ninety-nine percent is an interpretable high-retention operating criterion, not a theoretically privileged constant. The repository also evaluates 98% and 95% targets, showing how the boundary changes as the decision tolerance is relaxed. The main text uses 99% because it exposes the interaction clearly while retaining a simple operational interpretation.
-
-**Evidence:** `results/phase3_summary.json`, `retention_targets=[0.99,0.98,0.95]`.
-
-**Manuscript firewall:** Call it a **chosen operating criterion**, never a universal stability threshold.
+**Firewall:** Never interpolate a scientific conclusion through the masked region as though it were admissible.
 
 ---
 
-## 7. “Why does worse conditioning appear more robust to heterogeneity?”
+## 7. “Why retain the old `L1=L2` baseline after introducing full regularity?”
 
-**Risk:** Misinterpretation of the small normalized penalty at `kappa_bar=100`.
+**Risk:** The manuscript may look like two unrelated studies.
 
-**Prepared response:** It is not more robust in an absolute convergence sense. Every audited cell in that stratum already has `rho_star>=0.95`, and about 63.5% have `rho_star>=0.99`. The baseline has little contraction margin left to lose, so the incremental relative heterogeneity effect appears small.
+**Prepared response:** The equal-smoothness stage is the controlled baseline that first separates strong-convexity heterogeneity from average conditioning and quantifies the compression interaction. The full-regularity stage then asks what changes when smoothness heterogeneity is released. The second stage explains the first: the equal-smoothness path is one particular mismatch trajectory inside the larger `(tau_L,tau_mu)` surface.
 
-**Evidence:** C04.
+**Evidence:** C01–C06 and C10–C17; Results §4.1–§4.9.
 
-**Manuscript firewall:** Never equate smaller heterogeneity penalty with faster convergence.
-
----
-
-## 8. “Have you proved monotonicity in heterogeneity or compression?”
-
-**Risk:** Dense plots can tempt stronger wording than the evidence supports.
-
-**Prepared response:** No. The manuscript reports monotone behavior on the audited regular grid and deterministic off-grid paired stress tests under a stated numerical tolerance. The `kappa_bar=100` off-grid compression audit even preserves a small positive ordering residual of about `3.7e-10`, below the `1e-9` interpretation tolerance, rather than concealing it.
-
-**Evidence:** C06; `results/phase4_summary.json`.
-
-**Manuscript firewall:** Use “across the audited grid,” “within numerical tolerance,” and “off-grid checks support,” not “globally monotone.”
+**Action:** Preserve the narrative transition from “heterogeneity magnitude” to “regularity mismatch.”
 
 ---
 
-## 9. “What does the positive discriminant actually add?”
+## 8. “Is Figure 8 just a tautological replot?”
 
-**Risk:** Reviewer may see the Wolfram result as decorative algebra.
+**Risk:** Because `K2` is fixed and `K1-K2` determines `K1`, plotting rate against the mismatch coordinate may seem predetermined.
 
-**Prepared response:** It excludes root-collision transitions as the mechanism behind the observed sensitivity patterns on each tested fixed-conditioning open domain. Because the discriminant is strictly positive, the cubic stays in a three-distinct-real-root regime; the numerical sensitivity therefore reflects continuous movement of the relevant root rather than a change in root multiplicity.
+**Prepared response:** Figure 8 is not presented as independent proof. It is a publication visualization and regression check of the structural reduction established algebraically. Its scientific role is communicative: thousands of admissible two-dimensional parameter pairs collapse onto the one-dimensional coordinate predicted by the exact coefficient analysis. The proof burden remains on C11–C17, not on the scatter plot.
 
-**Evidence:** C07–C08.
+**Evidence:** C11–C17; `docs/phase19_full_regularity_figures.md`; `tests/test_phase19_figures.py`.
 
-**Manuscript firewall:** The discriminant result characterizes root structure; it does not validate the empirical convergence law itself.
-
----
-
-## 10. “Where is the practical value if there is no large ML benchmark?”
-
-**Risk:** Applied reviewer may request end-to-end training experiments.
-
-**Prepared response:** The study's practical output is a parameter-selection map conditional on an inherited tight-rate model, not a benchmark paper. The retention boundary translates the cubic rate into an interpretable loss-of-margin criterion. Adding a large stochastic training benchmark would introduce optimizer, data, architecture, and noise effects that are outside the controlled question and would not independently validate the worst-case cubic law.
-
-**Limitation to retain:** Do not infer large-scale stochastic ML behavior from the present analysis.
+**Firewall:** Do not describe the visual collapse as an independent theorem or empirical discovery separate from the coefficient reduction.
 
 ---
 
-## 11. “How reproducible are the results?”
+## 9. “Have you proved monotonicity, or only observed it?”
 
-**Prepared response:** All headline numerical statements are regenerated by version-controlled Python, checked in CI, mapped through a nine-claim evidence registry, and packaged with full-resolution figures/tables. The symbolic statements are independently evaluated with Wolfram Language. Hugging Face authentication is available for artifact publication, and OSF archival is planned before final submission.
+**Risk:** The manuscript now contains two different monotonicity evidence levels.
 
-**Evidence:** Phase 8 and Phase 9 CI artifacts; `claims/claim_registry.json`.
+**Prepared response:** They must be distinguished. The original equal-smoothness monotonic patterns are computational observations supported by dense and off-grid tests. The later statement `d rho_star/dK1>0` is an analytic-symbolic result about the inherited cubic on the stated generic shape-coordinate domain. It does **not** prove global monotonicity of EF21 with respect to every raw heterogeneity parameter.
+
+**Evidence:** C06 versus C16–C17.
+
+**Firewall:** Keep “across the audited grid” for baseline raw-parameter trends; reserve the strict derivative statement for the inherited cubic coordinate `K1`.
 
 ---
 
-## 12. “Does the Guest Editor relationship create an editorial conflict?”
+## 10. “Why trust the Wolfram result?”
 
-**Prepared response:** The academic-advisor relationship will be disclosed and independent editorial handling requested. The Guest Editor should not participate in the editorial decision for this manuscript.
+**Risk:** Symbolic computer algebra can hide assumptions or model-generated mistakes.
+
+**Prepared response:** The Wolfram layer is an independent computation engine, not a language-model assertion. The repository preserves the exact `.wl` proof script, machine-readable certificate, Python regression tests, and numerical cross-checks. The proof statement is additionally constrained by explicit domain assumptions (`0<s<1`, `0<K2<=K1<1`) and an evidence registry.
+
+**Evidence:** C15–C17; `wolfram/phase13_full_structure_proof.wl`; `results/phase13_symbolic_certificate.json`; `tests/test_phase13_symbolic_certificate.py`.
+
+**Firewall:** Do not claim that “AI proved” the result. The evidence is the reproducible symbolic computation and the recorded mathematical argument.
+
+---
+
+## 11. “Did the literature audit merely fail to find a counterexample?”
+
+**Risk:** Negative search results can be overstated as universal novelty.
+
+**Prepared response:** The project deliberately does not make a universal novelty claim. Undermind supplied an adversarial shortlist; Claude supplied a second targeted search and exposed remaining coverage gaps; Phase 17 then closed the named source-paper citation chain by primary-source inspection. The recorded result is `NAMED_REFERENCE_CHAIN_CLOSED` with `universal_novelty_certified=false`. This supports scoped contribution wording, not “first” or “no prior work.”
+
+**Evidence:** C18; `literature/phase17_primary_source_closure.json`; Phase 14–17 audit records.
+
+**Firewall:** Absolute bibliographic precedence remains blocked.
+
+---
+
+## 12. “What about prior smoothness-heterogeneity and variance-style EF21 analyses?”
+
+**Risk:** Error Feedback Reloaded already analyzes heterogeneous smoothness and a variance-like smoothness dispersion.
+
+**Prepared response:** It must be cited and positioned. The manuscript does not claim that heterogeneity or variance-style reasoning is absent from EF21 theory. The narrower object here jointly involves local `L_i` and `mu_i`, fixed arithmetic means, the inherited `K1/K2` cubic coordinates, proportional-alignment invariance, and conditional root sensitivity.
+
+**Evidence:** Related Work §2.3; Phase 15–17 literature audit.
+
+**Firewall:** Never write “first variance-based EF21 heterogeneity characterization.”
+
+---
+
+## 13. “Where is the practical value without a large ML benchmark?”
+
+**Risk:** Applied reviewers may request end-to-end training experiments.
+
+**Prepared response:** The paper is a controlled mathematical/computational characterization, not an empirical benchmark study. Its practical outputs are sensitivity maps, contraction-margin retention, admissibility masks, and a structural distinction between aligned heterogeneity and mismatch. A stochastic large-scale benchmark would add optimizer/data/architecture effects that do not independently validate the inherited worst-case cubic.
+
+**Limitation:** Do not infer large-scale stochastic ML behavior from this study.
+
+---
+
+## 14. “How reproducible is a study built with multiple AI systems?”
+
+**Risk:** A reviewer may worry that results depend on opaque model output.
+
+**Prepared response:** AI systems were used for research assistance, search, code drafting/review, and manuscript support, but scientific evidence is version-controlled and independently checkable. Numerical results are regenerated by Python and CI; symbolic results are reproduced by Wolfram Language; literature-search outputs are treated as candidate evidence until manually adjudicated against primary sources; the 18-claim registry fails if manuscript anchors or evidence paths drift.
+
+**Evidence:** Phase 21 claim registry; manuscript §3.9; `submission` AI disclosure; GitHub Actions workflow.
+
+**Firewall:** Human authors remain responsible for source verification, code/result review, and the final claims.
+
+---
+
+## 15. “Does the Guest Editor relationship create an editorial conflict?”
+
+**Risk:** The academic-advisor relationship can create an actual or perceived editorial conflict.
+
+**Prepared response:** The relationship is disclosed and independent editorial handling is requested. The Guest Editor should not select reviewers or participate in the editorial decision for the manuscript. If the Guest Editor becomes a co-author, the conflict wording must be revised accordingly while independent handling remains essential.
 
 **Evidence:** `submission/editorial_independence_note.md` and `submission/mdpi_policy_snapshot.md`.
 
 ---
 
+## 16. “Is the OSF record actually frozen and reproducible?”
+
+**Risk:** A repository URL alone is not a permanent research snapshot.
+
+**Prepared response:** Phase 22 creates a deterministic OSF release-candidate bundle with a SHA-256 inventory before any OSF registration/DOI is claimed. The bundle contains source code, tests, committed evidence, Wolfram scripts, literature-audit records, manuscript sources, and submission metadata. The project will not fill the manuscript's permanent archive placeholder until the bundle is uploaded and the resulting OSF identifier is verified.
+
+**Evidence:** `scripts/build_osf_release_candidate.py`; Phase 22 CI artifact; generated `OSF_ARCHIVE_MANIFEST.json`.
+
+**Firewall:** `READY_FOR_OSF_DRAFT_UPLOAD` is not equivalent to “OSF archived,” “registered,” or “DOI assigned.”
+
+---
+
 ## Pre-submission decision rule
 
-A revision should not be accepted merely because it sounds stronger. If it expands a claim beyond the evidence level recorded in `claims/claim_registry.json`, either new evidence must be added and audited or the wording must remain scoped.
+A revision is not accepted merely because it sounds stronger. If wording exceeds the evidence level in Claim Registry v2, either new evidence must be added and audited or the wording must remain scoped. Likewise, an archive is not called permanent until an external OSF identifier exists and has been independently checked.
