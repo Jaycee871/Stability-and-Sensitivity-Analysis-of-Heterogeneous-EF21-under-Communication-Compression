@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "manuscript": "manuscript/draft.md",
   "claims": [
     {
@@ -77,7 +77,7 @@
     {
       "id": "C07",
       "short_claim": "For each tested conditioning stratum, the discriminant factor has a 63-coefficient bivariate polynomial with all coefficients strictly positive.",
-      "evidence_level": "analytic-symbolic",
+      "evidence_level": "analytic-symbolic-fixed-strata",
       "manuscript_match": "63 coefficients",
       "evidence": [
         {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.strata.0.coefficient_count", "expected": 63},
@@ -91,13 +91,13 @@
     },
     {
       "id": "C08",
-      "short_claim": "The inherited cubic has three distinct real roots on each tested open controlled domain.",
-      "evidence_level": "analytic-symbolic",
+      "short_claim": "The inherited cubic has three distinct real roots on each tested open equal-smoothness controlled domain.",
+      "evidence_level": "analytic-symbolic-fixed-strata",
       "manuscript_match": "three distinct real roots",
       "evidence": [
         {"source": "results/phase4_summary.json", "path": "wolfram_symbolic_cross_check.analytic_consequence", "expected_contains": "three distinct real roots"}
       ],
-      "guardrail": "Root-structure statement does not prove Empirical Law 4.3 as a convergence theorem."
+      "guardrail": "Fixed-stratum root-structure statement; it does not prove Empirical Law 4.3 as a convergence theorem."
     },
     {
       "id": "C09",
@@ -108,6 +108,110 @@
         {"source": "manuscript/references.bib", "expected_contains": "A Tight Theory of Error Feedback Algorithms in Distributed Optimization"}
       ],
       "guardrail": "Always cite Thomsen, Taylor, and Dieuleveut and preserve the empirical-law label."
+    },
+    {
+      "id": "C10",
+      "short_claim": "The full-regularity audit requests 273,885 cells and retains 258,400 locally admissible cells.",
+      "evidence_level": "computational-full-regularity",
+      "manuscript_match": "258,400",
+      "evidence": [
+        {"source": "results/phase12_summary.json", "path": "requested_cells", "expected": 273885},
+        {"source": "results/phase12_summary.json", "path": "valid_cells", "expected": 258400},
+        {"source": "results/phase12_summary.json", "path": "invalid_regularity_cells", "expected": 15485}
+      ],
+      "guardrail": "Finite full-regularity grid with invalid mu_i>L_i cells masked; not a continuous-domain census."
+    },
+    {
+      "id": "C11",
+      "short_claim": "At fixed arithmetic means, K2 is invariant and equals ((kappa_bar-1)/(kappa_bar+1))^2.",
+      "evidence_level": "algebraic-controlled",
+      "manuscript_match": "K_2=\\left(\\frac{\\bar\\kappa-1}{\\bar\\kappa+1}\\right)^2",
+      "evidence": [
+        {"source": "results/phase13_symbolic_certificate.json", "path": "structure_certificate.K2_invariant_verified", "expected": true},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "structure_certificate.K2", "expected": "((kappa_bar-1)/(kappa_bar+1))^2"}
+      ],
+      "guardrail": "Exact property of the inherited n=2 cubic under the controlled fixed-average parameterization."
+    },
+    {
+      "id": "C12",
+      "short_claim": "K1-K2 is exactly the Sigma-weighted variance of q_i=(L_i-mu_i)/(L_i+mu_i), but this is an inherited algebraic reinterpretation rather than a novelty claim.",
+      "evidence_level": "algebraic-inherited-interpretation",
+      "manuscript_match": "exact algebraic reinterpretation of the inherited coefficients",
+      "evidence": [
+        {"source": "results/phase12_summary.json", "path": "exact_identities.interpretation", "expected_contains": "Sigma-weighted variance"},
+        {"source": "literature/phase17_primary_source_closure.json", "path": "claims.N1a.status", "expected": "INHERITED_ALGEBRAIC_REINTERPRETATION_NO_NOVELTY"}
+      ],
+      "guardrail": "Do not present the weighted-variance identity itself as a new theorem or new EF21 heterogeneity measure."
+    },
+    {
+      "id": "C13",
+      "short_claim": "The fixed-average mismatch gap has an exact rational factorization whose numerator contains (tau_L-tau_mu)^2.",
+      "evidence_level": "algebraic-controlled",
+      "manuscript_match": "(\\tau_L-\\tau_\\mu)^2",
+      "evidence": [
+        {"source": "results/phase13_symbolic_certificate.json", "path": "structure_certificate.K1_minus_K2_closed_form_verified", "expected": true},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "structure_certificate.K1_minus_K2", "expected_contains": "(tau_L-tau_mu)^2"}
+      ],
+      "guardrail": "Controlled factorization of inherited coefficients; it is not a proof of the underlying Empirical Law 4.3."
+    },
+    {
+      "id": "C14",
+      "short_claim": "The mismatch gap vanishes exactly on tau_L=tau_mu, and the inherited cubic then equals the homogeneous controlled cubic.",
+      "evidence_level": "algebraic-controlled",
+      "manuscript_match": "Proportional heterogeneity is invisible to the inherited cubic",
+      "evidence": [
+        {"source": "results/phase13_symbolic_certificate.json", "path": "structure_certificate.consequence", "expected_contains": "equality exactly when tau_L=tau_mu"},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "controlled_path_consequence.homogeneous_connection", "expected_contains": "inherited cubic equals the homogeneous controlled cubic"}
+      ],
+      "guardrail": "Aligned-path statement is restricted to the inherited two-agent fixed-average cubic and does not generalize to arbitrary EF21 settings."
+    },
+    {
+      "id": "C15",
+      "short_claim": "On the generic shape-coordinate domain, the inherited cubic has three distinct real roots in (0,1) and rho_star>s=sqrt(epsilon).",
+      "evidence_level": "analytic-symbolic-generic-cubic",
+      "manuscript_match": "all three roots are distinct and lie in `(0,1)`",
+      "evidence": [
+        {"source": "results/phase13_symbolic_certificate.json", "path": "generic_root_certificate.discriminant_nonpositive_feasible", "expected": false},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "generic_root_certificate.nonpositive_root_feasible", "expected": false},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "generic_root_certificate.root_at_or_above_one_feasible", "expected": false},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "generic_root_certificate.root_consequence", "expected_contains": "largest root rho_star satisfies rho_star>s"}
+      ],
+      "guardrail": "Generic result about the inherited cubic coordinates; it does not prove that Empirical Law 4.3 is a true EF21 convergence law."
+    },
+    {
+      "id": "C16",
+      "short_claim": "The largest inherited cubic root satisfies d rho_star/dK1>0 throughout the stated generic shape-coordinate domain.",
+      "evidence_level": "analytic-symbolic-generic-cubic",
+      "manuscript_match": "\\frac{d\\rho^\\star}{dK_1}>0",
+      "evidence": [
+        {"source": "results/phase13_symbolic_certificate.json", "path": "sensitivity_certificate.largest_root_Qprime_sign", "expected_contains": "positive"},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "sensitivity_certificate.consequence", "expected_contains": "d rho_star/dK1 > 0"}
+      ],
+      "guardrail": "Sensitivity theorem is conditional on the inherited cubic and does not claim novelty of implicit differentiation or polynomial root-location techniques."
+    },
+    {
+      "id": "C17",
+      "short_claim": "At fixed average conditioning and compression, aligned proportional regularity minimizes the inherited largest-root prediction; admissible mismatch strictly worsens it.",
+      "evidence_level": "analytic-symbolic-controlled-consequence",
+      "manuscript_match": "Thus the aligned path minimizes the inherited largest-root contraction prediction",
+      "evidence": [
+        {"source": "results/phase13_symbolic_certificate.json", "path": "controlled_path_consequence.statement", "expected_contains": "minimized by aligned proportional regularity heterogeneity"},
+        {"source": "results/phase13_symbolic_certificate.json", "path": "controlled_path_consequence.penalty_statement", "expected_contains": "nonnegative, with equality exactly on tau_L=tau_mu"}
+      ],
+      "guardrail": "Conditional ordering within the inherited n=2 empirical cubic, not a separately proved general EF21 convergence theorem."
+    },
+    {
+      "id": "C18",
+      "short_claim": "The named primary-source reference chain was closed without certifying universal bibliographic novelty.",
+      "evidence_level": "literature-audit",
+      "manuscript_match": "This scoped audit is not a universal absence-of-prior-work claim.",
+      "evidence": [
+        {"source": "literature/phase17_primary_source_closure.json", "path": "status", "expected": "NAMED_REFERENCE_CHAIN_CLOSED"},
+        {"source": "literature/phase17_primary_source_closure.json", "path": "universal_novelty_certified", "expected": false},
+        {"source": "literature/phase17_primary_source_closure.json", "path": "closure_result.named_sources_checked", "expected": 12},
+        {"source": "literature/phase17_primary_source_closure.json", "path": "closure_result.direct_equivalents_to_N1b_N4", "expected": 0}
+      ],
+      "guardrail": "No 'first', 'novel', 'for the first time', or universal no-prior-work wording follows from this scoped closure."
     }
   ]
 }
