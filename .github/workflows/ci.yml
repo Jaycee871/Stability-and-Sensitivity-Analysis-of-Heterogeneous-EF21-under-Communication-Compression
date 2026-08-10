@@ -60,6 +60,16 @@ jobs:
         with:
           name: phase14-literature-audit-state
           path: /tmp/phase14
+      - name: Phase 19 full-regularity publication figures
+        run: >-
+          python scripts/build_phase19_figures.py
+          --points 31
+          --output-dir /tmp/phase19-full-regularity
+      - name: Upload Phase 19 full-regularity figures
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase19-full-regularity-figures
+          path: /tmp/phase19-full-regularity
       - name: Phase 5 full-resolution paper asset build
         run: >-
           python scripts/build_paper_assets.py
