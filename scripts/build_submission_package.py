@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# MDPI free-format numbering follows first appearance in the Phase 18 manuscript.
+# MDPI free-format numbering follows first appearance in the Phase 20 manuscript.
 CITATION_NUMBERS = {
     "thomsen2026tight": 1,
     "seide2014onebit": 2,
@@ -68,21 +68,34 @@ def parse_captions(text: str) -> dict[str, str]:
         if not chunk or chunk.startswith("# Figure captions"):
             continue
         heading, _, body = chunk.partition("\n\n")
-        if heading.startswith("Figure 1"):
-            captions["Figure 1"] = body.strip()
-        elif heading.startswith("Figure 2"):
-            captions["Figure 2"] = body.strip()
-        elif heading.startswith("Figure 3"):
-            captions["Figure 3"] = body.strip()
-        elif heading.startswith("Figure 4"):
-            captions["Figure 4"] = body.strip()
-        elif heading.startswith("Figure 5"):
-            captions["Figure 5"] = body.strip()
-        elif heading.startswith("Figure S1"):
-            captions["Figure S1"] = body.strip()
-        elif heading.startswith("Table 1"):
-            captions["Table 1"] = body.strip()
-    required = {"Figure 1", "Figure 2", "Figure 3", "Figure 4", "Figure 5", "Figure S1", "Table 1"}
+        for label in (
+            "Figure 1",
+            "Figure 2",
+            "Figure 3",
+            "Figure 4",
+            "Figure 5",
+            "Figure 6",
+            "Figure 7",
+            "Figure 8",
+            "Figure S1",
+            "Table 1",
+        ):
+            if heading.startswith(label):
+                captions[label] = body.strip()
+                break
+
+    required = {
+        "Figure 1",
+        "Figure 2",
+        "Figure 3",
+        "Figure 4",
+        "Figure 5",
+        "Figure 6",
+        "Figure 7",
+        "Figure 8",
+        "Figure S1",
+        "Table 1",
+    }
     missing = required - captions.keys()
     if missing:
         raise ValueError(f"missing captions: {sorted(missing)}")
@@ -101,6 +114,12 @@ def insert_figure_captions(body: str, captions: dict[str, str]) -> str:
             "**[Insert Figure 4 here]**\n\n" + captions["Figure 4"],
         "**Figure file:** `paper_assets/figures/figure5_boundary_convergence.svg`":
             "**[Insert Figure 5 here]**\n\n" + captions["Figure 5"],
+        "**Figure file:** `paper_assets/phase19_full_regularity/figure6_mismatch_geometry.svg`":
+            "**[Insert Figure 6 here]**\n\n" + captions["Figure 6"],
+        "**Figure file:** `paper_assets/phase19_full_regularity/figure7_full_regularity_penalty.svg`":
+            "**[Insert Figure 7 here]**\n\n" + captions["Figure 7"],
+        "**Figure file:** `paper_assets/phase19_full_regularity/figure8_rate_collapse.svg`":
+            "**[Insert Figure 8 here]**\n\n" + captions["Figure 8"],
         "**Supplementary figure:** `paper_assets/figures/figureS1_symbolic_root_structure.svg`":
             "**[Insert Figure S1 in Supplementary Materials]**\n\n" + captions["Figure S1"],
     }
@@ -234,13 +253,14 @@ def main() -> None:
         if token in manuscript
     ]
     report = {
-        "phase": 18,
+        "phase": 20,
         "target": "MDPI Mathematics / Artificial Intelligence and Algorithms",
         "format": "MDPI-compatible free-format submission source",
         "content_ready": True,
         "final_submission_ready": len(unresolved) == 0,
         "word_count_approx": count_words(manuscript),
         "citations_resolved_to_numbered_references": "[@" not in manuscript,
+        "figures_integrated": [1, 2, 3, 4, 5, 6, 7, 8, "S1"],
         "required_sections_present": all(
             heading in manuscript
             for heading in [
@@ -263,7 +283,7 @@ def main() -> None:
         "notes": [
             "MDPI accepts free-format manuscripts provided required sections are present.",
             "Transfer to the current Mathematics Word/LaTeX house template should occur after author metadata and archive identifiers are finalized.",
-            "Phase 18 integrates the audited full-regularity structural and conditional symbolic results while preserving the empirical-law scope guardrail.",
+            "Phase 20 integrates the full-regularity Figure 6-8 visual evidence into the manuscript and submission-package pipeline while preserving the empirical-law scope guardrail.",
         ],
     }
     (out / "readiness_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

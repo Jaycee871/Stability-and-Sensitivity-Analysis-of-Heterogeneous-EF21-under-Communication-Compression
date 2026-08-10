@@ -15,8 +15,10 @@ class Phase18ManuscriptIntegrationTests(unittest.TestCase):
         cls.lower = cls.text.lower()
         cls.bib = BIB.read_text(encoding="utf-8")
 
-    def test_phase18_status_is_explicit(self) -> None:
-        self.assertIn("Working manuscript draft — Phase 18", self.text)
+    def test_phase18_or_later_manuscript_preserves_integration(self) -> None:
+        match = re.search(r"Working manuscript draft — Phase (\d+)", self.text)
+        self.assertIsNotNone(match)
+        self.assertGreaterEqual(int(match.group(1)), 18)
 
     def test_full_regularity_parameterization_is_integrated(self) -> None:
         for token in ("tau_L", "tau_\\mu", "bar\\kappa", "273{,}885", "258,400"):
@@ -40,8 +42,6 @@ class Phase18ManuscriptIntegrationTests(unittest.TestCase):
         self.assertIn("conditional on Empirical Law 4.3", self.text)
 
     def test_absolute_novelty_claims_remain_blocked(self) -> None:
-        # Guardrail prose may mention words that are intentionally avoided. Reject
-        # affirmative precedence claims rather than the mere presence of those words.
         forbidden = [
             r"\bwe (?:are|provide|give|present|derive|establish|show) the first\b",
             r"\bwe (?:introduce|present|propose|establish|derive|show) (?:a )?novel\b",

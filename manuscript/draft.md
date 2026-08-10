@@ -1,8 +1,8 @@
 # Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression
 
-**Working manuscript draft — Phase 18**
+**Working manuscript draft — Phase 20**
 
-> Status: full-regularity manuscript integration with audited numerical, algebraic, symbolic, and primary-source evidence. Bibliography source: `manuscript/references.bib`. Empirical Law 4.3, its cubic, and its coefficients are inherited from Thomsen, Taylor, and Dieuleveut; this manuscript analyzes that inherited object and does not present it as a newly proved EF21 convergence theorem.
+> Status: full-regularity manuscript and publication-figure integration with audited numerical, algebraic, symbolic, and primary-source evidence. Bibliography source: `manuscript/references.bib`. Empirical Law 4.3, its cubic, and its coefficients are inherited from Thomsen, Taylor, and Dieuleveut; this manuscript analyzes that inherited object and does not present it as a newly proved EF21 convergence theorem.
 
 ## Abstract
 
@@ -406,6 +406,8 @@ Once both `L_i` and `mu_i` vary while their arithmetic means remain fixed, neith
 
 The weighted-variance identity explains the geometry of this gap: it measures dispersion of the local condition-shape coordinates `q_i`, rather than raw dispersion of `L_i` or `mu_i` alone. The full dense audit requested `273,885` configurations and retained `258,400` admissible cells after enforcing `mu_i<=L_i`. Across all admissible cells, the exact moment identity, invariant `K2`, and fixed-average rational factorization reproduce to machine precision.
 
+**Figure file:** `paper_assets/phase19_full_regularity/figure6_mismatch_geometry.svg`
+
 ### 4.8 Proportional heterogeneity is invisible to the inherited cubic
 
 The explicit factorization contains `(tau_L-tau_mu)^2` and no other zero-producing numerator factor on the positive admissible domain. Therefore `tau_L=tau_mu` is exactly the zero-mismatch path.
@@ -413,6 +415,8 @@ The explicit factorization contains `(tau_L-tau_mu)^2` and no other zero-produci
 Along this path, both workers may have different smoothness constants and different strong-convexity constants. Nevertheless, their regularity pairs are scaled proportionally, `K1=K2`, the inherited step size remains fixed, and the cubic coefficients coincide with those of the homogeneous controlled case at the same `kappa_bar` and `epsilon`.
 
 This separates **heterogeneity magnitude** from **regularity mismatch**. Heterogeneity by itself need not activate a penalty in the inherited empirical law; disagreement between the smoothness and strong-convexity heterogeneity ratios does.
+
+**Figure file:** `paper_assets/phase19_full_regularity/figure7_full_regularity_penalty.svg`
 
 ### 4.9 Regularity mismatch strictly worsens the inherited largest-root prediction
 
@@ -433,6 +437,8 @@ At fixed average conditioning and compression, `K2` is invariant while `K1=K2+(K
 with strict inequality whenever the admissible cell has `tau_L!=tau_mu`.
 
 Thus the aligned path minimizes the inherited largest-root contraction prediction over the controlled full-regularity surface. This conclusion is conditional on Empirical Law 4.3 and should not be read as a separately proved EF21 convergence theorem.
+
+**Figure file:** `paper_assets/phase19_full_regularity/figure8_rate_collapse.svg`
 
 ## 5. Discussion
 
@@ -483,15 +489,18 @@ This study turns a reproduced two-agent heterogeneous EF21 empirical law into a 
 
 ## Figure and table map
 
-- **Figure 1:** contraction landscape — `figure1_contraction_landscape.svg`
-- **Figure 2:** normalized heterogeneity penalty — `figure2_normalized_penalty.svg`
-- **Figure 3:** compression × conditioning interaction — `figure3_conditioning_interaction.svg`
-- **Figure 4:** 99% retention operating boundary — `figure4_retention_boundary.svg`
-- **Figure 5:** boundary convergence under grid refinement — `figure5_boundary_convergence.svg`
-- **Figure S1:** fixed-stratum symbolic root-structure note — `figureS1_symbolic_root_structure.svg`
-- **Table 1:** equal-smoothness key results by conditioning stratum — `table1_key_results.csv`
+- **Figure 1:** contraction landscape — `figures/figure1_contraction_landscape.svg`
+- **Figure 2:** normalized heterogeneity penalty — `figures/figure2_normalized_penalty.svg`
+- **Figure 3:** compression × conditioning interaction — `figures/figure3_conditioning_interaction.svg`
+- **Figure 4:** 99% retention operating boundary — `figures/figure4_retention_boundary.svg`
+- **Figure 5:** boundary convergence under grid refinement — `figures/figure5_boundary_convergence.svg`
+- **Figure 6:** full-regularity mismatch geometry — `phase19_full_regularity/figure6_mismatch_geometry.svg`
+- **Figure 7:** full-regularity normalized contraction penalty — `phase19_full_regularity/figure7_full_regularity_penalty.svg`
+- **Figure 8:** rate collapse onto `K1-K2` — `phase19_full_regularity/figure8_rate_collapse.svg`
+- **Figure S1:** fixed-stratum symbolic root-structure note — `figures/figureS1_symbolic_root_structure.svg`
+- **Table 1:** equal-smoothness key results by conditioning stratum — `tables/table1_key_results.csv`
 
-The Phase 18 manuscript integrates the full-regularity structural results before dedicated full-regularity publication figures are added. Full publication-style captions for the existing figures are maintained in `manuscript/figure_captions.md`.
+Phase 20 integrates Figures 6–8 into the reproducible paper-asset and MDPI submission pipelines. Full publication-style captions are maintained in `manuscript/figure_captions.md`.
 
 ## References
 

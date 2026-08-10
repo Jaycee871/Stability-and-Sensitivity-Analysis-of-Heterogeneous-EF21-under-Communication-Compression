@@ -70,24 +70,25 @@ jobs:
         with:
           name: phase19-full-regularity-figures
           path: /tmp/phase19-full-regularity
-      - name: Phase 5 full-resolution paper asset build
+      - name: Phase 20 integrated paper asset build
         run: >-
           python scripts/build_paper_assets.py
           --output-dir /tmp/paper-assets
-      - name: Upload Phase 5 paper assets
+          --phase19-points 31
+      - name: Upload Phase 20 integrated paper assets
         uses: actions/upload-artifact@v4
         with:
-          name: phase5-paper-assets
+          name: phase20-paper-assets
           path: /tmp/paper-assets
-      - name: Phase 8 MDPI submission package build
+      - name: Phase 20 MDPI submission package build
         run: >-
           python scripts/build_submission_package.py
           --output-dir /tmp/mdpi-submission-package
           --paper-assets-dir /tmp/paper-assets
-      - name: Upload Phase 8 MDPI submission package
+      - name: Upload Phase 20 MDPI submission package
         uses: actions/upload-artifact@v4
         with:
-          name: phase8-mdpi-submission-package
+          name: phase20-mdpi-submission-package
           path: /tmp/mdpi-submission-package
       - name: Phase 9 claim-to-evidence audit
         run: >-
