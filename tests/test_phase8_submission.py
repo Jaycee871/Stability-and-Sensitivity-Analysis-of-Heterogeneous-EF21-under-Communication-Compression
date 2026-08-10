@@ -45,7 +45,18 @@ class Phase8SubmissionTests(unittest.TestCase):
 
     def test_figure_and_table_captions_embedded(self) -> None:
         manuscript = MODULE.build_manuscript()
-        for label in ["Figure 1.", "Figure 2.", "Figure 3.", "Figure 4.", "Figure 5.", "Figure S1.", "Table 1."]:
+        for label in [
+            "Figure 1.",
+            "Figure 2.",
+            "Figure 3.",
+            "Figure 4.",
+            "Figure 5.",
+            "Figure 6.",
+            "Figure 7.",
+            "Figure 8.",
+            "Figure S1.",
+            "Table 1.",
+        ]:
             self.assertIn(label, manuscript)
 
     def test_submission_blockers_are_explicit_not_silent(self) -> None:
