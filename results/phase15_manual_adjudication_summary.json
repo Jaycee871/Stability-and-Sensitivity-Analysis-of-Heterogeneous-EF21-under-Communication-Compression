@@ -1,0 +1,39 @@
+{
+  "phase": 15,
+  "study": "manual_prior_art_adjudication",
+  "source_export": "literature/undermind/Adversarial_N1_N2_Novelty_Audit.csv",
+  "candidate_count": 7,
+  "classification_counts": {
+    "A": 0,
+    "B": 2,
+    "C": 5,
+    "D": 0
+  },
+  "class_B_candidates": [
+    "C01_Tho26",
+    "C04_Ric24"
+  ],
+  "N1": {
+    "status": "PROMOTE_WITH_PRIOR_ART_POSITIONING",
+    "strongest_material_overlap": "C04_Ric24",
+    "class_A_equivalent_found": false,
+    "safe_scope": "Exact K1-K2 weighted variance of local condition-shape ratios under the inherited two-agent Empirical Law 4.3; do not claim first variance-style EF21 heterogeneity analysis."
+  },
+  "N2": {
+    "status": "PROMOTE_WITH_PRIOR_ART_POSITIONING",
+    "strongest_anchor": "C01_Tho26",
+    "class_A_equivalent_found": false,
+    "safe_scope": "Aligned proportional (L_i,mu_i) heterogeneity invariance as an algebraic consequence of the inherited cubic under fixed averages."
+  },
+  "N3": {
+    "status": "REQUIRES_MANUAL_EQUIVALENCE_CHECK",
+    "reason": "Current external export was N1-N2 focused."
+  },
+  "N4": {
+    "status": "REQUIRES_MANUAL_EQUIVALENCE_CHECK",
+    "reason": "Current external export was N1-N2 focused."
+  },
+  "manuscript_promotion": false,
+  "next_action": "Run a dedicated adversarial N3-N4 search before final novelty wording and manuscript promotion.",
+  "guardrail": "No Class-A match in the supplied seven-paper shortlist does not establish global novelty."
+}
