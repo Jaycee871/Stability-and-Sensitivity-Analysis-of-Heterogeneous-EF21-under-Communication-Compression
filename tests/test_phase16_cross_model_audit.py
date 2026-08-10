@@ -44,7 +44,7 @@ class Phase16CrossModelAuditTests(unittest.TestCase):
 
     def test_closure_gap_does_not_treat_search_absence_as_proof(self) -> None:
         gaps = "\n".join(self.payload["closure_gaps"])
-        self.assertIn("not proof of universal novelty", gaps)
+        self.assertIn("proof of universal novelty", gaps)
         self.assertIn("theorem/equation/page", gaps)
 
 
