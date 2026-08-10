@@ -5,6 +5,7 @@ import argparse
 import csv
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import matplotlib.pyplot as plt
@@ -159,11 +160,27 @@ def write_key_results(path: Path, summaries, boundary_records) -> None:
         writer.writerows(rows)
 
 
+def build_full_regularity_assets(output_dir: Path, points: int) -> None:
+    subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "scripts" / "build_phase19_figures.py"),
+            "--points",
+            str(points),
+            "--output-dir",
+            str(output_dir / "phase19_full_regularity"),
+        ],
+        cwd=ROOT,
+        check=True,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, default=Path("paper_assets"))
     parser.add_argument("--tau-points", type=int, default=381)
     parser.add_argument("--epsilon-points", type=int, default=189)
+    parser.add_argument("--phase19-points", type=int, default=101)
     args = parser.parse_args()
 
     kappas = (2.0, 10.0, 100.0)
@@ -221,23 +238,35 @@ def main() -> None:
         boundary_records,
     )
 
+    build_full_regularity_assets(args.output_dir, args.phase19_points)
+
     manifest = {
-        "study": "phase5_paper_assets",
-        "grid": {
+        "study": "phase20_integrated_paper_assets",
+        "baseline_grid": {
             "tau_points": len(taus),
             "epsilon_points": len(epsilons),
             "kappa_bar": list(kappas),
             "total_cells": len(taus) * len(epsilons) * len(kappas),
         },
+        "full_regularity_grid": {
+            "tau_L_points": args.phase19_points,
+            "tau_mu_points": args.phase19_points,
+            "epsilon": 0.95,
+            "kappa_bar": list(kappas),
+        },
         "figures": [
-            "figure1_contraction_landscape.svg",
-            "figure2_normalized_penalty.svg",
-            "figure3_conditioning_interaction.svg",
-            "figure4_retention_boundary.svg",
-            "figure5_boundary_convergence.svg",
-            "figureS1_symbolic_root_structure.svg",
+            "figures/figure1_contraction_landscape.svg",
+            "figures/figure2_normalized_penalty.svg",
+            "figures/figure3_conditioning_interaction.svg",
+            "figures/figure4_retention_boundary.svg",
+            "figures/figure5_boundary_convergence.svg",
+            "figures/figureS1_symbolic_root_structure.svg",
+            "phase19_full_regularity/figure6_mismatch_geometry.svg",
+            "phase19_full_regularity/figure7_full_regularity_penalty.svg",
+            "phase19_full_regularity/figure8_rate_collapse.svg",
         ],
-        "table": "table1_key_results.csv",
+        "table": "tables/table1_key_results.csv",
+        "full_regularity_data": "phase19_full_regularity/phase19_rate_collapse_data.csv",
         "continuous_99pct_boundaries_at_epsilon_095": {
             str(k): continuous_retention_boundary(k).to_dict() for k in kappas
         },
