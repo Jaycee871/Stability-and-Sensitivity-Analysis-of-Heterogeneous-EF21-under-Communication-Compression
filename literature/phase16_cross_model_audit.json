@@ -1,0 +1,92 @@
+{
+  "phase": 16,
+  "study": "cross_model_theorem_level_novelty_refinement",
+  "overall_status": "PARTIAL_CROSS_MODEL_AUDIT_REFERENCE_CLOSURE_REQUIRED",
+  "evidence_layers": {
+    "phase15_undermind": "Seven-paper adversarial N1-N2 shortlist with manual adjudication.",
+    "claude_followup": "Targeted three-direction search report supplied by the researcher; useful as search evidence but not treated as an independently verified closure certificate.",
+    "claude_cot": "Search-process notes supplied by the researcher. These reveal approximate search depth, untraced citation-chain gaps, and model inferences that must not be promoted as source evidence.",
+    "wolfram": "Independent algebraic checks of N1a and N1b identities."
+  },
+  "claims": {
+    "N1a": {
+      "label": "weighted_variance_identity",
+      "status": "INHERITED_ALGEBRAIC_REINTERPRETATION_NO_NOVELTY",
+      "claim": "K1-K2 equals the Sigma-weighted variance of q_i=(L_i-mu_i)/(L_i+mu_i).",
+      "evidence": "K1 and K2 are inherited from Empirical Law 4.3. Direct substitution makes K1 the weighted second moment and K2 the squared weighted mean; Wolfram independently simplifies the identity residuals to zero.",
+      "manuscript_rule": "Present as an exact algebraic reinterpretation of inherited quantities, never as a novel theorem or novel variance construction."
+    },
+    "N1b": {
+      "label": "fixed_average_explicit_mismatch_factorization",
+      "status": "NOVELTY_PLAUSIBLE_REFERENCE_CLOSURE_PENDING",
+      "claim": "At fixed arithmetic means L_bar and mu_bar, K1-K2 factors explicitly as a positive rational prefactor times (tau_L-tau_mu)^2.",
+      "evidence": "The Phase 12 formula is independently verified by Wolfram. The supplied cross-model searches report no theorem-level equivalent, but the source-paper backward citation chain is not yet fully inspected paper-by-paper.",
+      "confidence": "medium_high",
+      "manuscript_rule": "May be staged as a contribution only with explicit inheritance of K1,K2 and after reference closure."
+    },
+    "N2": {
+      "label": "aligned_proportional_heterogeneity_invariance",
+      "status": "NOVELTY_PLAUSIBLE_REFERENCE_CLOSURE_PENDING",
+      "claim": "tau_L=tau_mu annihilates the mismatch factor and makes the inherited controlled cubic coincide with the homogeneous controlled cubic at fixed average conditioning and compression.",
+      "confidence": "medium",
+      "manuscript_rule": "Phrase as a structural consequence of the inherited empirical cubic under the controlled parameterization, not as a new general EF21 convergence theorem."
+    },
+    "N3": {
+      "label": "strict_largest_root_mismatch_sensitivity",
+      "status": "NOVELTY_PLAUSIBLE_REFERENCE_CLOSURE_PENDING",
+      "claim": "d rho_star / d K1 > 0 on the generic inherited-cubic shape domain.",
+      "confidence": "medium",
+      "manuscript_rule": "The proof is a conditional analytic result about the inherited cubic; novelty wording remains blocked until remaining source checks close."
+    },
+    "N4": {
+      "label": "generic_cubic_root_structure",
+      "status": "NOVELTY_PLAUSIBLE_REFERENCE_CLOSURE_PENDING",
+      "claim": "The inherited cubic has three distinct real roots in (0,1), with the selected largest root above s=sqrt(epsilon), on the stated generic shape domain.",
+      "confidence": "medium_high",
+      "manuscript_rule": "Report only as conditional analysis of an inherited empirical cubic; never imply Empirical Law 4.3 itself has been proved."
+    }
+  },
+  "prior_art_refinements": [
+    {
+      "candidate": "Thomsen, Taylor and Dieuleveut (2026)",
+      "classification": "ANCHOR",
+      "decision": "Direct source of Empirical Law 4.3, K1, K2, and the cubic. N1a is therefore not a novelty claim. The supplied targeted audit reports no N1b-N4 statement in the source."
+    },
+    {
+      "candidate": "Richtarik, Gasanov and Burlachenko (2024), Error Feedback Reloaded",
+      "classification": "C_WITH_WORDING_CONSTRAINT",
+      "decision": "Variance-like smoothness dispersion involving L_i only; no simultaneous mu_i structure, no fixed-average kappa/tau factorization, no aligned invariance, and no matching cubic-root theorem. It still blocks broad wording such as 'first variance-based EF21 heterogeneity measure'."
+    },
+    {
+      "candidate": "Colla and Hendrickx (2024)",
+      "classification": "C",
+      "decision": "Methodological PEP/agent-symmetry context and a non-equivalent conjecture for EXTRA; not algebraically or algorithmically equivalent to N1b-N4."
+    },
+    {
+      "candidate": "Original EF21 (2021), EControl (2023), Tian-Chai-Xu (2026), Patel et al. (2026)",
+      "classification": "D_FOR_N1B_N4_OR_METHOD_TEMPLATE_ONLY",
+      "decision": "Useful provenance or proof-method context, but the supplied audit reports no same-axis theorem-level equivalence to the regularity-mismatch claims."
+    }
+  ],
+  "closure_gaps": [
+    "Individually inspect the remaining source-paper related-work chain that Claude reports as not yet opened in full: Zheng 2019; Li & Li 2022; Tang 2021; Fatkhullin 2023/2025; Condat 2022; Gruntkowska 2025; Egger 2025; Redie 2026; Tian 2026.",
+    "Record exact theorem/equation/page for any candidate that materially overlaps N1b-N4.",
+    "Do not treat absence from approximately fifteen targeted searches as proof of universal novelty.",
+    "Do not import generic Jury/Routh textbook novelty claims; only same-result or subsuming results count as Class A."
+  ],
+  "unresolved_cross_model_references": [
+    {
+      "reference": "[[ef21-stability-analysis]] / existing Jury criterion derivation for heterogeneous compression gains / c0 invariant",
+      "status": "UNRESOLVED_CROSS_MODEL_REFERENCE",
+      "reason": "Claude's chain-of-thought inferred or recalled this project, but no concrete repository path, file, or commit supporting it was located in the current connected repository. It must not enter the scientific evidence chain unless independently located."
+    }
+  ],
+  "promotion_gate": {
+    "manuscript_novelty_language": "BLOCKED",
+    "allowed_now": [
+      "N1a may be described as an exact reinterpretation of inherited K1,K2.",
+      "N1b-N4 may be described internally as novelty-plausible candidate contributions with explicit uncertainty."
+    ],
+    "required_before_unblocking": "Complete the remaining primary-source reference closure and record exact source adjudications."
+  }
+}
