@@ -90,16 +90,16 @@ jobs:
         with:
           name: phase20-mdpi-submission-package
           path: /tmp/mdpi-submission-package
-      - name: Phase 9 claim-to-evidence audit
+      - name: Phase 21 claim-to-evidence audit
         run: >-
           python scripts/audit_claim_registry.py
-          --output-json /tmp/phase9/phase9_claim_audit.json
-          --output-md /tmp/phase9/claim_evidence_matrix.md
-      - name: Upload Phase 9 claim-evidence audit
+          --output-json /tmp/phase21/phase21_claim_audit.json
+          --output-md /tmp/phase21/claim_evidence_matrix.md
+      - name: Upload Phase 21 claim-evidence audit
         uses: actions/upload-artifact@v4
         with:
-          name: phase9-claim-evidence-audit
-          path: /tmp/phase9
+          name: phase21-claim-evidence-audit
+          path: /tmp/phase21
       - name: Phase 10 manuscript scope lint
         run: >-
           python scripts/lint_manuscript_scope.py
@@ -112,7 +112,7 @@ jobs:
           cp submission/reviewer_premortem.md /tmp/phase10/
           cp submission/novelty_statement.md /tmp/phase10/
           cp manuscript/terminology_guardrails.md /tmp/phase10/
-          cp /tmp/phase9/claim_evidence_matrix.md /tmp/phase10/
+          cp /tmp/phase21/claim_evidence_matrix.md /tmp/phase10/
       - name: Upload Phase 10 reviewer pre-mortem
         uses: actions/upload-artifact@v4
         with:
