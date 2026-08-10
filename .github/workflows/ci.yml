@@ -100,24 +100,36 @@ jobs:
         with:
           name: phase21-claim-evidence-audit
           path: /tmp/phase21
+      - name: Phase 22 OSF release-candidate build
+        run: >-
+          python scripts/build_osf_release_candidate.py
+          --output-root /tmp/phase22-osf
+          --paper-assets-dir /tmp/paper-assets
+          --submission-package-dir /tmp/mdpi-submission-package
+      - name: Upload Phase 22 OSF release candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase22-osf-release-candidate
+          path: /tmp/phase22-osf
       - name: Phase 10 manuscript scope lint
         run: >-
           python scripts/lint_manuscript_scope.py
           --output /tmp/phase10/manuscript_scope_lint.json
-      - name: Assemble Phase 10 reviewer package
+      - name: Assemble Phase 22 reviewer package
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/phase10
-          cp submission/reviewer_premortem.md /tmp/phase10/
-          cp submission/novelty_statement.md /tmp/phase10/
-          cp manuscript/terminology_guardrails.md /tmp/phase10/
-          cp /tmp/phase21/claim_evidence_matrix.md /tmp/phase10/
-      - name: Upload Phase 10 reviewer pre-mortem
+          mkdir -p /tmp/phase22-reviewer
+          cp submission/reviewer_premortem.md /tmp/phase22-reviewer/
+          cp submission/novelty_statement.md /tmp/phase22-reviewer/
+          cp manuscript/terminology_guardrails.md /tmp/phase22-reviewer/
+          cp /tmp/phase21/claim_evidence_matrix.md /tmp/phase22-reviewer/
+          cp /tmp/phase22-osf/build_report.json /tmp/phase22-reviewer/osf_build_report.json
+      - name: Upload Phase 22 reviewer pre-mortem
         uses: actions/upload-artifact@v4
         with:
-          name: phase10-reviewer-premortem
-          path: /tmp/phase10
+          name: phase22-reviewer-premortem
+          path: /tmp/phase22-reviewer
       - name: Hugging Face authentication check
         env:
           HF_TOKEN1: ${{ secrets.HF_TOKEN1 }}

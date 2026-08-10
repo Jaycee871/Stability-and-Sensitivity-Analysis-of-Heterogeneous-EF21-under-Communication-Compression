@@ -1,0 +1,20 @@
+{
+  "title": "Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression",
+  "description": "Reproducibility archive for a controlled computational, algebraic, and symbolic characterization of the inherited two-agent Empirical Law 4.3 for heterogeneous EF21 under communication compression. The archive separates inherited results from project-derived controlled consequences and includes code, tests, numerical evidence, symbolic certificates, literature-audit records, manuscript sources, and publication assets.",
+  "tags": [
+    "EF21",
+    "error feedback",
+    "distributed optimization",
+    "communication compression",
+    "heterogeneous optimization",
+    "reproducibility"
+  ],
+  "resource_type": "research materials",
+  "license": "UNRESOLVED_BEFORE_PUBLIC_UPLOAD",
+  "contributors": "FINAL_HUMAN_CONTRIBUTOR_LIST_REQUIRED",
+  "public": false,
+  "registration_status": "NOT_REGISTERED",
+  "doi": null,
+  "osf_identifier": null,
+  "guardrail": "This template is metadata for a draft archive candidate. Do not claim an OSF registration, DOI, or permanent public archive until the external record exists and its identifier has been independently verified."
+}
