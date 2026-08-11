@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Phase24MDPILatexMaterializeTests(unittest.TestCase):
-    def test_author_order_is_reversed_and_correspondence_is_preserved(self) -> None:
+    def test_author_reviewed_front_matter_and_ef_notation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
             subprocess.run(
@@ -26,6 +26,8 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
             )
 
             manuscript = (out / "manuscript.tex").read_text(encoding="utf-8")
+            references = (out / "references.bib").read_text(encoding="utf-8")
+
             self.assertIn(
                 "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*",
                 manuscript,
@@ -35,7 +37,24 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
                 manuscript,
             )
             self.assertIn("Correspondence: Fu-Hsing Wang", manuscript)
-            self.assertIn("without claiming a general EF21 convergence proof", manuscript)
+
+            self.assertIn(
+                "Stability and Sensitivity Analysis of Heterogeneous Error Feedback "
+                "(EF$^{21}$) under Communication Compression",
+                manuscript,
+            )
+            self.assertIn(
+                "without claiming a general EF$^{21}$ convergence proof",
+                manuscript,
+            )
+            self.assertNotIn("EF21", manuscript)
+
+            # The typography transform is manuscript-only. Bibliographic source data
+            # remain intact rather than being mechanically rewritten.
+            self.assertIn(
+                "A Tight Theory of Error Feedback Algorithms in Distributed Optimization",
+                references,
+            )
             self.assertIn("Submission-draft display guard", manuscript)
 
 
