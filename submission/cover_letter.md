@@ -14,7 +14,7 @@ We believe the manuscript is well aligned with the Special Issue because it comb
 
 We confirm that neither this manuscript nor any part of its substantive content is currently under consideration for publication in another journal, and the manuscript has not been published previously in journal form. All authors will approve the final submitted version and accept responsibility for the integrity of the work.
 
-**Editorial independence.** Prof. Dr. Fu-Hsing Wang is both a co-author/corresponding author of this manuscript and a Guest Editor of the Special Issue “Artificial Intelligence and Algorithms.” We therefore respectfully request fully independent editorial handling by an appropriate Editorial Board Member or other Academic Editor without a conflict of interest. Prof. Wang should have no role in reviewer selection, peer-review access beyond his role as an author, recommendation, or editorial decision-making for this submission.
+**Editorial independence.** Prof. Dr. Fu-Hsing Wang is both a co-author/corresponding author of this manuscript and a Guest Editor of the Special Issue “Artificial Intelligence and Algorithms.” He is also the academic advisor of Pack Kwan Low. We therefore respectfully request fully independent editorial handling by an appropriate Editorial Board Member or other Academic Editor without a conflict of interest. Prof. Wang should have no role in reviewer selection, peer-review access beyond his role as an author, recommendation, or editorial decision-making for this submission.
 
 Thank you for your consideration.
 
