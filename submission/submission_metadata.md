@@ -16,8 +16,8 @@
 
 ## Current author order
 
-1. **Fu-Hsing Wang** — first author and corresponding author
-2. **Pack Kwan Low** — second author
+1. **Pack Kwan Low** — first author
+2. **Fu-Hsing Wang** — second author and corresponding author
 
 ## Shared affiliation
 
@@ -52,9 +52,9 @@ This study converts an independently reproduced two-agent empirical cubic law in
 
 The manuscript fits the Special Issue because it studies the mathematical and computational behavior of a communication-efficient distributed optimization method, combining algorithmic parameter sensitivity, numerical verification, symbolic analysis, and optimization theory.
 
-## Phase 23 LaTeX source
+## Phase 24 LaTeX source
 
-The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23b `manuscript.tex` and `references.bib` are integrity-checked through `scripts/materialize_phase23_mdpi_latex.py`.
+The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23c source is preserved and Phase 24 author order is applied deterministically through `scripts/materialize_phase24_mdpi_latex.py`.
 
 ## Files expected at submission
 

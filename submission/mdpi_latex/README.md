@@ -1,23 +1,29 @@
-# Phase 23c — MDPI Mathematics LaTeX integration
+# Phase 24 — MDPI Mathematics LaTeX integration
 
 This directory stages the journal-template manuscript prepared from the official 2026 MDPI ACS LaTeX template supplied by the human author on 2026-08-11.
 
 ## Current authorship metadata
 
-1. **Fu-Hsing Wang** — first author and corresponding author.
-2. **Pack Kwan Low** — second author.
+1. **Pack Kwan Low** — first author.
+2. **Fu-Hsing Wang** — second author and corresponding author.
 
 Shared affiliation staged in the manuscript:
 
 > Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd., Yang-Ming-Shan, Taipei 11114, Taiwan.
 
-The preferred correspondence e-mail for Fu-Hsing Wang remains a submission-stage placeholder until confirmed.
+The corresponding-author role remains with Fu-Hsing Wang.
 
-## Phase 23c display correction
+## Phase 24 author-review correction
+
+Author review revised the manuscript order so the author with the largest contribution is listed first. Phase 24 therefore changes the displayed and running author order from `Fu-Hsing Wang; Pack Kwan Low` to `Pack Kwan Low; Fu-Hsing Wang`, while preserving Fu-Hsing Wang as corresponding author.
+
+The scientific text, scope guardrails, figures, references, and DOI-footer correction are unchanged by this authorship-only transform.
+
+## Phase 23c display correction retained
 
 The official MDPI class synthesizes a dummy footer DOI from the template volume/issue/article-number defaults even in submit mode. In the earlier author-facing PDF this appeared as `https://doi.org/10.3390/math1010000`. That string was a **template-generated placeholder, not an assigned DOI**.
 
-Phase 23c adds a submit-mode footer guard to the LaTeX source so the author-facing draft no longer displays that placeholder. Existing DOI identifiers belonging to cited references remain unchanged.
+Phase 23c added a submit-mode footer guard so the author-facing draft no longer displays that placeholder. Existing DOI identifiers belonging to cited references remain unchanged.
 
 ## What is tracked here
 
@@ -26,17 +32,23 @@ The Phase 23b base `manuscript.tex` and `references.bib` remain stored as gzip-c
 - `manuscript.tex.gz.b64`
 - `references.bib.gz.b64`
 
-Run:
+Phase 23c reconstruction remains available through:
 
 ```bash
 python scripts/materialize_phase23_mdpi_latex.py
 ```
 
-to reconstruct the exact Phase 23c editable sources under `submission/mdpi_latex/materialized/`. The materializer verifies the original payload hashes, applies the deterministic DOI-footer guard to `manuscript.tex`, and then verifies the final Phase 23c source hash.
+For the current Phase 24 author-reviewed manuscript, run:
 
-The local Phase 23c package also contains the official MDPI `Definitions/` support files, publication Figures 1–8, Supplementary Figure S1, and the compiled 18-page PDF. Vendor/binary template assets and generated PDFs are intentionally not duplicated in Git history; publication figures remain reproducible from the repository paper-asset pipeline, and the current official MDPI template should be obtained from MDPI for final submission assembly.
+```bash
+python scripts/materialize_phase24_mdpi_latex.py
+```
 
-## Local package integrity record
+The Phase 24 materializer first verifies and reconstructs the exact Phase 23c source, then applies only the deterministic author-order correction. The corresponding-author line remains Fu-Hsing Wang.
+
+The local submission package additionally requires the official MDPI `Definitions/` support files, publication Figures 1–8, Supplementary Figure S1, and the compiled PDF. Vendor/binary template assets and generated PDFs are intentionally not duplicated in Git history; publication figures remain reproducible from the repository paper-asset pipeline, and the current official MDPI template should be obtained from MDPI for final submission assembly.
+
+## Phase 23c integrity record retained
 
 Phase 23c package:
 
@@ -60,8 +72,7 @@ The manuscript analyzes consequences of the inherited two-agent Empirical Law 4.
 
 ## Still unresolved before submission
 
-- Fu-Hsing Wang correspondence e-mail;
-- ORCID identifiers;
+- final ORCID/author metadata confirmation as applicable;
 - final CRediT contribution statement;
 - funding statement;
 - permanent public OSF URL/DOI after archive freeze;
