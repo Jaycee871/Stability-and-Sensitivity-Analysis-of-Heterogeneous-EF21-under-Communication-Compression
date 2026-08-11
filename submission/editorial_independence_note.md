@@ -2,21 +2,16 @@
 
 ## Known relationship
 
-- Target Special Issue Guest Editor: **Prof. Dr. Fuhsing Wang**
-- Relationship to submitting author: **academic advisor**
+- Target Special Issue Guest Editor: **Prof. Dr. Fu-Hsing Wang**
+- Manuscript role: **first author and corresponding author**
+- Relationship to Pack Kwan Low: **academic advisor**
 
-This relationship should be disclosed to the Editorial Office so that the Guest Editor does not participate in reviewer selection, peer-review access, recommendation, or editorial decision-making for this manuscript.
+Because Prof. Wang is both an author of the manuscript and a Guest Editor of the target Special Issue, the submission should be disclosed to the Editorial Office and handled fully independently of Prof. Wang's editorial role.
 
 ## Suggested note to the Editorial Office
 
-> Prof. Dr. Fuhsing Wang, Guest Editor of the Special Issue “Artificial Intelligence and Algorithms,” is the academic advisor of the submitting author. To avoid any actual or perceived conflict of interest, we respectfully request independent editorial handling by an appropriate Editorial Board Member or other Academic Editor. Prof. Wang should not participate in reviewer selection or editorial decision-making for this submission.
-
-## If Prof. Wang is also a co-author
-
-Use the stronger version:
-
-> Prof. Dr. Fuhsing Wang is both a co-author of this manuscript and Guest Editor of the Special Issue “Artificial Intelligence and Algorithms.” In accordance with MDPI editorial safeguards, we request fully independent handling by an Editorial Board Member or other Academic Editor. Prof. Wang should have no access to or role in reviewer selection, peer review, or editorial decisions except in his capacity as an author.
+> Prof. Dr. Fu-Hsing Wang is both a co-author/corresponding author of this manuscript and Guest Editor of the Special Issue “Artificial Intelligence and Algorithms.” To avoid any actual or perceived conflict of interest, we respectfully request fully independent editorial handling by an appropriate Editorial Board Member or other Academic Editor without a conflict of interest. Prof. Wang should have no role in reviewer selection, peer-review access beyond his role as an author, recommendation, or editorial decision-making for this submission.
 
 ## Rationale
 
-MDPI's Special Issue guidelines state that editors should remove themselves from a manuscript's editorial process when a conflict or a perceived conflict exists, and that an alternative editor should be assigned. MDPI also states that manuscripts authored by a Guest Editor are handled independently by a member of the Editorial Board.
+The independent-handling request is an editorial safeguard, not a statement about the scientific merits of the manuscript. It should remain in the cover letter/submission metadata whenever the manuscript is submitted to this Special Issue with Prof. Wang as an author.

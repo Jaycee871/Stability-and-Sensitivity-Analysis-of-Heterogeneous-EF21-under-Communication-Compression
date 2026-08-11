@@ -1,0 +1,46 @@
+{
+  "phase": "23b",
+  "date": "2026-08-11",
+  "target": "MDPI Mathematics / ACS LaTeX template",
+  "authors": [
+    {
+      "name": "Fu-Hsing Wang",
+      "order": 1,
+      "corresponding": true
+    },
+    {
+      "name": "Pack Kwan Low",
+      "order": 2,
+      "corresponding": false
+    }
+  ],
+  "local_compiled_package": {
+    "filename": "MDPI_Mathematics_EF21_LaTeX_Phase23b_CorrespondingAuthor.zip",
+    "size_bytes": 2119283,
+    "sha256": "68eaf805f052b4fb557690b90d2d69d0dbdc0e3453e0e2830d6662f230db5a1d",
+    "compiled_pdf_pages": 18
+  },
+  "tracked_exact_sources": {
+    "manuscript.tex": {
+      "payload": "manuscript.tex.gz.b64",
+      "size_bytes": 41088,
+      "sha256": "be4e9faa00cc48f05545d6da83df521778a14f748c83132cd9a552d16217706a"
+    },
+    "references.bib": {
+      "payload": "references.bib.gz.b64",
+      "size_bytes": 3749,
+      "sha256": "56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1"
+    }
+  },
+  "binary_vendor_assets_versioned": false,
+  "reason": "Official MDPI binary template assets and generated publication PDFs are not duplicated in Git history; exact manuscript/reference sources and integrity metadata are versioned, while figures remain reproducible from repository pipelines.",
+  "unresolved": [
+    "corresponding author email",
+    "ORCID identifiers",
+    "CRediT author contributions",
+    "funding statement",
+    "public OSF URL/DOI",
+    "final author-reviewed conflict-of-interest wording"
+  ],
+  "guardrail": "The manuscript characterizes consequences of the inherited two-agent Empirical Law 4.3 cubic and does not claim to prove the empirical law as a general EF21 convergence theorem."
+}

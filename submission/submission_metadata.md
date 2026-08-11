@@ -5,13 +5,23 @@
 - **Journal:** Mathematics (MDPI)
 - **Section:** Mathematics and Computer Science
 - **Special Issue:** Artificial Intelligence and Algorithms
-- **Guest Editor:** Prof. Dr. Fuhsing Wang
+- **Guest Editor (MDPI profile):** Prof. Dr. Fuhsing Wang
+- **Manuscript author name:** Fu-Hsing Wang
 - **Current manuscript deadline:** 30 November 2026
 - **Article type:** Article
 
 ## Working title
 
 **Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression**
+
+## Current author order
+
+1. **Fu-Hsing Wang** — first author and corresponding author
+2. **Pack Kwan Low** — second author
+
+## Shared affiliation
+
+Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd., Yang-Ming-Shan, Taipei 11114, Taiwan.
 
 ## Suggested keywords
 
@@ -20,40 +30,42 @@
 3. EF21
 4. communication compression
 5. heterogeneous optimization
-6. convergence rate
+6. convergence analysis
 7. stability analysis
 8. sensitivity analysis
 
 ## Short research question
 
-How do agent heterogeneity and communication compression jointly affect the inherited optimal contraction factor of EF21 when average conditioning is held fixed?
+How do local regularity heterogeneity and communication compression jointly affect the inherited optimal contraction prediction of two-agent heterogeneous EF21 when average conditioning is held fixed?
 
 ## One-sentence contribution statement
 
-This study converts a reproduced two-agent empirical cubic convergence law into a controlled stability and sensitivity characterization with fixed-average heterogeneity, contraction-margin operating boundaries, off-grid robustness checks, and a fixed-stratum symbolic root-structure result.
+This study converts an independently reproduced two-agent empirical cubic law into a controlled computational, algebraic, and symbolic stability/sensitivity characterization, including a fixed-average full-regularity mismatch factorization, aligned-path invariance, and conditional largest-root sensitivity while retaining the inherited law's empirical status.
 
 ## Scope-fit statement
 
-The manuscript fits the Special Issue because it studies the mathematical and computational behavior of a distributed optimization algorithm used in communication-efficient machine learning, combining convergence-rate analysis, algorithmic parameter sensitivity, numerical verification, and symbolic characterization.
+The manuscript fits the Special Issue because it studies the mathematical and computational behavior of a communication-efficient distributed optimization method, combining algorithmic parameter sensitivity, numerical verification, symbolic analysis, and optimization theory.
+
+## Phase 23 LaTeX source
+
+The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23b `manuscript.tex` and `references.bib` are integrity-checked through `scripts/materialize_phase23_mdpi_latex.py`.
 
 ## Files expected at submission
 
-- main manuscript
-- figures 1--5
-- supplementary Figure S1
+- MDPI LaTeX manuscript source and compiled PDF
+- Figures 1--8
+- Supplementary Figure S1
 - Table 1
-- bibliography
+- bibliography / reference source
 - cover letter
-- editorial-independence note if requested by the submission system/editorial office
-- code/data availability URL or DOI
+- independent-editorial-handling disclosure
+- public code/data availability URL or DOI
 
-## Items that must be confirmed before submission
+## Items that must still be confirmed before submission
 
-- final author list and order
-- corresponding author
-- author affiliations and ORCID identifiers
-- CRediT author contributions
+- Fu-Hsing Wang correspondence e-mail
+- author ORCID identifiers
+- final CRediT author contributions
 - funding statement
-- final public GitHub release / OSF registration URL or DOI
-- whether Prof. Fuhsing Wang is an author on the manuscript
-- final conflict-of-interest wording
+- final public GitHub release / OSF Registration URL or DOI
+- final conflict-of-interest wording approved by both authors
