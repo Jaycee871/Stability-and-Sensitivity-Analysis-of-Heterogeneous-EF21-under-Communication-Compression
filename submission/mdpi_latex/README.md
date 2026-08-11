@@ -11,7 +11,9 @@ Shared affiliation staged in the manuscript:
 
 > Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd., Yang-Ming-Shan, Taipei 11114, Taiwan.
 
-The preferred correspondence e-mail for Fu-Hsing Wang remains a submission-stage placeholder until confirmed.
+Confirmed correspondence e-mail for Fu-Hsing Wang:
+
+> `wang.fuhsing@gmail.com`
 
 ## Phase 23c display correction
 
@@ -60,7 +62,6 @@ The manuscript analyzes consequences of the inherited two-agent Empirical Law 4.
 
 ## Still unresolved before submission
 
-- Fu-Hsing Wang correspondence e-mail;
 - ORCID identifiers;
 - final CRediT contribution statement;
 - funding statement;
