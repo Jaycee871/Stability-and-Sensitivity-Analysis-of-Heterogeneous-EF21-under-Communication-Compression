@@ -26,8 +26,10 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
             )
 
             manuscript = (out / "manuscript.tex").read_text(encoding="utf-8")
-            references = (out / "references.bib").read_text(encoding="utf-8")
+            references_bib = (out / "references.bib").read_text(encoding="utf-8")
+            body, marker, bibliography = manuscript.partition("\\reftitle{References}")
 
+            self.assertTrue(marker)
             self.assertIn(
                 "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*",
                 manuscript,
@@ -45,15 +47,19 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
             )
             self.assertIn(
                 "without claiming a general EF$^{21}$ convergence proof",
-                manuscript,
+                body,
             )
-            self.assertNotIn("EF21", manuscript)
+            self.assertNotIn("EF21", body)
 
-            # The typography transform is manuscript-only. Bibliographic source data
-            # remain intact rather than being mechanically rewritten.
+            # The notation transform stops before References. Published titles must
+            # remain verbatim even when they use the original plain EF21 spelling.
+            self.assertIn(
+                "EF21: A new, simpler, theoretically better, and practically faster error feedback.",
+                bibliography,
+            )
             self.assertIn(
                 "A Tight Theory of Error Feedback Algorithms in Distributed Optimization",
-                references,
+                references_bib,
             )
             self.assertIn("Submission-draft display guard", manuscript)
 

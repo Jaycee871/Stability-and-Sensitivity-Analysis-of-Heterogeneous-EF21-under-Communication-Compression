@@ -20,6 +20,7 @@ NEW_TITLE = (
     "Stability and Sensitivity Analysis of Heterogeneous Error Feedback "
     "(EF$^{21}$) under Communication Compression"
 )
+REFERENCES_MARKER = "\\reftitle{References}"
 
 
 def phase24_authorship(manuscript: bytes) -> bytes:
@@ -60,7 +61,7 @@ def phase24_authorship(manuscript: bytes) -> bytes:
 
 
 def phase24_ef_notation(manuscript: bytes) -> bytes:
-    """Apply author-reviewed EF notation without changing scientific content."""
+    """Apply author-reviewed EF notation while preserving bibliographic titles."""
     text = manuscript.decode("utf-8")
 
     if OLD_TITLE not in text:
@@ -70,17 +71,23 @@ def phase24_ef_notation(manuscript: bytes) -> bytes:
     # the algorithm name with the author-requested superscript 21.
     text = text.replace(OLD_TITLE, NEW_TITLE, 1)
 
-    # Subsequent visible manuscript uses follow the same EF^{21} typography.
-    # This transform operates on manuscript.tex only; references.bib, citation
-    # keys, filenames, and source-paper bibliographic titles are not rewritten.
-    text = text.replace("EF21", "EF$^{21}$")
+    # Apply the notation change only to the manuscript/front matter. Published
+    # titles in the References section are bibliographic data and must remain
+    # verbatim (for example, the NeurIPS paper title beginning with plain EF21).
+    body, marker, references = text.partition(REFERENCES_MARKER)
+    if not marker:
+        raise SystemExit("Phase 24 EF notation transform could not locate References")
+    body = body.replace("EF21", "EF$^{21}$")
+    text = body + marker + references
 
     if NEW_TITLE not in text:
         raise SystemExit("Phase 24 EF first-use expansion validation failed")
-    if "without claiming a general EF$^{21}$ convergence proof" not in text:
+    if "without claiming a general EF$^{21}$ convergence proof" not in body:
         raise SystemExit("Phase 24 EF notation validation marker was not found")
-    if "EF21" in text:
-        raise SystemExit("Phase 24 EF notation validation found a remaining plain EF21 token")
+    if "EF21" in body:
+        raise SystemExit("Phase 24 EF notation validation found a remaining plain EF21 token before References")
+    if "EF21: A new, simpler, theoretically better, and practically faster error feedback." not in references:
+        raise SystemExit("Phase 24 bibliography guard failed: formal EF21 title was altered")
 
     return text.encode("utf-8")
 
@@ -135,8 +142,8 @@ def main() -> None:
     print(
         "Phase 24 author review applied: Pack Kwan Low first author; Fu-Hsing Wang "
         "second/corresponding author; first visible EF occurrence expanded to Error "
-        "Feedback and subsequent manuscript notation typeset as EF^{21}. Scientific "
-        "content is unchanged."
+        "Feedback and subsequent manuscript notation typeset as EF^{21}; formal "
+        "bibliographic titles preserved verbatim. Scientific content is unchanged."
     )
 
 
