@@ -1,7 +1,14 @@
-# Phase 23c status
+# Phase 23c status — authorship superseded by Phase 24
 
 **State:** `MDPI_LATEX_STAGED_FOR_AUTHOR_REVIEW_NO_PLACEHOLDER_DOI`
 
-The official-template manuscript source is staged with Fu-Hsing Wang as first/corresponding author and Pack Kwan Low as second author. Phase 23c suppresses the MDPI class-generated dummy DOI footer in submit-mode author-facing PDFs; this does not remove DOI identifiers belonging to cited references and does not imply that a DOI has been assigned to this manuscript.
+Phase 23c established the official-template manuscript source, exact source reconstruction, and the submit-mode placeholder-DOI display correction. Those scientific/source-integrity results remain valid.
 
-The exact Phase 23c source is deterministically materialized and integrity checked in CI. Final submission remains blocked on correspondence e-mail, ORCIDs, CRediT, funding, public OSF archival identifier, and final author review.
+The Phase 23c author order has now been superseded by Phase 24 author review:
+
+1. **Pack Kwan Low** — first author.
+2. **Fu-Hsing Wang** — second author and corresponding author.
+
+Use `scripts/materialize_phase24_mdpi_latex.py` for the current author-reviewed source. The Phase 23c materializer remains preserved as the exact historical reconstruction layer.
+
+No scientific claim, figure, reference, or scope guardrail is changed by the Phase 24 authorship correction.
