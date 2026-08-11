@@ -5,7 +5,8 @@
 - **Journal:** Mathematics (MDPI)
 - **Section:** Mathematics and Computer Science
 - **Special Issue:** Artificial Intelligence and Algorithms
-- **Guest Editor / co-author:** Prof. Dr. Fu-Hsing Wang
+- **Guest Editor (MDPI profile):** Prof. Dr. Fuhsing Wang
+- **Manuscript author name:** Fu-Hsing Wang
 - **Current manuscript deadline:** 30 November 2026
 - **Article type:** Article
 
