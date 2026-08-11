@@ -13,7 +13,7 @@
 - [x] Figures 1--8 + Figure S1 + Table 1 reproducibly generated/integrated
 - [x] Current author names, order, shared affiliation, and corresponding-author role staged
 - [x] MDPI Mathematics LaTeX manuscript compiled successfully in Phase 23 staging
-- [ ] Confirm Fu-Hsing Wang correspondence e-mail
+- [x] Phase 24 author-review order recorded: Pack Kwan Low first; Fu-Hsing Wang second/corresponding
 - [ ] Confirm final author-reviewed back matter before submission
 
 ## Reproducibility
@@ -28,6 +28,7 @@
 - [x] Claim Registry v2 with 18 registered claims
 - [x] Named primary-source chain closure recorded with universal novelty explicitly uncertified
 - [x] Exact Phase 23b manuscript/reference source payloads preserved with SHA-256 checks
+- [x] Phase 24 authorship transform deterministically preserves the Phase 23c scientific source
 - [ ] Create permanent public GitHub release/tag for submitted version
 - [ ] Finalize public OSF snapshot/Registration
 - [ ] Insert permanent archive URL/DOI in Data Availability Statement
@@ -35,14 +36,13 @@
 ## MDPI front/back matter
 
 - [x] 3--10 keywords drafted
-- [x] Cover letter drafted and updated for current authorship
+- [x] Cover letter drafted and updated for current authorship relationship
 - [x] Data Availability wording drafted
 - [x] GenAI Methods/Acknowledgments disclosure drafted
 - [x] Editorial-independence note updated for Guest Editor co-authorship
-- [x] Current author list/order staged: Fu-Hsing Wang; Pack Kwan Low
+- [x] Current author list/order staged: Pack Kwan Low; Fu-Hsing Wang
 - [x] Corresponding author staged: Fu-Hsing Wang
-- [ ] Confirm correspondence e-mail
-- [ ] Confirm ORCID identifiers
+- [ ] Confirm final ORCID metadata as applicable
 - [ ] Finalize CRediT author contributions
 - [ ] Confirm funding statement
 - [ ] Finalize Conflicts of Interest statement with both authors
@@ -66,7 +66,7 @@
 - [ ] Ensure every table is cited in numerical order
 - [ ] Confirm equations and symbols follow manuscript typography consistently
 - [ ] Confirm all cited references resolve
-- [ ] Confirm no unresolved placeholder remains (email, ORCID, CRediT, funding, OSF DOI/URL)
+- [ ] Confirm no unresolved placeholder remains (ORCID, CRediT, funding, OSF DOI/URL, or other submission metadata)
 - [ ] Confirm manuscript is not under consideration elsewhere
 - [ ] Upload cover letter
 - [ ] Select the intended Special Issue in SuSy
