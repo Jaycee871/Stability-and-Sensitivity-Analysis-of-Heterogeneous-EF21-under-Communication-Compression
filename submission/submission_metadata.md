@@ -12,7 +12,7 @@
 
 ## Working title
 
-**Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression**
+**Stability and Sensitivity Analysis of Heterogeneous Error Feedback (EF$^{21}$) under Communication Compression**
 
 ## Current author order
 
@@ -40,9 +40,11 @@ Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd
 7. stability analysis
 8. sensitivity analysis
 
+`EF21` is retained as plain-text keyword metadata for indexing/search stability; the manuscript typesets the algorithm name as `EF$^{21}$`.
+
 ## Short research question
 
-How do local regularity heterogeneity and communication compression jointly affect the inherited optimal contraction prediction of two-agent heterogeneous EF21 when average conditioning is held fixed?
+How do local regularity heterogeneity and communication compression jointly affect the inherited optimal contraction prediction of two-agent heterogeneous EF$^{21}$ when average conditioning is held fixed?
 
 ## One-sentence contribution statement
 
@@ -54,7 +56,7 @@ The manuscript fits the Special Issue because it studies the mathematical and co
 
 ## Phase 24 LaTeX source
 
-The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23c source is preserved and Phase 24 author order is applied deterministically through `scripts/materialize_phase24_mdpi_latex.py`.
+The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23c source is preserved and Phase 24 author-review transforms are applied deterministically through `scripts/materialize_phase24_mdpi_latex.py`. These transforms currently cover author order, corresponding-author preservation, `EF$^{21}$` typography, and first-use expansion to **Error Feedback**.
 
 ## Files expected at submission
 
