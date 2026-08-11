@@ -3,8 +3,14 @@ Date: 2026-08-11
 Target: MDPI Mathematics / official ACS LaTeX template
 Output: 18-page PDF
 Display correction: MDPI class-generated placeholder DOI suppressed in submit-mode author-facing PDF
-Authors: Fu-Hsing Wang; Pack Kwan Low
-Corresponding author: Fu-Hsing Wang (email pending confirmation)
+Historical Phase 23c authors: Fu-Hsing Wang; Pack Kwan Low
+Historical Phase 23c corresponding author: Fu-Hsing Wang
 Local package SHA-256: 3a9da65db0c9cfa8ef15c1712910dcad35b4494570a796ebd888095f03e06aa4
-Materialized manuscript.tex SHA-256: 2ed375aa91d7b51b10f318eb03f587ea32bd776593ed4dfeac00dbee1a4ffeb3
+Materialized Phase 23c manuscript.tex SHA-256: 2ed375aa91d7b51b10f318eb03f587ea32bd776593ed4dfeac00dbee1a4ffeb3
+
+Phase 24 author-reviewed source order: Pack Kwan Low; Fu-Hsing Wang
+Phase 24 corresponding author: Fu-Hsing Wang
+Phase 24 scientific-content change: none
+Phase 24 local MDPI recompile: pending final package assembly / author review
+
 Guardrail: local compile success is a formatting/reproducibility check, not a scientific validation, DOI assignment, or submission acceptance claim.
