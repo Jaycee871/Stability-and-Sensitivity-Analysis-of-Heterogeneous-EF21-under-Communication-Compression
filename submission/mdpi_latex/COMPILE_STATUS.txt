@@ -1,8 +1,10 @@
-Phase 23b local staging compile: PASS
+Phase 23c local staging compile: PASS
 Date: 2026-08-11
 Target: MDPI Mathematics / official ACS LaTeX template
 Output: 18-page PDF
+Display correction: MDPI class-generated placeholder DOI suppressed in submit-mode author-facing PDF
 Authors: Fu-Hsing Wang; Pack Kwan Low
 Corresponding author: Fu-Hsing Wang (email pending confirmation)
-Local package SHA-256: 68eaf805f052b4fb557690b90d2d69d0dbdc0e3453e0e2830d6662f230db5a1d
-Guardrail: local compile success is a formatting/reproducibility check, not a scientific validation or submission acceptance claim.
+Local package SHA-256: 3a9da65db0c9cfa8ef15c1712910dcad35b4494570a796ebd888095f03e06aa4
+Materialized manuscript.tex SHA-256: 2ed375aa91d7b51b10f318eb03f587ea32bd776593ed4dfeac00dbee1a4ffeb3
+Guardrail: local compile success is a formatting/reproducibility check, not a scientific validation, DOI assignment, or submission acceptance claim.
