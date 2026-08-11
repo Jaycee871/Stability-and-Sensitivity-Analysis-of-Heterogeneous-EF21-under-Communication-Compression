@@ -2,13 +2,13 @@
 
 Dear Editors of *Mathematics*,
 
-Please consider our manuscript, **“Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression,”** for publication as an Article in the Special Issue **“Artificial Intelligence and Algorithms.”**
+Please consider our manuscript, **“Stability and Sensitivity Analysis of Heterogeneous Error Feedback (EF$^{21}$) under Communication Compression,”** for publication as an Article in the Special Issue **“Artificial Intelligence and Algorithms.”**
 
 The manuscript builds on the recent two-agent heterogeneous error-feedback Empirical Law 4.3 reported in *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. Rather than proposing a new algorithm or claiming a general convergence theorem, we independently reproduce and analyze the inherited cubic contraction prediction under controlled heterogeneous regularity and communication compression.
 
 The study first isolates strong-convexity heterogeneity at fixed average conditioning over a 216,027-cell baseline and then extends the controlled design so local smoothness and local strong convexity vary independently while both arithmetic means remain fixed. In the full-regularity parameterization, the inherited empirical step size and `K2` remain invariant. We separate an inherited algebraic reinterpretation, `K1-K2 = Var_w(q_i)`, from the project-derived fixed-average factorization in which the mismatch dependence is carried explicitly by `(tau_L-tau_mu)^2`. We further show that proportional regularity heterogeneity leaves the inherited cubic unchanged and, conditional on Empirical Law 4.3, use a generic symbolic root and sensitivity audit to establish positive sensitivity of the selected largest root to `K1` on the stated cubic-coordinate domain.
 
-The numerical, algebraic, symbolic, and literature-audit evidence layers are kept explicitly separate. The manuscript retains the two-agent scope and does not promote Empirical Law 4.3 into a proved general EF21 convergence theorem. The complete computational workflow, Claim Registry, symbolic-verification materials, and publication-figure pipeline are version controlled and are being prepared for permanent OSF archival release.
+The numerical, algebraic, symbolic, and literature-audit evidence layers are kept explicitly separate. The manuscript retains the two-agent scope and does not promote Empirical Law 4.3 into a proved general EF$^{21}$ convergence theorem. The complete computational workflow, Claim Registry, symbolic-verification materials, and publication-figure pipeline are version controlled and are being prepared for permanent OSF archival release.
 
 We believe the manuscript is well aligned with the Special Issue because it combines applied mathematical analysis, distributed optimization, algorithmic sensitivity, computational verification, and communication-efficient learning.
 

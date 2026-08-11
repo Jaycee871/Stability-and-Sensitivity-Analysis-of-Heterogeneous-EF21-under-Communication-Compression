@@ -15,6 +15,11 @@ from materialize_phase23_mdpi_latex import (
 
 OLD_DISPLAY_AUTHOR_LINE = "Fu-Hsing Wang $^{1,}$* and Pack Kwan Low $^{1}$"
 NEW_DISPLAY_AUTHOR_LINE = "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*"
+OLD_TITLE = "Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression"
+NEW_TITLE = (
+    "Stability and Sensitivity Analysis of Heterogeneous Error Feedback "
+    "(EF$^{21}$) under Communication Compression"
+)
 
 
 def phase24_authorship(manuscript: bytes) -> bytes:
@@ -54,11 +59,38 @@ def phase24_authorship(manuscript: bytes) -> bytes:
     return text.encode("utf-8")
 
 
+def phase24_ef_notation(manuscript: bytes) -> bytes:
+    """Apply author-reviewed EF notation without changing scientific content."""
+    text = manuscript.decode("utf-8")
+
+    if OLD_TITLE not in text:
+        raise SystemExit("Phase 24 EF notation transform could not locate the manuscript title")
+
+    # The title is the first visible occurrence, so expand EF there and typeset
+    # the algorithm name with the author-requested superscript 21.
+    text = text.replace(OLD_TITLE, NEW_TITLE, 1)
+
+    # Subsequent visible manuscript uses follow the same EF^{21} typography.
+    # This transform operates on manuscript.tex only; references.bib, citation
+    # keys, filenames, and source-paper bibliographic titles are not rewritten.
+    text = text.replace("EF21", "EF$^{21}$")
+
+    if NEW_TITLE not in text:
+        raise SystemExit("Phase 24 EF first-use expansion validation failed")
+    if "without claiming a general EF$^{21}$ convergence proof" not in text:
+        raise SystemExit("Phase 24 EF notation validation marker was not found")
+    if "EF21" in text:
+        raise SystemExit("Phase 24 EF notation validation found a remaining plain EF21 token")
+
+    return text.encode("utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
             "Reconstruct the Phase 24 MDPI LaTeX sources with Pack Kwan Low as "
-            "first author and Fu-Hsing Wang as second/corresponding author."
+            "first author, Fu-Hsing Wang as second/corresponding author, and "
+            "the author-reviewed Error Feedback (EF^{21}) notation."
         )
     )
     parser.add_argument(
@@ -84,10 +116,10 @@ def main() -> None:
             phase23c_digest = sha256(phase23c)
             if phase23c_digest != PHASE23C_FINAL_SHA256[filename]:
                 raise SystemExit(
-                    "Phase 23c integrity failure before Phase 24 authorship transform: "
+                    "Phase 23c integrity failure before Phase 24 transforms: "
                     f"expected {PHASE23C_FINAL_SHA256[filename]}, got {phase23c_digest}"
                 )
-            data = phase24_authorship(phase23c)
+            data = phase24_ef_notation(phase24_authorship(phase23c))
         else:
             digest = sha256(data)
             if digest != PHASE23C_FINAL_SHA256[filename]:
@@ -101,8 +133,10 @@ def main() -> None:
         print(f"materialized {target} sha256={digest}")
 
     print(
-        "Phase 24 authorship: Pack Kwan Low first author; Fu-Hsing Wang second author "
-        "and corresponding author. Scientific content is unchanged."
+        "Phase 24 author review applied: Pack Kwan Low first author; Fu-Hsing Wang "
+        "second/corresponding author; first visible EF occurrence expanded to Error "
+        "Feedback and subsequent manuscript notation typeset as EF^{21}. Scientific "
+        "content is unchanged."
     )
 
 
