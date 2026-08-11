@@ -17,7 +17,7 @@ OLD_DISPLAY_AUTHOR_LINE = "Fu-Hsing Wang $^{1,}$* and Pack Kwan Low $^{1}$"
 NEW_DISPLAY_AUTHOR_LINE = "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*"
 OLD_TITLE = "Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression"
 NEW_TITLE = (
-    "Stability and Sensitivity Analysis of Heterogeneous Error Feedback "
+    "Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 "
     "(EF$^{21}$) under Communication Compression"
 )
 REFERENCES_MARKER = "\\reftitle{References}"
@@ -67,8 +67,9 @@ def phase24_ef_notation(manuscript: bytes) -> bytes:
     if OLD_TITLE not in text:
         raise SystemExit("Phase 24 EF notation transform could not locate the manuscript title")
 
-    # The title is the first visible occurrence, so expand EF there and typeset
-    # the algorithm name with the author-requested superscript 21.
+    # The title is the first visible occurrence. The latest author clarification
+    # requests the full name "Error Feedback 21" there, followed by the
+    # abbreviation with superscript 21: EF^{21}.
     text = text.replace(OLD_TITLE, NEW_TITLE, 1)
 
     # Apply the notation change only to the manuscript/front matter. Published
@@ -97,7 +98,7 @@ def main() -> None:
         description=(
             "Reconstruct the Phase 24 MDPI LaTeX sources with Pack Kwan Low as "
             "first author, Fu-Hsing Wang as second/corresponding author, and "
-            "the author-reviewed Error Feedback (EF^{21}) notation."
+            "the author-reviewed Error Feedback 21 (EF^{21}) first-use notation."
         )
     )
     parser.add_argument(
@@ -141,9 +142,10 @@ def main() -> None:
 
     print(
         "Phase 24 author review applied: Pack Kwan Low first author; Fu-Hsing Wang "
-        "second/corresponding author; first visible EF occurrence expanded to Error "
-        "Feedback and subsequent manuscript notation typeset as EF^{21}; formal "
-        "bibliographic titles preserved verbatim. Scientific content is unchanged."
+        "second/corresponding author; first visible algorithm-name occurrence expanded "
+        "to Error Feedback 21 (EF^{21}); subsequent manuscript notation typeset as "
+        "EF^{21}; formal bibliographic titles preserved verbatim. Scientific content "
+        "is unchanged."
     )
 
 
