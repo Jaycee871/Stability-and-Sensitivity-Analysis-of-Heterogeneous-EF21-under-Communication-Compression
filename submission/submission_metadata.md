@@ -12,7 +12,7 @@
 
 ## Working title
 
-**Stability and Sensitivity Analysis of Heterogeneous Error Feedback (EF$^{21}$) under Communication Compression**
+**Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 (EF$^{21}$) under Communication Compression**
 
 ## Current author order
 
@@ -40,7 +40,7 @@ Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd
 7. stability analysis
 8. sensitivity analysis
 
-`EF21` is retained as plain-text keyword metadata for indexing/search stability; the manuscript typesets the algorithm name as `EF$^{21}$`.
+`EF21` is retained as plain-text keyword metadata for indexing/search stability; the manuscript typesets the algorithm abbreviation as `EF$^{21}$` after the first-use expansion **Error Feedback 21 (EF$^{21}$)**.
 
 ## Short research question
 
@@ -56,7 +56,7 @@ The manuscript fits the Special Issue because it studies the mathematical and co
 
 ## Phase 24 LaTeX source
 
-The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23c source is preserved and Phase 24 author-review transforms are applied deterministically through `scripts/materialize_phase24_mdpi_latex.py`. These transforms currently cover author order, corresponding-author preservation, `EF$^{21}$` typography, and first-use expansion to **Error Feedback**.
+The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23c source is preserved and Phase 24 author-review transforms are applied deterministically through `scripts/materialize_phase24_mdpi_latex.py`. These transforms currently cover author order, corresponding-author preservation, `EF$^{21}$` typography, first-use expansion to **Error Feedback 21 (EF$^{21}$)**, and preservation of formal bibliographic titles.
 
 ## Files expected at submission
 
