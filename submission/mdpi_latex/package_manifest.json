@@ -1,5 +1,5 @@
 {
-  "phase": "23b",
+  "phase": "23c",
   "date": "2026-08-11",
   "target": "MDPI Mathematics / ACS LaTeX template",
   "authors": [
@@ -15,25 +15,27 @@
     }
   ],
   "local_compiled_package": {
-    "filename": "MDPI_Mathematics_EF21_LaTeX_Phase23b_CorrespondingAuthor.zip",
-    "size_bytes": 2119283,
-    "sha256": "68eaf805f052b4fb557690b90d2d69d0dbdc0e3453e0e2830d6662f230db5a1d",
-    "compiled_pdf_pages": 18
+    "filename": "MDPI_Mathematics_EF21_LaTeX_Phase23c_NoPlaceholderDOI.zip",
+    "size_bytes": 2102545,
+    "sha256": "3a9da65db0c9cfa8ef15c1712910dcad35b4494570a796ebd888095f03e06aa4",
+    "compiled_pdf_pages": 18,
+    "display_change": "Suppresses the MDPI class-generated placeholder DOI in the author-facing submit-mode PDF."
   },
-  "tracked_exact_sources": {
+  "tracked_source_reconstruction": {
     "manuscript.tex": {
-      "payload": "manuscript.tex.gz.b64",
-      "size_bytes": 41088,
-      "sha256": "be4e9faa00cc48f05545d6da83df521778a14f748c83132cd9a552d16217706a"
+      "base_payload": "manuscript.tex.gz.b64",
+      "base_sha256": "be4e9faa00cc48f05545d6da83df521778a14f748c83132cd9a552d16217706a",
+      "phase23c_materialized_sha256": "2ed375aa91d7b51b10f318eb03f587ea32bd776593ed4dfeac00dbee1a4ffeb3",
+      "deterministic_transform": "scripts/materialize_phase23_mdpi_latex.py inserts the submit-mode footer guard after the keyword block."
     },
     "references.bib": {
-      "payload": "references.bib.gz.b64",
-      "size_bytes": 3749,
-      "sha256": "56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1"
+      "base_payload": "references.bib.gz.b64",
+      "base_sha256": "56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1",
+      "phase23c_materialized_sha256": "56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1"
     }
   },
   "binary_vendor_assets_versioned": false,
-  "reason": "Official MDPI binary template assets and generated publication PDFs are not duplicated in Git history; exact manuscript/reference sources and integrity metadata are versioned, while figures remain reproducible from repository pipelines.",
+  "reason": "Official MDPI binary template assets and generated publication PDFs are not duplicated in Git history. The manuscript/reference sources are deterministically reconstructed and integrity checked, while figures remain reproducible from repository pipelines.",
   "unresolved": [
     "corresponding author email",
     "ORCID identifiers",
@@ -42,5 +44,5 @@
     "public OSF URL/DOI",
     "final author-reviewed conflict-of-interest wording"
   ],
-  "guardrail": "The manuscript characterizes consequences of the inherited two-agent Empirical Law 4.3 cubic and does not claim to prove the empirical law as a general EF21 convergence theorem."
+  "guardrail": "The manuscript characterizes consequences of the inherited two-agent Empirical Law 4.3 cubic and does not claim to prove the empirical law as a general EF21 convergence theorem. The removed 10.3390/math1010000 footer was only a template-generated placeholder, not an assigned DOI."
 }
