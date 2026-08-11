@@ -1,4 +1,4 @@
-# Phase 23 — MDPI Mathematics LaTeX integration
+# Phase 23c — MDPI Mathematics LaTeX integration
 
 This directory stages the journal-template manuscript prepared from the official 2026 MDPI ACS LaTeX template supplied by the human author on 2026-08-11.
 
@@ -13,9 +13,15 @@ Shared affiliation staged in the manuscript:
 
 The preferred correspondence e-mail for Fu-Hsing Wang remains a submission-stage placeholder until confirmed.
 
+## Phase 23c display correction
+
+The official MDPI class synthesizes a dummy footer DOI from the template volume/issue/article-number defaults even in submit mode. In the earlier author-facing PDF this appeared as `https://doi.org/10.3390/math1010000`. That string was a **template-generated placeholder, not an assigned DOI**.
+
+Phase 23c adds a submit-mode footer guard to the LaTeX source so the author-facing draft no longer displays that placeholder. Existing DOI identifiers belonging to cited references remain unchanged.
+
 ## What is tracked here
 
-The exact Phase 23b `manuscript.tex` and `references.bib` are stored as gzip-compressed Base64 payloads so that the journal source can be reproduced byte-for-byte without duplicating MDPI-owned binary template assets in the repository:
+The Phase 23b base `manuscript.tex` and `references.bib` remain stored as gzip-compressed Base64 payloads:
 
 - `manuscript.tex.gz.b64`
 - `references.bib.gz.b64`
@@ -26,21 +32,25 @@ Run:
 python scripts/materialize_phase23_mdpi_latex.py
 ```
 
-to reconstruct the two editable source files under `submission/mdpi_latex/materialized/`.
+to reconstruct the exact Phase 23c editable sources under `submission/mdpi_latex/materialized/`. The materializer verifies the original payload hashes, applies the deterministic DOI-footer guard to `manuscript.tex`, and then verifies the final Phase 23c source hash.
 
-The compiled local Phase 23b package also contained the official MDPI `Definitions/` support files, publication figures 1–8, Supplementary Figure S1, and a compiled PDF. Those vendor/binary assets are intentionally not duplicated in Git history; the publication figures remain reproducible from the repository paper-asset pipeline, and the official current MDPI template should be obtained from MDPI for final submission assembly.
+The local Phase 23c package also contains the official MDPI `Definitions/` support files, publication Figures 1–8, Supplementary Figure S1, and the compiled 18-page PDF. Vendor/binary template assets and generated PDFs are intentionally not duplicated in Git history; publication figures remain reproducible from the repository paper-asset pipeline, and the current official MDPI template should be obtained from MDPI for final submission assembly.
 
 ## Local package integrity record
 
-The compiled package produced on 2026-08-11 had SHA-256:
+Phase 23c package:
 
-`68eaf805f052b4fb557690b90d2d69d0dbdc0e3453e0e2830d6662f230db5a1d`
+`MDPI_Mathematics_EF21_LaTeX_Phase23c_NoPlaceholderDOI.zip`
 
-The staged `manuscript.tex` SHA-256 is:
+SHA-256:
 
-`be4e9faa00cc48f05545d6da83df521778a14f748c83132cd9a552d16217706a`
+`3a9da65db0c9cfa8ef15c1712910dcad35b4494570a796ebd888095f03e06aa4`
 
-The staged `references.bib` SHA-256 is:
+Materialized Phase 23c `manuscript.tex` SHA-256:
+
+`2ed375aa91d7b51b10f318eb03f587ea32bd776593ed4dfeac00dbee1a4ffeb3`
+
+`references.bib` SHA-256:
 
 `56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1`
 
