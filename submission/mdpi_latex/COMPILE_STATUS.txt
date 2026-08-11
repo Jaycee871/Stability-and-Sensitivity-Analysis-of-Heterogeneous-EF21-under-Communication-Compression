@@ -1,0 +1,8 @@
+Phase 23b local staging compile: PASS
+Date: 2026-08-11
+Target: MDPI Mathematics / official ACS LaTeX template
+Output: 18-page PDF
+Authors: Fu-Hsing Wang; Pack Kwan Low
+Corresponding author: Fu-Hsing Wang (email pending confirmation)
+Local package SHA-256: 68eaf805f052b4fb557690b90d2d69d0dbdc0e3453e0e2830d6662f230db5a1d
+Guardrail: local compile success is a formatting/reproducibility check, not a scientific validation or submission acceptance claim.
