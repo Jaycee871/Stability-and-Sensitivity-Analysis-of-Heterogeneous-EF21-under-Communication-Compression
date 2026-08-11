@@ -2,7 +2,7 @@
 
 Dear Editors of *Mathematics*,
 
-Please consider our manuscript, **“Stability and Sensitivity Analysis of Heterogeneous Error Feedback (EF$^{21}$) under Communication Compression,”** for publication as an Article in the Special Issue **“Artificial Intelligence and Algorithms.”**
+Please consider our manuscript, **“Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 (EF$^{21}$) under Communication Compression,”** for publication as an Article in the Special Issue **“Artificial Intelligence and Algorithms.”**
 
 The manuscript builds on the recent two-agent heterogeneous error-feedback Empirical Law 4.3 reported in *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. Rather than proposing a new algorithm or claiming a general convergence theorem, we independently reproduce and analyze the inherited cubic contraction prediction under controlled heterogeneous regularity and communication compression.
 
