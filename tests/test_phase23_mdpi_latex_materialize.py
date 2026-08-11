@@ -36,7 +36,7 @@ class Phase23MDPILatexMaterializeTests(unittest.TestCase):
             manuscript = (out / "manuscript.tex").read_text(encoding="utf-8")
             self.assertIn("Fu-Hsing Wang $^{1,}$* and Pack Kwan Low $^{1}$", manuscript)
             self.assertIn("Correspondence: Fu-Hsing Wang", manuscript)
-            self.assertIn("does not claim to prove", manuscript)
+            self.assertIn("without claiming a general EF21 convergence proof", manuscript)
 
 
 if __name__ == "__main__":
