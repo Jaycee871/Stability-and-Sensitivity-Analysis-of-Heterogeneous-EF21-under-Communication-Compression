@@ -26,7 +26,8 @@ FINAL_SHA256 = {
     "references.bib": "56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1",
 }
 
-DOI_GUARD = r'''\n% Submission-draft display guard: the MDPI class synthesizes a placeholder DOI
+DOI_GUARD = r'''
+% Submission-draft display guard: the MDPI class synthesizes a placeholder DOI
 % from volume/issue/article-number defaults even in submit mode. Suppress that
 % footer in the author-facing draft; the Editorial Office assigns the real DOI.
 \makeatletter
