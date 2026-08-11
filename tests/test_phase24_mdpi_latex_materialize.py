@@ -41,6 +41,11 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
             self.assertIn("Correspondence: Fu-Hsing Wang", manuscript)
 
             self.assertIn(
+                "Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 "
+                "(EF$^{21}$) under Communication Compression",
+                manuscript,
+            )
+            self.assertNotIn(
                 "Stability and Sensitivity Analysis of Heterogeneous Error Feedback "
                 "(EF$^{21}$) under Communication Compression",
                 manuscript,
