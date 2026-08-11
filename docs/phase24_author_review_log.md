@@ -11,19 +11,16 @@ The authorship correction changes front matter and submission metadata only. It 
 
 ## 2026-08-11 — EF$^{21}$ notation and first-use expansion
 
-Author review requested two manuscript notation corrections:
+Author review requested the algorithm name be typeset as `EF$^{21}$` rather than plain `EF21`.
 
-1. Typeset the algorithm name as `EF$^{21}$` rather than plain `EF21`.
-2. At the first visible occurrence, expand `EF` as **Error Feedback**.
+The first wording request was to expand `EF` as **Error Feedback** at the first visible occurrence. A follow-up clarification immediately refined the first-use wording to the full name **Error Feedback 21**. Accordingly, because the manuscript title is the first visible occurrence, the current author-reviewed title is staged as:
 
-Because the manuscript title is the first visible occurrence, the current author-reviewed title is staged as:
+**Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 (EF$^{21}$) under Communication Compression**
 
-**Stability and Sensitivity Analysis of Heterogeneous Error Feedback (EF$^{21}$) under Communication Compression**
-
-Subsequent visible manuscript uses are typeset as `EF$^{21}$`. Bibliographic titles, citation keys, filenames, and source identifiers are not mechanically rewritten.
+Subsequent visible manuscript uses are typeset as `EF$^{21}$`. Bibliographic titles, citation keys, filenames, and source identifiers are not mechanically rewritten. In particular, published titles that formally use plain `EF21` remain verbatim in the References section.
 
 This is an editorial terminology/typesetting correction only. It does not alter the scientific claims, equations, numerical results, symbolic analysis, figures, references, or the inherited two-agent Empirical Law 4.3 scope.
 
 ## Scientific review status
 
-Line-by-line author review has begun with authorship, notation, and acronym-definition comments. Detailed mathematical/scientific review remains pending further comparison with the source paper *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. Until substantive scientific comments are received, Phase 24 keeps the scientific body frozen except for explicit author-review edits and necessary metadata/integrity corrections.
+Line-by-line author review has begun with authorship, notation, and acronym/full-name comments. Detailed mathematical/scientific review remains pending further comparison with the source paper *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. Until substantive scientific comments are received, Phase 24 keeps the scientific body frozen except for explicit author-review edits and necessary metadata/integrity corrections.
