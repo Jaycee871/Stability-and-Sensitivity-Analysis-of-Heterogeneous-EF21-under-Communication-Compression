@@ -69,7 +69,6 @@ The official-template manuscript source is staged under `submission/mdpi_latex/`
 
 ## Items that must still be confirmed before submission
 
-- Pack Kwan Low ORCID, if one is to be supplied
 - final CRediT author contributions
 - funding statement
 - final public GitHub release / OSF Registration URL or DOI
