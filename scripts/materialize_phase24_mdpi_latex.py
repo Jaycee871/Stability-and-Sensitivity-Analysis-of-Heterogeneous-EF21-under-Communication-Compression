@@ -90,12 +90,64 @@ def phase24_ef_notation(manuscript: bytes) -> bytes:
     return text.encode("utf-8")
 
 
+def phase24_reader_guidance(manuscript: bytes) -> bytes:
+    """Apply author-review readability edits without changing the mathematics."""
+    text = manuscript.decode("utf-8")
+
+    # First-use emphasis is intentionally limited to technical concepts that the
+    # manuscript explicitly distinguishes or defines. Proper names, algorithm
+    # names, theorem labels, and bibliographic titles are left unchanged.
+    first_use_replacements = [
+        (
+            "Statistical or data heterogeneity concerns",
+            "\\emph{Statistical or data heterogeneity} concerns",
+        ),
+        (
+            "Regularity heterogeneity concerns",
+            "\\emph{Regularity heterogeneity} concerns",
+        ),
+        (
+            "weighted variance of local condition-shape coordinates",
+            "weighted variance of \\emph{local condition-shape coordinates}",
+        ),
+        (
+            "Hence aligned heterogeneity leaves the inherited cubic unchanged",
+            "Hence \\emph{aligned heterogeneity} leaves the inherited cubic unchanged",
+        ),
+        (
+            "Conditional on Empirical Law 4.3, regularity mismatch therefore worsens",
+            "Conditional on Empirical Law 4.3, \\emph{regularity mismatch} therefore worsens",
+        ),
+    ]
+    for old, new in first_use_replacements:
+        if old not in text:
+            raise SystemExit(f"Phase 24 first-use emphasis marker not found: {old}")
+        text = text.replace(old, new, 1)
+
+    k2_block = """K_2=\n\\left(\\frac{\\Delta_1+\\Delta_2}{\\Sigma_1+\\Sigma_2}\\right)^2.\n\\]\n\nLet"""
+    k2_with_guidance = """K_2=\n\\left(\\frac{\\Delta_1+\\Delta_2}{\\Sigma_1+\\Sigma_2}\\right)^2.\n\\]\n\nThese coefficients summarize the weighted second moment and squared weighted mean of the local condition-shape coordinates; their difference will later be shown to equal a weighted variance.\n\nLet"""
+    if k2_block not in text:
+        raise SystemExit("Phase 24 K1/K2 reader-guidance insertion point not found")
+    text = text.replace(k2_block, k2_with_guidance, 1)
+
+    guidance = (
+        "These coefficients summarize the weighted second moment and squared weighted mean "
+        "of the local condition-shape coordinates; their difference will later be shown to "
+        "equal a weighted variance."
+    )
+    if text.count(guidance) != 1:
+        raise SystemExit("Phase 24 K1/K2 reader-guidance validation failed")
+
+    return text.encode("utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
             "Reconstruct the Phase 24 MDPI LaTeX sources with Pack Kwan Low as "
-            "first author, Fu-Hsing Wang as second/corresponding author, and "
-            "the author-reviewed Error Feedback 21 (EF^{21}) first-use notation."
+            "first author, Fu-Hsing Wang as second/corresponding author, the "
+            "author-reviewed Error Feedback 21 (EF^{21}) notation, first-use "
+            "technical-term emphasis, and K1/K2 reader guidance."
         )
     )
     parser.add_argument(
@@ -124,7 +176,9 @@ def main() -> None:
                     "Phase 23c integrity failure before Phase 24 transforms: "
                     f"expected {PHASE23C_FINAL_SHA256[filename]}, got {phase23c_digest}"
                 )
-            data = phase24_ef_notation(phase24_authorship(phase23c))
+            data = phase24_reader_guidance(
+                phase24_ef_notation(phase24_authorship(phase23c))
+            )
         else:
             digest = sha256(data)
             if digest != PHASE23C_FINAL_SHA256[filename]:
@@ -141,7 +195,8 @@ def main() -> None:
         "Phase 24 author review applied: Pack Kwan Low first author; Fu-Hsing Wang "
         "second/corresponding author; first visible algorithm-name occurrence expanded "
         "to Error Feedback 21 (EF^{21}); subsequent manuscript notation typeset as "
-        "EF^{21}; formal bibliographic titles preserved verbatim. Scientific content "
+        "EF^{21}; selected first-use technical terms emphasized; K1/K2 reader guidance "
+        "inserted; formal bibliographic titles preserved verbatim. Scientific content "
         "is unchanged."
     )
 
