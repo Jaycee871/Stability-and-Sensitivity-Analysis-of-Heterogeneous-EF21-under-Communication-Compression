@@ -56,6 +56,32 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
             )
             self.assertNotIn("EF21", body)
 
+            # Author-review readability edits: first-use technical concepts are
+            # emphasized, and K1/K2 receive a concise reader-facing interpretation
+            # immediately after their inherited definitions.
+            self.assertIn("\\emph{Statistical or data heterogeneity} concerns", manuscript)
+            self.assertIn("\\emph{Regularity heterogeneity} concerns", manuscript)
+            self.assertIn(
+                "weighted variance of \\emph{local condition-shape coordinates}",
+                manuscript,
+            )
+            self.assertIn(
+                "Hence \\emph{aligned heterogeneity} leaves the inherited cubic unchanged",
+                manuscript,
+            )
+            self.assertIn(
+                "Conditional on Empirical Law 4.3, \\emph{regularity mismatch} therefore worsens",
+                manuscript,
+            )
+            guidance = (
+                "These coefficients summarize the weighted second moment and squared weighted mean "
+                "of the local condition-shape coordinates; their difference will later be shown to "
+                "equal a weighted variance."
+            )
+            self.assertEqual(manuscript.count(guidance), 1)
+            self.assertLess(manuscript.index("K_2="), manuscript.index(guidance))
+            self.assertLess(manuscript.index(guidance), manuscript.index("Let\n\n\\[\n s=\\sqrt"))
+
             # The notation transform stops before References. Published titles must
             # remain verbatim even when they use the original plain EF21 spelling.
             self.assertIn(
