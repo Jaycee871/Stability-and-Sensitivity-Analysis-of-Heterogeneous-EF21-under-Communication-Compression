@@ -80,7 +80,10 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
             )
             self.assertEqual(manuscript.count(guidance), 1)
             self.assertLess(manuscript.index("K_2="), manuscript.index(guidance))
-            self.assertLess(manuscript.index(guidance), manuscript.index("Let\n\n\\[\n s=\\sqrt"))
+            self.assertLess(
+                manuscript.index(guidance),
+                manuscript.index("Empirical Law 4.3 expresses the predicted optimal contraction factor"),
+            )
 
             # The notation transform stops before References. Published titles must
             # remain verbatim even when they use the original plain EF21 spelling.
