@@ -13,141 +13,71 @@ from materialize_phase23_mdpi_latex import (
     sha256,
 )
 
-OLD_DISPLAY_AUTHOR_LINE = "Fu-Hsing Wang $^{1,}$* and Pack Kwan Low $^{1}$"
-NEW_DISPLAY_AUTHOR_LINE = "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*"
-OLD_TITLE = "Stability and Sensitivity Analysis of Heterogeneous EF21 under Communication Compression"
-NEW_TITLE = (
-    "Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 "
-    "(EF$^{21}$) under Communication Compression"
-)
-REFERENCES_MARKER = "\\reftitle{References}"
+ROUND2_MANUSCRIPT_PAYLOAD = SOURCE_DIR / "manuscript_phase24_round2.tex.gz.b64"
+ROUND2_MANUSCRIPT_SHA256 = "2ea4ead0e7c1164d3507fc5ab8aa6138ed2b82b63f1d781b4e8ba50b26fac40d"
 
 
-def phase24_authorship(manuscript: bytes) -> bytes:
-    """Apply the author-reviewed Phase 24 order without changing correspondence."""
-    text = manuscript.decode("utf-8")
+def validate_round2_manuscript(data: bytes) -> None:
+    text = data.decode("utf-8")
 
-    if "\\abstract{" not in text:
-        raise SystemExit("Phase 24 authorship transform could not locate the abstract boundary")
-
-    front, abstract_marker, rest = text.partition("\\abstract{")
-
-    if OLD_DISPLAY_AUTHOR_LINE not in front:
-        raise SystemExit("Phase 24 authorship transform could not locate the Phase 23 author line")
-
-    front = front.replace(OLD_DISPLAY_AUTHOR_LINE, NEW_DISPLAY_AUTHOR_LINE, 1)
-    front = front.replace(
-        "Fu-Hsing Wang and Pack Kwan Low",
-        "Pack Kwan Low and Fu-Hsing Wang",
-        1,
-    )
-    front = front.replace(
-        "Fu-Hsing Wang, Pack Kwan Low",
-        "Pack Kwan Low, Fu-Hsing Wang",
-        1,
-    )
-
-    text = front + abstract_marker + rest
-
-    if NEW_DISPLAY_AUTHOR_LINE not in text:
-        raise SystemExit("Phase 24 author-order validation failed")
-    if "Correspondence: Fu-Hsing Wang" not in text:
-        raise SystemExit("Phase 24 corresponding-author validation failed")
-
-    return text.encode("utf-8")
-
-
-def phase24_ef_notation(manuscript: bytes) -> bytes:
-    """Apply author-reviewed EF notation while preserving bibliographic titles."""
-    text = manuscript.decode("utf-8")
-
-    if OLD_TITLE not in text:
-        raise SystemExit("Phase 24 EF notation transform could not locate the manuscript title")
-
-    # The title is the first visible occurrence. The latest author clarification
-    # requests the full name "Error Feedback 21" there, followed by the
-    # abbreviation with superscript 21: EF^{21}.
-    text = text.replace(OLD_TITLE, NEW_TITLE, 1)
-
-    # Apply the notation change only to the manuscript/front matter. Published
-    # titles in the References section are bibliographic data and must remain
-    # verbatim (for example, the NeurIPS paper title beginning with plain EF21).
-    body, marker, references = text.partition(REFERENCES_MARKER)
-    if not marker:
-        raise SystemExit("Phase 24 EF notation transform could not locate References")
-    body = body.replace("EF21", "EF$^{21}$")
-    text = body + marker + references
-
-    if NEW_TITLE not in text:
-        raise SystemExit("Phase 24 EF first-use expansion validation failed")
-    if "without claiming a general EF$^{21}$ convergence proof" not in body:
-        raise SystemExit("Phase 24 EF notation validation marker was not found")
-    if "EF21" in body:
-        raise SystemExit("Phase 24 EF notation validation found a remaining plain EF21 token before References")
-    if "EF21: A new, simpler, theoretically better, and practically faster error feedback." not in references:
-        raise SystemExit("Phase 24 bibliography guard failed: formal EF21 title was altered")
-
-    return text.encode("utf-8")
-
-
-def phase24_reader_guidance(manuscript: bytes) -> bytes:
-    """Apply author-review readability edits without changing the mathematics."""
-    text = manuscript.decode("utf-8")
-
-    # First-use emphasis is intentionally limited to technical concepts that the
-    # manuscript explicitly distinguishes or defines. Proper names, algorithm
-    # names, theorem labels, and bibliographic titles are left unchanged.
-    first_use_replacements = [
-        (
-            "Statistical or data heterogeneity concerns",
-            "\\emph{Statistical or data heterogeneity} concerns",
-        ),
-        (
-            "Regularity heterogeneity concerns",
-            "\\emph{Regularity heterogeneity} concerns",
-        ),
-        (
-            "weighted variance of local condition-shape coordinates",
-            "weighted variance of \\emph{local condition-shape coordinates}",
-        ),
-        (
-            "Hence aligned heterogeneity leaves the inherited cubic unchanged",
-            "Hence \\emph{aligned heterogeneity} leaves the inherited cubic unchanged",
-        ),
-        (
-            "Conditional on Empirical Law 4.3, regularity mismatch therefore worsens",
-            "Conditional on Empirical Law 4.3, \\emph{regularity mismatch} therefore worsens",
-        ),
+    required = [
+        "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*",
+        "Error Feedback 21\n(\\texorpdfstring{EF$^{21}$}{EF21}) under Communication Compression",
+        "\\emph{Statistical or data heterogeneity}",
+        "\\emph{Regularity heterogeneity}",
+        "\\emph{local condition-shape coordinate}",
+        "K_1=\\sum_{i=1}^{2} w_iq_i^2",
+        "\\operatorname{Var}_w(q_i)\n:=",
+        "The study makes three main contributions.",
+        "the apparent two-dimensional heterogeneity dependence collapses onto a single nonnegative mismatch coordinate",
+        "\\begin{Proposition}[Conditional mismatch principle]",
+        "Algebraic generalizability beyond two agents",
+        "Theorem 3.1 of Ref.~\\citep{thomsen2026tight}",
+        "\\subsection{Relation to prior \\texorpdfstring{EF$^{21}$}{EF21} heterogeneity analyses}",
+        "\\setlength{\\headheight}{19pt}",
+        "Future work should test whether analogous mismatch coordinates emerge for $n>2$",
+        "{\\nolinkurl{doi:10.48550/arXiv.2402.10774}}",
     ]
-    for old, new in first_use_replacements:
-        if old not in text:
-            raise SystemExit(f"Phase 24 first-use emphasis marker not found: {old}")
-        text = text.replace(old, new, 1)
+    for marker in required:
+        if marker not in text:
+            raise SystemExit(f"Phase 24 Round 2 validation marker missing: {marker}")
 
-    k2_block = """K_2=\n\\left(\\frac{\\Delta_1+\\Delta_2}{\\Sigma_1+\\Sigma_2}\\right)^2.\n\\]\n\nLet"""
-    k2_with_guidance = """K_2=\n\\left(\\frac{\\Delta_1+\\Delta_2}{\\Sigma_1+\\Sigma_2}\\right)^2.\n\\]\n\nThese coefficients summarize the weighted second moment and squared weighted mean of the local condition-shape coordinates; their difference will later be shown to equal a weighted variance.\n\nLet"""
-    if k2_block not in text:
-        raise SystemExit("Phase 24 K1/K2 reader-guidance insertion point not found")
-    text = text.replace(k2_block, k2_with_guidance, 1)
+    forbidden = [
+        "N1a",
+        "N1b",
+        "Phase 4",
+        "Phase 13",
+        "\\rho_{\\rm homogeneous}",
+        "their difference will later be shown",
+    ]
+    for marker in forbidden:
+        if marker in text:
+            raise SystemExit(f"Phase 24 Round 2 forbidden legacy marker found: {marker}")
 
-    guidance = (
-        "These coefficients summarize the weighted second moment and squared weighted mean "
-        "of the local condition-shape coordinates; their difference will later be shown to "
-        "equal a weighted variance."
-    )
-    if text.count(guidance) != 1:
-        raise SystemExit("Phase 24 K1/K2 reader-guidance validation failed")
+    if text.count("\\begin{Proposition}[Conditional mismatch principle]") != 1:
+        raise SystemExit("Phase 24 Round 2 proposition count is not exactly one")
 
-    return text.encode("utf-8")
+    q_pos = text.index("q_i=\n\\frac{\\Delta_i}{\\Sigma_i}")
+    k_pos = text.index("K_1=\\sum_{i=1}^{2} w_iq_i^2")
+    if q_pos >= k_pos:
+        raise SystemExit("Phase 24 Round 2 K1/K2 definitions appear before q_i")
+
+    results_pos = text.index("\\section{Results}")
+    proposition_pos = text.index("\\begin{Proposition}[Conditional mismatch principle]")
+    discussion_pos = text.index("\\section{Discussion}")
+    if not (results_pos < proposition_pos < discussion_pos):
+        raise SystemExit("Phase 24 Round 2 proposition is not located in Results")
+
+    if "EF21: A new, simpler, theoretically better, and practically faster error feedback." not in text:
+        raise SystemExit("Phase 24 bibliography guard failed: formal EF21 title was altered")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Reconstruct the Phase 24 MDPI LaTeX sources with Pack Kwan Low as "
-            "first author, Fu-Hsing Wang as second/corresponding author, the "
-            "author-reviewed Error Feedback 21 (EF^{21}) notation, first-use "
-            "technical-term emphasis, and K1/K2 reader guidance."
+            "Reconstruct the Phase 24 MDPI source after live author/peer review. "
+            "The reviewed manuscript is stored as an integrity-checked compressed "
+            "snapshot while the unchanged reference payload remains traced to Phase 23c."
         )
     )
     parser.add_argument(
@@ -160,44 +90,43 @@ def main() -> None:
     out = args.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=True)
 
-    for filename, spec in BASE_FILES.items():
-        data = decode_payload(SOURCE_DIR / spec["payload"])
-        base_digest = sha256(data)
-        if base_digest != spec["base_sha256"]:
-            raise SystemExit(
-                f"base integrity failure for {filename}: expected {spec['base_sha256']}, got {base_digest}"
-            )
+    # Preserve the Phase 23c lineage check before accepting the reviewed snapshot.
+    base_manuscript_spec = BASE_FILES["manuscript.tex"]
+    base_manuscript = decode_payload(SOURCE_DIR / base_manuscript_spec["payload"])
+    if sha256(base_manuscript) != base_manuscript_spec["base_sha256"]:
+        raise SystemExit("Phase 23b base manuscript integrity failure")
+    phase23c = phase23c_manuscript(base_manuscript)
+    if sha256(phase23c) != PHASE23C_FINAL_SHA256["manuscript.tex"]:
+        raise SystemExit("Phase 23c manuscript lineage integrity failure")
 
-        if filename == "manuscript.tex":
-            phase23c = phase23c_manuscript(data)
-            phase23c_digest = sha256(phase23c)
-            if phase23c_digest != PHASE23C_FINAL_SHA256[filename]:
-                raise SystemExit(
-                    "Phase 23c integrity failure before Phase 24 transforms: "
-                    f"expected {PHASE23C_FINAL_SHA256[filename]}, got {phase23c_digest}"
-                )
-            data = phase24_reader_guidance(
-                phase24_ef_notation(phase24_authorship(phase23c))
-            )
-        else:
-            digest = sha256(data)
-            if digest != PHASE23C_FINAL_SHA256[filename]:
-                raise SystemExit(
-                    f"reference integrity failure: expected {PHASE23C_FINAL_SHA256[filename]}, got {digest}"
-                )
+    manuscript = decode_payload(ROUND2_MANUSCRIPT_PAYLOAD)
+    digest = sha256(manuscript)
+    if digest != ROUND2_MANUSCRIPT_SHA256:
+        raise SystemExit(
+            "Phase 24 Round 2 snapshot integrity failure: "
+            f"expected {ROUND2_MANUSCRIPT_SHA256}, got {digest}"
+        )
+    validate_round2_manuscript(manuscript)
+    target = out / "manuscript.tex"
+    target.write_bytes(manuscript)
+    print(f"materialized {target} sha256={digest}")
 
-        digest = sha256(data)
-        target = out / filename
-        target.write_bytes(data)
-        print(f"materialized {target} sha256={digest}")
+    # references.bib remains the verified Phase 23c reference payload.
+    ref_spec = BASE_FILES["references.bib"]
+    references = decode_payload(SOURCE_DIR / ref_spec["payload"])
+    if sha256(references) != ref_spec["base_sha256"]:
+        raise SystemExit("references.bib base integrity failure")
+    if sha256(references) != PHASE23C_FINAL_SHA256["references.bib"]:
+        raise SystemExit("references.bib Phase 23c integrity failure")
+    ref_target = out / "references.bib"
+    ref_target.write_bytes(references)
+    print(f"materialized {ref_target} sha256={sha256(references)}")
 
     print(
-        "Phase 24 author review applied: Pack Kwan Low first author; Fu-Hsing Wang "
-        "second/corresponding author; first visible algorithm-name occurrence expanded "
-        "to Error Feedback 21 (EF^{21}); subsequent manuscript notation typeset as "
-        "EF^{21}; selected first-use technical terms emphasized; K1/K2 reader guidance "
-        "inserted; formal bibliographic titles preserved verbatim. Scientific content "
-        "is unchanged."
+        "Phase 24 Round 2 author-review snapshot validated: first-use definitions, "
+        "three-contribution narrative, conditional proposition, n>2 algebraic "
+        "discussion, theorem attribution, PDF-string-safe EF^{21} metadata, "
+        "symbol consistency, and bibliographic guards are present."
     )
 
 
