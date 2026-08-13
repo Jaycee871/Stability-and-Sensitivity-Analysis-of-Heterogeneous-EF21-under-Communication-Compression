@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Phase24MDPILatexMaterializeTests(unittest.TestCase):
-    def test_author_reviewed_front_matter_and_ef_notation(self) -> None:
+    def test_round2_author_review_snapshot(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
             subprocess.run(
@@ -27,75 +27,63 @@ class Phase24MDPILatexMaterializeTests(unittest.TestCase):
 
             manuscript = (out / "manuscript.tex").read_text(encoding="utf-8")
             references_bib = (out / "references.bib").read_text(encoding="utf-8")
-            body, marker, bibliography = manuscript.partition("\\reftitle{References}")
 
-            self.assertTrue(marker)
-            self.assertIn(
-                "Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*",
-                manuscript,
-            )
-            self.assertNotIn(
-                "Fu-Hsing Wang $^{1,}$* and Pack Kwan Low $^{1}$",
-                manuscript,
-            )
-            self.assertIn("Correspondence: Fu-Hsing Wang", manuscript)
+            # Authorship and PDF-string-safe EF21 notation.
+            self.assertIn("Pack Kwan Low $^{1}$ and Fu-Hsing Wang $^{1,}$*", manuscript)
+            self.assertIn("\\texorpdfstring{EF$^{21}$}{EF21}", manuscript)
+            self.assertIn("\\setlength{\\headheight}{19pt}", manuscript)
 
-            self.assertIn(
-                "Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 "
-                "(EF$^{21}$) under Communication Compression",
-                manuscript,
-            )
-            self.assertNotIn(
-                "Stability and Sensitivity Analysis of Heterogeneous Error Feedback "
-                "(EF$^{21}$) under Communication Compression",
-                manuscript,
-            )
-            self.assertIn(
-                "without claiming a general EF$^{21}$ convergence proof",
-                body,
-            )
-            self.assertNotIn("EF21", body)
+            # First-use definitions: q_i and w_i must precede K1/K2, and the
+            # weighted variance is defined immediately rather than deferred.
+            q_pos = manuscript.index("q_i=\n\\frac{\\Delta_i}{\\Sigma_i}")
+            k_pos = manuscript.index("K_1=\\sum_{i=1}^{2} w_iq_i^2")
+            self.assertLess(q_pos, k_pos)
+            self.assertIn("\\operatorname{Var}_w(q_i)\n:=", manuscript)
+            self.assertNotIn("their difference will later be shown", manuscript)
 
-            # Author-review readability edits: first-use technical concepts are
-            # emphasized, and K1/K2 receive a concise reader-facing interpretation
-            # immediately after their inherited definitions.
-            self.assertIn("\\emph{Statistical or data heterogeneity} concerns", manuscript)
-            self.assertIn("\\emph{Regularity heterogeneity} concerns", manuscript)
-            self.assertIn(
-                "weighted variance of \\emph{local condition-shape coordinates}",
-                manuscript,
+            # Round 2 narrative rebalance.
+            self.assertIn("The study makes three main contributions.", manuscript)
+            self.assertIn("collapses onto a single nonnegative mismatch coordinate", manuscript)
+            self.assertIn("\\begin{Proposition}[Conditional mismatch principle]", manuscript)
+            self.assertEqual(
+                manuscript.count("\\begin{Proposition}[Conditional mismatch principle]"),
+                1,
             )
-            self.assertIn(
-                "Hence \\emph{aligned heterogeneity} leaves the inherited cubic unchanged",
-                manuscript,
-            )
-            self.assertIn(
-                "Conditional on Empirical Law 4.3, \\emph{regularity mismatch} therefore worsens",
-                manuscript,
-            )
-            guidance = (
-                "These coefficients summarize the weighted second moment and squared weighted mean "
-                "of the local condition-shape coordinates; their difference will later be shown to "
-                "equal a weighted variance."
-            )
-            self.assertEqual(manuscript.count(guidance), 1)
-            self.assertLess(manuscript.index("K_2="), manuscript.index(guidance))
             self.assertLess(
-                manuscript.index(guidance),
-                manuscript.index("Empirical Law 4.3 expresses the predicted optimal contraction factor"),
+                manuscript.index("\\section{Results}"),
+                manuscript.index("\\begin{Proposition}[Conditional mismatch principle]"),
+            )
+            self.assertLess(
+                manuscript.index("\\begin{Proposition}[Conditional mismatch principle]"),
+                manuscript.index("\\section{Discussion}"),
             )
 
-            # The notation transform stops before References. Published titles must
-            # remain verbatim even when they use the original plain EF21 spelling.
+            # Internal project labels must not leak into the journal manuscript.
+            for token in ("N1a", "N1b", "Phase 4", "Phase 13"):
+                self.assertNotIn(token, manuscript)
+
+            # Source attribution and notation consistency.
+            self.assertIn(
+                "homogeneous baseline $\\rho_{\\mathrm{hom}}$ from Theorem 3.1 of Ref.~\\citep{thomsen2026tight}",
+                manuscript,
+            )
+            self.assertNotIn("\\rho_{\\rm homogeneous}", manuscript)
+            self.assertIn("Algebraic generalizability beyond two agents", manuscript)
+            self.assertIn(
+                "Future work should test whether analogous mismatch coordinates emerge for $n>2$",
+                manuscript,
+            )
+
+            # Bibliographic and DOI guards.
             self.assertIn(
                 "EF21: A new, simpler, theoretically better, and practically faster error feedback.",
-                bibliography,
+                manuscript,
             )
+            self.assertIn("{\\nolinkurl{doi:10.48550/arXiv.2402.10774}}", manuscript)
             self.assertIn(
                 "A Tight Theory of Error Feedback Algorithms in Distributed Optimization",
                 references_bib,
             )
-            self.assertIn("Submission-draft display guard", manuscript)
 
 
 if __name__ == "__main__":
