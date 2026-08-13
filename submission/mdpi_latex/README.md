@@ -1,6 +1,6 @@
 # Phase 24 — MDPI Mathematics LaTeX integration
 
-This directory stages the journal-template manuscript prepared from the official 2026 MDPI ACS LaTeX template supplied by the human author on 2026-08-11.
+This directory stages the journal-template manuscript prepared from the official 2026 MDPI ACS LaTeX template supplied by the human author and subsequently reviewed in Overleaf.
 
 ## Current authorship metadata
 
@@ -11,64 +11,50 @@ Shared affiliation staged in the manuscript:
 
 > Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd., Yang-Ming-Shan, Taipei 11114, Taiwan.
 
-The corresponding-author role remains with Fu-Hsing Wang.
+## Current reviewed title
 
-## Phase 24 author-review correction
+**Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 (EF$^{21}$) under Communication Compression**
 
-Author review revised the manuscript order so the author with the largest contribution is listed first. Phase 24 therefore changes the displayed and running author order from `Fu-Hsing Wang; Pack Kwan Low` to `Pack Kwan Low; Fu-Hsing Wang`, while preserving Fu-Hsing Wang as corresponding author.
+## Round 2 reviewed manuscript snapshot
 
-The scientific text, scope guardrails, figures, references, and DOI-footer correction are unchanged by this authorship-only transform.
+The live Overleaf manuscript underwent substantive author/peer review after the earlier deterministic Phase 24 typography edits. Because those changes now include narrative restructuring, definition movement, a formal proposition, Discussion expansion, future-work text, theorem attribution, and PDF-metadata hygiene, the current reviewed manuscript is frozen as an integrity-checked compressed snapshot:
 
-## Phase 23c display correction retained
+- `manuscript_phase24_round2.tex.gz.b64`
 
-The official MDPI class synthesizes a dummy footer DOI from the template volume/issue/article-number defaults even in submit mode. In the earlier author-facing PDF this appeared as `https://doi.org/10.3390/math1010000`. That string was a **template-generated placeholder, not an assigned DOI**.
-
-Phase 23c added a submit-mode footer guard so the author-facing draft no longer displays that placeholder. Existing DOI identifiers belonging to cited references remain unchanged.
-
-## What is tracked here
-
-The Phase 23b base `manuscript.tex` and `references.bib` remain stored as gzip-compressed Base64 payloads:
-
-- `manuscript.tex.gz.b64`
-- `references.bib.gz.b64`
-
-Phase 23c reconstruction remains available through:
-
-```bash
-python scripts/materialize_phase23_mdpi_latex.py
-```
-
-For the current Phase 24 author-reviewed manuscript, run:
+Materialize the current source with:
 
 ```bash
 python scripts/materialize_phase24_mdpi_latex.py
 ```
 
-The Phase 24 materializer first verifies and reconstructs the exact Phase 23c source, then applies only the deterministic author-order correction. The corresponding-author line remains Fu-Hsing Wang.
+The materializer still verifies the Phase 23c lineage before accepting the reviewed snapshot. The unchanged `references.bib` payload remains verified against the Phase 23c integrity record.
 
-The local submission package additionally requires the official MDPI `Definitions/` support files, publication Figures 1–8, Supplementary Figure S1, and the compiled PDF. Vendor/binary template assets and generated PDFs are intentionally not duplicated in Git history; publication figures remain reproducible from the repository paper-asset pipeline, and the current official MDPI template should be obtained from MDPI for final submission assembly.
+Current reviewed manuscript SHA-256:
 
-## Phase 23c integrity record retained
+`2ea4ead0e7c1164d3507fc5ab8aa6138ed2b82b63f1d781b4e8ba50b26fac40d`
 
-Phase 23c package:
+## Round 2 review highlights
 
-`MDPI_Mathematics_EF21_LaTeX_Phase23c_NoPlaceholderDOI.zip`
+The current manuscript includes:
 
-SHA-256:
+- direct first-use definitions of $q_i$, $w_i$, $K_1$, $K_2$, and $\operatorname{Var}_w(q_i)$;
+- three consolidated contributions rather than six project-style bullets;
+- early preview of the mismatch-coordinate collapse;
+- positive contrastive positioning against nearby EF$^{21}$ heterogeneity work;
+- **Proposition 1 (Conditional mismatch principle)** in Results;
+- removal of internal labels such as `N1a`, `N1b`, `Phase 4`, and `Phase 13`;
+- a Discussion paragraph on algebraic generalizability beyond two agents while keeping the cubic claims two-agent-specific;
+- explicit attribution of the homogeneous baseline to Theorem 3.1 of Ref. [7];
+- consistent use of $\rho_{\mathrm{hom}}$;
+- PDF-string-safe `\texorpdfstring` fallbacks and LaTeX warning cleanup.
 
-`3a9da65db0c9cfa8ef15c1712910dcad35b4494570a796ebd888095f03e06aa4`
+## Phase 23c display correction retained
 
-Materialized Phase 23c `manuscript.tex` SHA-256:
-
-`2ed375aa91d7b51b10f318eb03f587ea32bd776593ed4dfeac00dbee1a4ffeb3`
-
-`references.bib` SHA-256:
-
-`56d1eb6eb77845a3a5b9d85212aedd3687b59eb9105308bf7f199bacab9cb2a1`
+The official MDPI class can synthesize a dummy footer DOI from template volume/issue/article-number defaults even in submit mode. Phase 23c added a submit-mode footer guard so the author-facing draft does not display that placeholder. Real DOI identifiers belonging to cited references remain unchanged.
 
 ## Scientific guardrail
 
-The manuscript analyzes consequences of the inherited two-agent Empirical Law 4.3 cubic. It does **not** claim to prove Empirical Law 4.3 as a general EF21 convergence theorem.
+The manuscript analyzes consequences of the reproduced two-agent Empirical Law 4.3 cubic. It does **not** claim to prove Empirical Law 4.3 as a general EF$^{21}$ convergence theorem. The weighted-moment variance identity is algebraically broader, but the fixed-average factorization and root-sensitivity results remain scoped to the inherited two-agent cubic.
 
 ## Still unresolved before submission
 
@@ -76,4 +62,5 @@ The manuscript analyzes consequences of the inherited two-agent Empirical Law 4.
 - final CRediT contribution statement;
 - funding statement;
 - permanent public OSF URL/DOI after archive freeze;
-- final Conflict of Interest wording after author review.
+- final Conflict of Interest wording after author review;
+- final figure/layout consolidation and submission-package freeze.
