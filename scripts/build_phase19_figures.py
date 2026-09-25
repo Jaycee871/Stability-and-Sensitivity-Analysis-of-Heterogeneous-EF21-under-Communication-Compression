@@ -119,9 +119,9 @@ def save_rate_collapse(
         order = np.argsort(x)
         ax.scatter(x[order], y[order], s=7, alpha=0.18, label=rf"$\bar\kappa={kappa:g}$")
 
-    ax.set_xlabel(r"Mismatch coordinate $K_1-K_2$")
-    ax.set_ylabel("Normalized contraction penalty")
-    ax.set_title(r"Two-dimensional heterogeneity collapses onto $K_1-K_2$")
+    ax.set_xlabel(r"Regularity mismatch $\\Psi=K_1-K_2$")
+    ax.set_ylabel(r"Normalized contraction penalty $H_{\\mathrm{norm}}$")
+    ax.set_title(r"Two-dimensional heterogeneity collapses onto $\\Psi=K_1-K_2$")
     ax.legend()
     fig.tight_layout()
     fig.savefig(path, format="svg", bbox_inches="tight")
@@ -167,14 +167,14 @@ def main() -> None:
         taus,
         out / "figure6_mismatch_geometry.svg",
         title=rf"Regularity mismatch geometry ($\bar\kappa={args.focus_kappa:g}$)",
-        colorbar_label=r"$K_1-K_2$",
+        colorbar_label=r"$\\Psi=K_1-K_2$",
     )
     save_heatmap(
         focus["penalty"],
         taus,
         out / "figure7_full_regularity_penalty.svg",
         title=rf"Full-regularity contraction penalty ($\bar\kappa={args.focus_kappa:g}$, $\epsilon={args.epsilon:g}$)",
-        colorbar_label="Normalized contraction penalty",
+        colorbar_label=r"Normalized contraction penalty $H_{\\mathrm{norm}}$",
     )
     save_rate_collapse(surfaces, out / "figure8_rate_collapse.svg")
 
