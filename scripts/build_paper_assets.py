@@ -30,8 +30,8 @@ def save_heatmap(matrix, taus, epsilons, title, label, path: Path) -> None:
         aspect="auto",
         extent=[epsilons[0], epsilons[-1], taus[0], taus[-1]],
     )
-    ax.set_xlabel("compression error epsilon")
-    ax.set_ylabel("heterogeneity ratio tau = mu2 / mu1")
+    ax.set_xlabel(r"Compression error $\\epsilon$")
+    ax.set_ylabel(r"Heterogeneity ratio $\\tau=\\mu_2/\\mu_1$")
     ax.set_title(title)
     fig.colorbar(image, ax=ax, label=label)
     fig.tight_layout()
@@ -51,10 +51,10 @@ def save_conditioning_comparison(all_rows, path: Path) -> None:
         ax.plot(
             [float(row["epsilon"]) for row in selected],
             [float(row["normalized_penalty"]) for row in selected],
-            label=f"kappa_bar={kappa:g}",
+            label=rf"$\\bar{{\\kappa}}={kappa:g}$",
         )
-    ax.set_xlabel("compression error epsilon")
-    ax.set_ylabel("normalized heterogeneity penalty")
+    ax.set_xlabel(r"Compression error $\\epsilon$")
+    ax.set_ylabel(r"Normalized heterogeneity penalty $H_{\\mathrm{norm}}$")
     ax.set_title("Compression amplifies the relative heterogeneity burden")
     ax.legend()
     fig.tight_layout()
@@ -79,10 +79,10 @@ def save_retention_boundaries(boundaries, target: float, path: Path) -> None:
         ax.plot(
             [float(row.epsilon) for row in selected],
             [float(row.minimum_tau) for row in selected],
-            label=f"kappa_bar={kappa:g}",
+            label=rf"$\\bar{{\\kappa}}={kappa:g}$",
         )
-    ax.set_xlabel("compression error epsilon")
-    ax.set_ylabel("minimum tau")
+    ax.set_xlabel(r"Compression error $\\epsilon$")
+    ax.set_ylabel(r"Minimum heterogeneity ratio $\\tau$")
     ax.set_title(f"Minimum heterogeneity ratio for {target:.0%} margin retention")
     ax.set_ylim(0.0, 1.0)
     ax.legend()
@@ -100,15 +100,15 @@ def save_boundary_convergence(records, path: Path) -> None:
         estimates = np.asarray(
             [float(row["grid_boundaries"][str(value)]) for value in points], dtype=float
         )
-        ax.plot(points, estimates, marker="o", label=f"grid kappa_bar={kappa:g}")
+        ax.plot(points, estimates, marker="o", label=rf"Grid $\\bar{{\\kappa}}={kappa:g}$")
         ax.axhline(
             float(row["continuous_boundary"]),
             linestyle="--",
-            label=f"bisection kappa_bar={kappa:g}",
+            label=rf"Bisection $\\bar{{\\kappa}}={kappa:g}$",
         )
     ax.set_xscale("log")
-    ax.set_xlabel("number of tau grid points")
-    ax.set_ylabel("99% retention boundary at epsilon=0.95")
+    ax.set_xlabel(r"Number of $\\tau$ grid points")
+    ax.set_ylabel(r"99% retention boundary at $\\epsilon=0.95$")
     ax.set_title("Boundary convergence under grid refinement")
     ax.legend(fontsize=8)
     fig.tight_layout()
@@ -119,11 +119,11 @@ def save_boundary_convergence(records, path: Path) -> None:
 
 def save_root_structure_note(path: Path) -> None:
     text = (
-        "Wolfram symbolic audit (kappa_bar = 2, 10, 100):\n"
-        "Delta = positive prefactor x P(s, tau),\n"
-        "with all 63 coefficients of P strictly positive.\n\n"
-        "Therefore, for 0 < s = sqrt(epsilon) < 1 and tau > 0,\n"
-        "Delta > 0 and the inherited cubic has three distinct real roots\n"
+        r"Wolfram symbolic audit ($\\bar{\\kappa}\\in\\{2,10,100\\}$):" "\n"
+        r"$\\Delta$ = positive prefactor $\\times P(s,\\tau)$," "\n"
+        "with all 63 coefficients of $P$ strictly positive.\n\n"
+        r"Therefore, for $0<s=\\sqrt{\\epsilon}<1$ and $\\tau>0$," "\n"
+        r"$\\Delta>0$ and the inherited cubic has three distinct real roots" "\n"
         "on each audited fixed-conditioning open domain."
     )
     fig, ax = plt.subplots(figsize=(7.2, 3.8))
@@ -204,16 +204,16 @@ def main() -> None:
         metric_matrix(primary_rows, taus, epsilons, "rho_star"),
         taus,
         epsilons,
-        "EF21 contraction landscape at fixed average conditioning (kappa_bar=10)",
-        "rho_star",
+        r"EF$^{21}$ contraction landscape at fixed average conditioning ($\\bar{\\kappa}=10$)",
+        r"Predicted contraction factor $\\rho_\\star$",
         figures / "figure1_contraction_landscape.svg",
     )
     save_heatmap(
         metric_matrix(primary_rows, taus, epsilons, "normalized_penalty"),
         taus,
         epsilons,
-        "Normalized heterogeneity penalty (kappa_bar=10)",
-        "normalized penalty",
+        r"Normalized heterogeneity penalty ($\\bar{\\kappa}=10$)",
+        r"Normalized penalty $H_{\\mathrm{norm}}$",
         figures / "figure2_normalized_penalty.svg",
     )
     save_conditioning_comparison(
