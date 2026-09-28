@@ -1,5 +1,7 @@
 # MDPI Mathematics submission checklist
 
+> **Submission milestone:** the manuscript was submitted to *Mathematics* on **28 September 2026**. Unchecked items below are retained as archival or post-submission follow-up items and do not imply that the submission is still pending.
+
 ## Manuscript content
 
 - [x] Working title fixed
