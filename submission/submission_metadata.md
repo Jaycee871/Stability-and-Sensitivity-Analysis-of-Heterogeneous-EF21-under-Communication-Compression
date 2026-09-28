@@ -1,5 +1,13 @@
 # MDPI Mathematics submission metadata
 
+## Submission status
+
+- **Status:** Submitted
+- **Submission date:** 28 September 2026
+- **Journal:** *Mathematics* (MDPI)
+- **Submitted manuscript version:** Version September 28, 2026
+- **Acceptance/publication/DOI:** not yet recorded
+
 ## Target
 
 - **Journal:** Mathematics (MDPI)
@@ -50,7 +58,7 @@ The manuscript studies the reproduced two-agent Heterogeneity-Aware Convergence 
 
 ## Current source of record
 
-The authoritative author-reviewed source is `manuscript/manuscript.tex`. Older Markdown and compressed LaTeX snapshots are retained only as development records.
+The submitted source is frozen at `submission/manuscript_submitted_2026-09-28.tex`. The maintained working copy is `manuscript/manuscript.tex`. Older Markdown and compressed LaTeX snapshots are retained only as development records.
 
 ## Public repository
 
