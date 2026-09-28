@@ -1,0 +1,304 @@
+% Based on the official MDPI LaTeX template (2026 version).
+% Submitted manuscript version: 28 September 2026, Mathematics (MDPI).
+\documentclass[mathematics,article,submit,moreauthors]{Definitions/mdpi}
+
+
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{ }
+\daterevised{ }
+\dateaccepted{ }
+\datepublished{ }
+
+\Title{Sensitivity of Two-Agent \texorpdfstring{EF\textsuperscript{21}}{EF21} to Heterogeneous Regularity under Compression}
+\newcommand{\orcidauthorA}{0000-0002-7292-0100} % Pack Kwan Low
+
+
+\Author{Pack Kwan Low\texorpdfstring{\textsuperscript{1}}{1}\orcidA{} and Fu-Hsing Wang\texorpdfstring{\textsuperscript{1,*}}{1,*}}
+\AuthorNames{Pack Kwan Low and Fu-Hsing Wang}
+
+\address{\textsuperscript{1} \quad Department of Information Management,
+Chinese Culture University,
+55 Hwa-Kang Rd.,
+Yang-Ming-Shan,
+Taipei 11114,
+Taiwan}
+
+\corres{Correspondence: wfx2@ulive.pccu.edu.tw}
+
+\abstract{Error Feedback 21 (EF$^{21}$) is a communication efficient optimization method whose behavior under heterogeneous local regularity remains incompletely understood. For two agents, Berg Thomsen, Taylor, and Dieuleveut reported an empirical cubic relation whose largest real root predicts the optimal contraction rate. We independently reproduced this relation across the complete 10,500-configuration source grid and verified numerical consistency with the polynomial, the homogeneous theoretical limit, and the reference implementation. We then examined sensitivity under two controlled parameterizations. In the equal smoothness setting, stronger convexity heterogeneity reduced the available contraction margin, while heavier compression amplified the relative penalty. In the full regularity setting, local smoothness and strong convexity varied independently while their arithmetic means remained fixed. The empirical step size and the average regularity coefficient then remained invariant, and the remaining dependence reduced to a nonnegative mismatch measure equal to the weighted variance of local regularity ratios. Proportional variation in smoothness and strong convexity produced zero mismatch even when the agents remained heterogeneous. Symbolic analysis further showed that the selected contraction root increases with mismatch. These results indicate that, conditional on the reproduced empirical relation, contraction degradation is governed by regularity mismatch rather than heterogeneity magnitude alone.}
+
+\keyword{distributed optimization; error feedback; communication compression; regularity heterogeneity; performance estimation; sensitivity analysis}
+
+% Submission-draft display guard: the MDPI class synthesizes a placeholder DOI
+% from volume/issue/article-number defaults even in submit mode. Suppress that
+% footer in the author-facing draft; the Editorial Office assigns the real DOI.
+\makeatletter
+\AtBeginDocument{%
+  \ifthenelse{\equal{\@status}{submit}}{%
+    \rfoot{}%
+    \fancypagestyle{plain}{\fancyfoot[R]{}}%
+  }{}%
+}
+\makeatother
+
+
+
+\setlength{\headheight}{19pt}
+\begin{document}
+\section{Introduction}
+
+The rapid growth of distributed and federated learning has substantially increased the importance of communication efficient optimization algorithms. In large-scale learning systems, numerous agents collaboratively train a global model while exchanging gradient information with a central server. Since modern models often contain millions or even billions of parameters, communication frequently becomes the dominant computational bottleneck. This challenge has motivated the development of gradient quantization, sparsification, and other compressed communication schemes that reduce transmission costs while preserving optimization efficiency. However, compression inevitably introduces approximation errors that may degrade convergence performance. To alleviate this issue, error feedback mechanisms accumulate and re-inject compression residuals into subsequent iterations, thereby compensating for information loss and recovering favorable convergence properties even under biased or lossy compression schemes \cite{seide2014onebit,stich2018sparsified,karimireddy2019error}. As a result, error feedback has become a central component of modern communication efficient optimization methods.
+
+Among existing error-compensation approaches, Error Feedback 21 (\texorpdfstring{EF$^{21}$}{EF21}), proposed by Richt\'arik et al. \cite{richtarik2021ef21}, has emerged as one of the most influential frameworks. Instead of directly transmitting compressed gradients, \texorpdfstring{EF$^{21}$}{EF21} maintains local gradient estimators and communicates compressed gradient differences, resulting in a simpler and more stable error feedback mechanism. Recent theoretical advances have further strengthened its foundations by establishing tight convergence guarantees, optimal step-size rules, and Lyapunov-based characterizations under contractive compression and strongly convex objectives \cite{thomsen2026tight}. These results demonstrate that \texorpdfstring{EF$^{21}$}{EF21} effectively mitigates degradation from compression while maintaining strong convergence behavior in distributed learning environments with limited communication.
+
+Despite these advances, the role of agent heterogeneity is still not adequately understood. In practical federated learning systems, local objectives often differ substantially due to data heterogeneity, unequal sample sizes, or variations in local regularity properties. Such differences may manifest through distinct smoothness constants, strong convexity parameters, or local conditioning characteristics between agents. Although recent work has begun to investigate heterogeneous EF$^{21}$ systems \cite{thomsen2026tight}, a systematic understanding of how heterogeneity interacts with communication compression is still lacking. In particular, it remains unclear whether increasing heterogeneity simply slows convergence or fundamentally changes how sensitive EF$^{21}$ is to perturbations caused by compression. 
+
+Recent evidence suggests that the interaction between communication compression and agent heterogeneity plays a fundamental role in determining the behavior of error feedback algorithms. In particular, Berg Thomsen et al. \cite{thomsen2026tight} reported a collection of empirical laws that describe EF and EF$^{21}$ under heterogeneous regularity parameters. Unlike conventional convergence results obtained through direct analytical derivation, these empirical laws emerged from a combination of \emph{Performance Estimation Problem (PEP)} analysis \cite{drori2014performance,taylor2017exact,goujaud2024pepit}, semidefinite programming based Lyapunov searches, symbolic algebra exploration, and extensive numerical verification. Most notably, their two-agent heterogeneous analysis predicts that the optimal convergence rate is given by the largest real root of an agent-dependent cubic polynomial. Consequently, the predicted contraction behavior is no longer determined solely by a global condition number, but instead depends on a more intricate interaction among local smoothness constants, local strong convexity constants, and communication compression.
+
+To establish a reliable foundation for further investigation, we
+independently reproduced the heterogeneous two-agent cubic relation
+reported as Empirical Law~4.3 of Ref.~\cite{thomsen2026tight}; throughout
+this paper, we refer to this relation as the \emph{Heterogeneity-Aware
+Convergence Law (HAC Law)}. The reproduction covers the full evaluation grid of 10,500 configurations used in the original study. It includes consistency checks based on polynomial residuals, agreement with the homogeneous theoretical limit, and comparison with the reference implementation. Across the tested parameter domain, the maximum observed polynomial residual is $1.742\times10^{-15}$, supporting the numerical consistency of the reproduced formulation.
+
+Building upon this numerical reproduction, we adopt the term HAC Law to
+emphasize that the predicted convergence rate explicitly incorporates
+both communication compression and discrepancies in local objective
+regularity. More specifically, HAC Law characterizes the optimal prediction for EF$^{21}$ contraction as the largest real root of a cubic polynomial specific to each agent, thereby quantitatively describing how heterogeneous local regularity influences convergence behavior under compression. This characterization naturally raises a
+deeper question: although the cubic relation depends on multiple
+heterogeneous parameters, what structural aspects of heterogeneity are
+actually responsible for the observed convergence degradation?
+
+To answer this question, we first establish an independent reproduction
+of HAC Law and then develop a systematic sensitivity framework for
+heterogeneous EF$^{21}$ systems. The main contributions of this paper are summarized as follows. 
+
+\begin{enumerate}
+\addtolength{\labelwidth}{3pt}
+\item \textbf{Sensitivity analysis of heterogeneous EF$^{21}$ under compression.}
+To isolate the effect of heterogeneity from overall conditioning, we develop a controlled baseline parameterization and examine the joint influence of communication compression and heterogeneous local regularity on the predicted EF$^{21}$ contraction rate. A controlled sweep of more than 216,000 configurations, each evaluated through the largest real root of the reproduced cubic, reveals how compression influences contraction behavior across heterogeneous environments and identifies regimes in which heterogeneity has either a negligible or a substantial effect on the predicted contraction factor.
+\item \textbf{Discovery of a low dimensional heterogeneity structure.} By allowing variations in smoothness and strong convexity to occur simultaneously, we show that the apparent dependence of HAC Law on multiple parameters reduces to a simpler measure of structural mismatch. This representation reveals an unexpected alignment invariance: when disparities in smoothness and strong convexity evolve proportionally across agents, increasing heterogeneity may leave the predicted convergence behavior essentially unchanged. 
+\item \textbf{Characterization of when heterogeneity becomes harmful.} We analyze the sensitivity of the selected contraction root of HAC Law and establish a monotonic relationship between structural mismatch and convergence degradation. The results demonstrate that convergence is affected not merely by the magnitude of heterogeneity but by how different forms of heterogeneity are misaligned across agents. This finding provides a principled explanation of when heterogeneity becomes harmful and when it remains effectively invisible to the heterogeneous convergence law. \end{enumerate}
+
+The remainder of this paper is organized as follows. Section~2 introduces the reproduced HAC Law and develops an alternative coefficient interpretation that reveals its underlying regularity structure. Section~3 assesses the numerical consistency of the reproduced relation and investigates its sensitivity to heterogeneous regularity through a sequence of controlled parameter studies. The section culminates in an interpretation of the reproduced law based on structural mismatch and a characterization of how sensitive the selected contraction root is. Section~4 discusses the implications, scope, generalizability, and practical interpretation of regularity mismatch. Finally, Section~5 concludes the paper and outlines directions for future research.
+
+\section{Background and HAC Law} 
+This section introduces the mathematical form of the reproduced HAC Law used throughout this study. The empirical background and motivation of HAC Law have been discussed in Section~1. Here, we focus on the quantities required for the subsequent analysis and develop an alternative coefficient interpretation that exposes the regularity structure embedded in the reproduced cubic relation.
+
+\subsection{Problem Setting and Notation} \label{sec:problem-setting} 
+Consider the distributed finite sum objective \[ f(x)=\frac{1}{n}\sum_{i=1}^{n} f_i(x), \] where \(f_i\) denotes the local objective associated with worker \(i\). Communication is performed through a contractive compression operator satisfying Assumption 1.1 of Ref.~\cite{thomsen2026tight}, with compression-error parameter \(\epsilon\in[0,1)\): \[ \mathbb{E}_{\omega}\!\left[\|x-\mathcal{C}(x;\omega)\|^2\right] \leq \epsilon\|x\|^2 \quad \text{for every }x\in\mathbb{R}^d. \] Here, \(\omega\) denotes the random seed of the compression operator, and the expectation is taken over this randomness. The endpoint \(\epsilon=0\) corresponds to exact transmission, since the compression error must then vanish almost surely for each input. To study the effect of compression error, the numerical and root sensitivity analyses in this paper focus on \(0<\epsilon<1\). The case \(\epsilon=0\) is treated separately in Section~\ref{sec:root-audit}, where its distinct root structure and sensitivity behavior are analyzed after the necessary quantities have been defined. The source compressor assumption remains \(\epsilon\in[0,1)\); the restriction to positive error specifies the domain of the present analysis. Theorem~3.1 of Ref.~\cite{thomsen2026tight}, used for the homogeneous reference, also assumes \(0<\epsilon<1\). Throughout this paper, we focus on the two-agent setting. For a given compression level in the studied domain, HAC Law associates a heterogeneous two-agent configuration with an empirical optimal step size \(\eta_\star\) and a predicted optimal contraction factor \(\rho_\star\). These quantities provide the basis for the validation, sensitivity, and mismatch analyses developed in the subsequent sections. 
+
+\subsection{HAC Law} \label{sec:hac-law} Recall that HAC Law denotes
+the two-agent relation reported as Empirical Law~4.3 of
+Ref.~\cite{thomsen2026tight}. For each worker \(i\in\{1,2\}\), let
+\(L_i\) and \(\mu_i\) denote the local smoothness and strong convexity
+constants, respectively. The smoothness constant \(L_i\) controls how rapidly the local gradient may change, whereas the strong convexity constant \(\mu_i\) characterizes the local curvature responsible for linear convergence. Define $\Sigma_i=L_i+\mu_i, \Delta_i=L_i-\mu_i$. Here, \(\Sigma_i\) characterizes the overall scale of local regularity, whereas \(\Delta_i\) measures the imbalance between smoothness and strong convexity. Large values of \(\Delta_i\) indicate that the local objective is considerably smoother than it is strongly convex, whereas \(\Delta_i=0\) corresponds to the balanced case \(L_i=\mu_i\). The regularity dependent coefficients appearing in HAC Law are \[ K_1= \frac{\Delta_2^2\Sigma_1+\Delta_1^2\Sigma_2} {\Sigma_1\Sigma_2(\Sigma_1+\Sigma_2)}, \qquad K_2= \left( \frac{\Delta_1+\Delta_2} {\Sigma_1+\Sigma_2} \right)^2. \] The coefficient \(K_1\) aggregates local regularity information through a weighted combination of squared imbalance terms. As shown below, it admits an interpretation as a second moment quantity associated with the local regularity structure. In contrast, \(K_2\) combines the imbalance terms prior to squaring and therefore reflects an averaged regularity structure across workers. Let $s=\sqrt{\epsilon}$ and $r(s)=\frac{(1-s)^2}{1+s}$. The variable \(s\) is a reparameterized compression factor introduced to simplify notation, since compression dependence appears repeatedly through \(\sqrt{\epsilon}\). The quantity \(r(s)\) acts as a compression dependent scaling factor that modulates the influence of heterogeneous regularity on the cubic coefficients. HAC Law characterizes the predicted optimal contraction factor \(\rho_\star\) as the largest real root of $Q(\rho) = \rho^3-A\rho^2+B\rho-s^4$, where $A = s(2+s) + r(s)(sK_1+K_2)$, and $B = s^2 \Bigl[ 1+2s+r(s)(K_1+sK_2) \Bigr]$. The associated empirical optimal step size is $\eta_\star = \frac{4} {(L_1+\mu_1)+(L_2+\mu_2)} \cdot \frac{1-s}{1+s}$. In this representation, communication compression enters through \(s\) and \(r(s)\), whereas heterogeneous local regularity enters exclusively through \(K_1\) and \(K_2\). Their interaction determines the predicted contraction factor \(\rho_\star\). Thus, for fixed local regularity parameters \((L_1,\mu_1,L_2,\mu_2)\) and compression level \(\epsilon\), HAC Law maps a heterogeneous two-agent configuration to a cubic polynomial and an empirical step size. Smaller values of \(\rho_\star\) correspond to faster predicted contraction, whereas values closer to one indicate slower predicted contraction. 
+
+\subsection{Alternative Coefficient Interpretation} \label{sec:weighted-moment} Although HAC Law provides an explicit characterization of the predicted contraction factor, the meanings of the coefficients \(K_1\) and \(K_2\) are not immediately transparent. To expose their regularity structure, we introduce an alternative interpretation based on local regularity ratios. Define the local regularity ratio $q_i = \frac{\Delta_i}{\Sigma_i} = \frac{L_i-\mu_i}{L_i+\mu_i}$, and the normalized weights $w_i = \frac{\Sigma_i}{\Sigma_1+\Sigma_2}$. The coordinate \(q_i\) describes the shape of the local regularity pair \((L_i,\mu_i)\) independently of its overall scale. Values of $q_i$ close to zero indicate balanced regularity ($L_i \approx \mu_i$), while values near one reflect a highly ill conditioned local structure. The normalized weight \(w_i\) represents the relative contribution of worker \(i\) to the total regularity scale; workers with larger values of \(L_i+\mu_i\) therefore exert greater influence on the coefficient structure. Substituting \( \Delta_i=q_i\Sigma_i \) and \( w_i=\Sigma_i/(\Sigma_1+\Sigma_2) \) into the definitions of \(K_1\) and \(K_2\) yields $K_1=\sum_{i=1}^{2} w_i q_i^2$, and $K_2= \left( \sum_{i=1}^{2} w_i q_i \right)^2$. Thus, \(K_1\) is the weighted second moment of the local regularity ratios, whereas \(K_2\) is the square of their weighted mean. To quantify discrepancies among local regularity structures, we define the regularity mismatch measure \[ \Psi = \sum_{i=1}^{2} w_i \left( q_i- \sum_{j=1}^{2}w_jq_j \right)^2. \] Using the identity \(\sum_{i=1}^{2}w_i=1\), it follows that \[ \Psi = \sum_{i=1}^{2} w_i q_i^2 - \left( \sum_{i=1}^{2} w_i q_i \right)^2 = K_1-K_2. \] The quantity \(\Psi\) is the weighted variance of the local regularity ratios. It measures disagreement among local regularity structures, vanishes if and only if all workers share the same regularity ratio, and increases as the mismatch among local regularity structures becomes larger. Consequently, the coefficient pair \((K_1,K_2)\) admits a natural decomposition into an average component and a mismatch component. Specifically, $K_1=K_2+\Psi$, where \(K_2\) represents the squared weighted average regularity shape and \(\Psi\) captures the contribution arising from differences among workers. Hence, HAC Law depends on both the average regularity structure and the regularity mismatch among workers. This representation is an exact algebraic rewriting of the coefficients appearing in HAC Law and does not constitute a new convergence law. Rather, it provides an interpretable description of how heterogeneous regularity enters the reproduced cubic relation. Most importantly, it reveals that HAC Law depends not only on the magnitudes of local regularity parameters but also on their structural mismatch as quantified by \(\Psi\). 
+
+\subsection{The Case of Exact Transmission}\label{sec:root-audit}
+The source compressor assumption allows \(\epsilon\in[0,1)\), but the reproduced cubic undergoes a structural simplification at the exact transmission endpoint \(\epsilon=0\). In that case $s=0$ and $r(s)=1$, so the coefficients collapse to $A=K_2$ and $B=0$. The polynomial therefore reduces to
+\[
+Q(\rho)=\rho^3-K_2\rho^2=\rho^2(\rho-K_2).
+\]
+
+The roots are \(0\) (with multiplicity two) and \(K_2\) when \(K_2>0\); in the degenerate case \(K_2=0\), zero has multiplicity three. In either case, \(K_1\) drops out of both \(A\) and \(B\). Hence, the three distinct roots argument used later does not apply at this endpoint. When \(K_2>0\), the selected largest root is \(\rho_\star=K_2\) and \(\mathrm{d}\rho_\star/\mathrm{d}K_1=0\), so the later strict sensitivity conclusion does not extend to \(\epsilon=0\).
+
+For this reason, the numerical audits and the claims regarding strict sensitivity to mismatch in Section~3 are restricted to $0<\epsilon<1$. The endpoint $\epsilon=0$ is recorded here only to explain that restriction; it is not used as a regular operating point of the sensitivity analysis. 
+
+\section{Numerical Reproduction and Sensitivity Analysis of HAC Law}
+This section assesses the numerical consistency of the reproduced HAC Law and investigates its behavior under controlled heterogeneity parameterizations. The analysis proceeds from independent numerical reproduction checks to sensitivity studies under equal smoothness and finally to mismatch analysis under full regularity. Unless otherwise stated, all reported quantities are evaluated using the reproduced cubic formulation introduced in Section~2.
+
+\subsection{Independent Numerical Reproduction of HAC Law}
+Before using HAC Law as the analytical foundation for the subsequent sensitivity study, we independently reproduced the source cubic relation over the original two-agent verification grid. For each worker $i\in\{1,2\}$, the local smoothness $L_i$ is taken from $\{1,10,100,1000\}$ and the local condition number $\kappa_i$ from $\{2,10,100,1000,10000\}$.
+Each pair $(L_i,\kappa_i)$ determines $\mu_i=L_i/\kappa_i$, so $\mu_i$ is derived rather than chosen independently.
+The grid therefore has two independent dimensions per worker: $L_i$ and $\kappa_i$. The four smoothness values and five condition number values yield $4 \times 5 = 20$ local regularity configurations per worker. Because exchanging the worker labels leaves the two-agent relation unchanged, worker pairs that differ only by label exchange are counted only once, while pairs with identical local configurations are retained. The resulting grid therefore contains \(\binom{20+2-1}{2}=\binom{21}{2}=210\) unordered worker configurations, comprising \(190\) heterogeneous pairs and \(20\) identical pairs. Following the source verification protocol, each of these \(210\) configurations was evaluated at \(50\) equally spaced compression levels \(\epsilon\in[0.05,0.95]\), yielding \(210\times50=10{,}500\) parameter instances.
+
+Before evaluating the cubic, the local smoothness constants were normalized by the largest smoothness value within each worker pair, with the same scaling applied to the corresponding strong convexity constants. This normalization preserves the local condition numbers and therefore leaves the underlying regularity structure unchanged. The count of \(10{,}500\) refers to the enumerated grid prior to any additional identification of configurations related by common scaling.
+
+The validation framework reports three complementary diagnostics. First, the polynomial residual \(|Q(\rho_\star)|\) checks whether the selected numerical root satisfies the reproduced cubic. Second, the implementation difference compares the independently computed result with the hash pinned source helper. Third, the homogeneous limit difference compares the heterogeneous cubic evaluated at the homogeneous parameter limit with the proved EF$^{21}$ contraction rate from Theorem~3.1 of Ref.~\cite{thomsen2026tight}.
+
+To distinguish genuine reproducibility from a permissive numerical test, every audited parameter instance was paired with a negative control obtained from a modified polynomial. A valid validation procedure should reproduce the source polynomial while rejecting the modified relation. The independent replay covered all \(10{,}500\) parameter instances. The maximum polynomial residual was \(1.742\times10^{-15}\), and the maximum difference from the pinned source helper was zero at stored numerical precision. At the homogeneous limit, the reproduced largest root prediction agreed with the proved EF$^{21}$ contraction rate to within \(8.389\times10^{-13}\). Every one of the $10{,}500$ controls with mutated polynomials was rejected.
+
+\subsection{Equal Smoothness Contraction Analysis} 
+To isolate the effect of strong convexity heterogeneity, we impose equal local smoothness, \(L_1=L_2=L=1\), and fix the arithmetic mean of the local strong convexity constants at \(\bar{\mu}=(\mu_1+\mu_2)/2\). Strong convexity heterogeneity is parameterized by the ratio \(\tau=\mu_2/\mu_1\), where \(0<\tau\le1\). Under fixed \(\bar{\mu}\), the local strong convexity constants are reconstructed as \(\mu_1=2\bar{\mu}/(1+\tau)\) and \(\mu_2=2\bar{\mu}\tau/(1+\tau)\). The homogeneous case corresponds to \(\tau=1\). With \(L=1\), the average conditioning level is represented by \(\bar{\kappa}=L/\bar{\mu}\). Three conditioning strata are considered, namely \(\bar{\kappa}\in\{2,10,100\}\). The primary audit uses 381 evenly spaced values of \(\tau\in[0.05,1]\), 189 evenly spaced values of \(\epsilon\in[0.01,0.95]\), and the three conditioning strata, yielding \(381\times189\times3=216{,}027\) controlled parameter configurations. For each parameter cell \((\tau,\epsilon,\bar{\kappa})\), the analysis records the empirical step size \(\eta_\star\), the selected largest real root \(\rho_\star\), and the homogeneous reference contraction factor \(\rho_{\mathrm{hom}}\). Figure~\ref{fig:contraction-landscape} shows the predicted contraction factor \(\rho_\star\) over the \((\tau,\epsilon)\) plane for the representative conditioning stratum \(\bar{\kappa}=10\). Stronger heterogeneity corresponds to smaller values of \(\tau\), while larger values of \(\epsilon\) indicate heavier communication compression. Several trends are visible. First, \(\rho_\star\) increases monotonically with compression error, indicating progressively slower predicted contraction as communication becomes less accurate. Second, decreasing \(\tau\) moves the system away from the homogeneous limit and produces an increasingly pronounced separation between heterogeneous and homogeneous contraction predictions. Finally, the surface reveals an interaction between compression and heterogeneity. Near the homogeneous regime (\(\tau\approx1\)), variation in \(\epsilon\) primarily shifts the contraction level. Under stronger heterogeneity, however, the contraction prediction becomes substantially more sensitive to compression, suggesting that communication error amplifies the effect of local regularity imbalance. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/figure1_contraction_landscape.pdf}
+\caption{Predicted contraction factor over strong convexity heterogeneity and compression at fixed average conditioning \(\bar{\kappa}=10\).
+\label{fig:contraction-landscape}}
+\end{figure}
+\unskip
+
+
+
+\subsection{Heterogeneity Penalty and Conditioning Effects}
+To quantify the impact of heterogeneity, we define three summary metrics. The contraction margin \(1-\rho\) quantifies the distance from a contraction factor to the boundary where contraction fails at $\rho=1$.
+Based on this quantity, we define the absolute heterogeneity penalty
+\(H_{\rm abs}=\rho_\star-\rho_{\mathrm{hom}}\), the normalized
+heterogeneity penalty
+\(H_{\rm norm}=(\rho_\star-\rho_{\mathrm{hom}})/(1-\rho_{\mathrm{hom}})\),
+and the contraction margin retention
+\(R=(1-\rho_\star)/(1-\rho_{\mathrm{hom}})=1-H_{\rm norm}\). The normalized formulation proves especially useful when approaching the boundary where contraction fails, as a slight absolute rise in $\rho_\star$ can account for a large portion of the remaining contraction margin. Consequently, \(H_{\rm norm}\) measures the fraction of
+homogeneous contraction margin lost because of heterogeneity.
+Figure~\ref{fig:normalized-penalty} reports the normalized heterogeneity penalty for the representative conditioning level \(\bar{\kappa}=10\). Larger values indicate a greater loss of contraction margin relative to the homogeneous reference. Across the audited domain, increasing strong convexity heterogeneity consistently increases the relative contraction penalty. The effect becomes more
+pronounced as compression increases, indicating that communication
+error amplifies the influence of regularity imbalance. Across the dense
+audit grid, the maximum normalized penalties are approximately
+\(5.07\%\), \(1.70\%\), and \(0.20\%\) for \(\bar{\kappa}=2\), \(10\),
+and \(100\), respectively.
+
+\begin{figure}[H] \centering \includegraphics[width=0.96\textwidth]{figures/figure2_normalized_penalty.pdf} \caption{Normalized heterogeneity penalty over strong convexity heterogeneity and compression at \(\bar{\kappa}=10\).
+\label{fig:normalized-penalty}} 
+\end{figure} 
+\unskip
+
+Figure~\ref{fig:conditioning-interaction} examines the interaction between compression and conditioning by fixing the heterogeneity level at \(\tau=0.05\). Increasing compression from \(\epsilon=0.01\) to \(\epsilon=0.95\) multiplies the normalized penalty by approximately \(3.84\times\), \(3.12\times\), and \(3.03\times\) for \(\bar{\kappa}=2\), \(10\), and \(100\), respectively. The smaller relative penalty observed for \(\bar{\kappa}=100\) should not be interpreted as improved convergence. In this stratum, the predicted contraction factor is already very close to unity throughout most of the audited domain. For example, every audited configuration satisfies \(\rho_\star\ge0.95\), and approximately \(63.5\%\) satisfy \(\rho_\star\ge0.99\). Consequently, relatively little contraction margin remains available to be consumed by heterogeneity. 
+
+\begin{figure}[H] \centering \includegraphics[width=0.96\textwidth]{figures/figure3_conditioning_interaction.pdf}
+\caption{Normalized heterogeneity penalty versus compression error at \(\tau=0.05\) for \(\bar{\kappa}\in\{2,10,100\}\).
+\label{fig:conditioning-interaction}} \end{figure} 
+\unskip
+
+\subsection{Contraction Margin Operating Boundaries and Robustness} 
+To provide operational summaries of the contraction penalty, we define a target retention level \(R_0\) and identify, for each compression level and conditioning stratum, the smallest heterogeneity ratio satisfying \(R(\tau,\epsilon,\bar{\kappa})\ge R_0\). The resulting threshold curve characterizes the minimum heterogeneity ratio required to retain a prescribed fraction of the homogeneous contraction margin. The principal analysis adopts \(R_0=0.99\). Figure~\ref{fig:retention-boundary} shows the corresponding threshold curves. At \(\epsilon=0.95\), continuous bisection yields \(\tau^\star=0.4076217487\) for \(\bar{\kappa}=2\), \(\tau^\star=0.1798561595\) for \(\bar{\kappa}=10\), and full domain satisfaction over the audited range \(\tau\ge0.05\) for \(\bar{\kappa}=100\). These thresholds provide practical summaries of the heterogeneous contraction behavior predicted by HAC Law under severe communication compression.
+\begin{figure}[H] \centering \includegraphics[width=0.96\textwidth]{figures/figure4_retention_boundary.pdf} \caption{Minimum heterogeneity ratio required to retain 99\% of the homogeneous contraction margin across compression levels.
+\label{fig:retention-boundary}} \end{figure} \unskip Table~\ref{tab:key-results} summarizes the principal outcomes of the equal smoothness audit, including the maximum observed heterogeneity penalties, the range of predicted contraction factors, and the corresponding 99\% retention boundaries across the three conditioning strata. \begin{table}[H] \caption{ Maximum observed heterogeneity penalties, predicted contraction factor ranges, and 99\% retention boundaries for the three conditioning strata considered in the equal smoothness analysis. } \label{tab:key-results} \centering \begin{tabular*}{0.96\textwidth}{@{\extracolsep{\fill}}cccccc} \toprule $\bar{\kappa}$ & Max. $H_{\mathrm{norm}}$ & Max. $H_{\mathrm{abs}}$ & $\rho_{\star,\min}$ & $\rho_{\star,\max}$ & $\tau^\star_{99\%}$\\ \midrule 2 & 0.050736 & 0.015650 & 0.250000 & 0.983908 & 0.407622\\ 10 & 0.016990 & 0.002103 & 0.728505 & 0.995427 & 0.179856\\ 100 & 0.002005 & 0.000030 & 0.967907 & 0.999493 & $\le 0.05$\\ \bottomrule \end{tabular*} \end{table} Because these operating boundaries are derived from a finite parameter grid, their robustness was assessed through two additional audits. First, Figure~\ref{fig:boundary-convergence} examines the effect of grid refinement on the estimated threshold values. The 99\% threshold curves remain stable under refinement to 1,521 grid points, indicating that the reported operating thresholds are robust with respect to grid resolution.
+
+\begin{figure}[H] \centering \includegraphics[width=0.96\textwidth]{figures/figure5_boundary_convergence.pdf} \caption{Stability of the 99\% threshold curve under increasing grid resolution for $\tau$. 
+\label{fig:boundary-convergence}} \end{figure} 
+\unskip 
+
+Second, the robustness of the results was examined using 20,000 parameter pairs that were not part of the original evaluation grid. No substantive ordering violation was observed under the project's numerical interpretation tolerance, and the maximum observed cubic residual remained approximately \(2\times10^{-15}\). To perform an additional check for consistency, we conducted a symbolic audit across fixed strata for $\bar{\kappa} \in \{2, 10, 100\}$. In each case, the cubic discriminant factors into a positive rational prefactor and a polynomial whose coefficients remain strictly positive. Consequently, the cubic possesses three distinct real roots throughout the corresponding equal smoothness domain. 
+
+
+\subsection{Full Regularity Analysis and Regularity Mismatch Interpretation} 
+The equal smoothness study isolates the effect of strong convexity heterogeneity by holding the local smoothness constants fixed. We now consider a more general setting where both smoothness and strong convexity vary across workers. We define the \emph{fixed average parameterization} as the setup where the arithmetic means $\bar{L} = \frac{L_1 + L_2}{2}$ and $\bar{\mu} = \frac{\mu_1 + \mu_2}{2}$ are held fixed, yielding a constant average condition number $\bar{\kappa} = \frac{\bar{L}}{\bar{\mu}}$. Under this parameterization, smoothness and strong convexity heterogeneity are captured independently by $\tau_L = \frac{L_2}{L_1}$ and $\tau_{\mu} = \frac{\mu_2}{\mu_1}$. The full audit contains \(273{,}885\) requested parameter cells, of which \(258{,}400\) satisfy the admissibility condition \(0<\mu_i\le L_i\). Because both arithmetic means remain fixed, the empirical step size \(\eta_\star\) is invariant throughout the audit. The coefficient \(K_2=((\bar{\kappa}-1)/(\bar{\kappa}+1))^2\) is likewise invariant and depends only on average conditioning. Consequently, all remaining regularity dependence is carried by the regularity mismatch measure \(\Psi=K_1-K_2\). Using the weighted moment representation developed in Section~\ref{sec:weighted-moment}, the mismatch measure admits the exact factorization \begin{equation} \Psi= \frac{ 4\bar{\kappa}^2(\tau_L-\tau_\mu)^2 }{ (\bar{\kappa}+1)^2 (\tau_L+\bar{\kappa}\tau_\mu+\bar{\kappa}+1) (\bar{\kappa}\tau_L\tau_\mu+\tau_L\tau_\mu+\bar{\kappa}\tau_L+\tau_\mu) }. \end{equation} All denominator factors remain positive on the admissible domain. Therefore, \(\Psi\ge0\), with equality if and only if \(\tau_L=\tau_\mu\). Figure~\ref{fig:mismatch-geometry} visualizes the resulting mismatch geometry for the representative conditioning stratum \(\bar{\kappa}=10\). The path \(\tau_L=\tau_\mu\) forms an exact zero mismatch valley across the admissible domain. We call this aligned case \emph{proportional heterogeneity}: the workers may still differ in the raw values of \(L_i\) and \(\mu_i\), but the two heterogeneity ratios coincide, so the local regularity ratios are identical and \(\Psi=0\). Equivalently, \(K_1=K_2\). We refer to this insensitivity of the cubic to proportional regularity scaling as the \emph{alignment invariance}. This observation reveals an important distinction between heterogeneity magnitude and regularity mismatch. Under the reproduced HAC Law, contraction behavior is influenced not by heterogeneity alone, but by the extent to which smoothness and strong convexity heterogeneity become misaligned.
+
+\begin{figure}[H] \centering \includegraphics[width=0.96\textwidth]{figures/figure6_mismatch_geometry.pdf} \caption{Regularity mismatch measure \(\Psi\) over the \((\tau_L,\tau_\mu)\) plane for \(\bar{\kappa}=10\).
+\label{fig:mismatch-geometry}} \end{figure} \unskip 
+
+Figure~\ref{fig:full-penalty} demonstrates the contraction consequences of this mismatch structure. The normalized contraction penalty vanishes along the path \(\tau_L=\tau_\mu\), where \(\Psi=0\), and increases as smoothness and strong convexity heterogeneity become progressively misaligned. Thus, configurations with identical average conditioning may exhibit substantially different contraction predictions depending on the value of \(\Psi\). The close correspondence between Figures~\ref{fig:mismatch-geometry} and~\ref{fig:full-penalty} indicates that the full two dimensional regularity dependence is effectively organized by a single mismatch coordinate. This provides empirical evidence that regularity mismatch, rather than raw heterogeneity magnitude, is the dominant structural quantity governing the reproduced HAC Law. 
+
+\begin{figure}[H] \centering \includegraphics[width=0.96\textwidth]{figures/figure7_full_regularity_penalty.pdf} \caption{Normalized contraction penalty over the \((\tau_L,\tau_\mu)\) plane at \(\bar{\kappa}=10\) and \(\epsilon=0.95\).
+\label{fig:full-penalty}} 
+\end{figure} 
+\unskip
+
+\subsection{Root Sensitivity and Regularity Mismatch} 
+The mismatch factorization established above shows that all regularity dependence enters HAC Law through the mismatch measure \(\Psi\). To determine whether increasing mismatch improves or worsens the predicted contraction behavior, a symbolic audit of the reproduced cubic was conducted over a parameter domain independent of any particular \((\tau_L,\tau_\mu)\) discretization. For the studied setting \(\bar{\kappa}>1\), positivity of the local regularity parameters together with the weighted moment representation implies \(0<K_2\le K_1<1\) and \(0<s<1\). The symbolic certificate establishes that the cubic possesses three distinct roots in the open unit interval and that the selected largest root remains simple throughout the admissible domain. Evaluation at \(s=\sqrt{\epsilon}\) further yields \(Q(s)=K_2(s-1)^3s^2<0\), implying \(\rho_\star>s\). Implicit differentiation with respect to \(K_1\) gives \begin{equation} \frac{d\rho_\star}{dK_1} = \frac{(1-s)^2}{1+s} \frac{s\rho_\star(\rho_\star-s)} {Q'(\rho_\star)} >0. \end{equation} Thus, increasing \(K_1\) while holding \(K_2\) fixed strictly increases the predicted contraction factor. Under the fixed average parameterization, both the empirical step size and the coefficient \(K_2\) remain invariant, while the remaining regularity dependence is entirely captured by the mismatch measure \(\Psi=K_1-K_2\). Consequently, every admissible nonzero mismatch increases the predicted contraction factor relative to the aligned configuration, whereas \(\Psi=0\) yields the smallest contraction factor within the corresponding family of admissible configurations. Since \(K_1=K_2+\Psi\), it follows that \(\rho_\star\) is monotonically increasing in \(\Psi\). Therefore, proportional regularity scaling yields the best predicted contraction behavior among all admissible configurations sharing the same average conditioning and compression level. Figure~\ref{fig:rate-collapse} illustrates this relationship. For \(\epsilon=0.95\) and \(\bar{\kappa}\in\{2,10,100\}\), every admissible \((\tau_L,\tau_\mu)\) pair is plotted as normalized contraction penalty versus \(\Psi\). Within each conditioning stratum, the two dimensional parameter space collapses onto a one dimensional curve because \(K_2\) and the empirical step size remain fixed, leaving \(\Psi\) as the only regularity dependent coordinate. The observed monotone trend is consistent with the sensitivity result \(d\rho_\star/dK_1>0\). Taken together, the mismatch factorization, symbolic sensitivity analysis, and rate collapse behavior indicate that contraction degradation under the reproduced HAC Law is governed by regularity mismatch rather than by heterogeneity magnitude alone.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/figure8_rate_collapse.pdf}
+\caption{Collapse of full regularity contraction penalties onto the mismatch coordinate \(\Psi\) at \(\epsilon=0.95\) for \(\bar{\kappa}\in\{2,10,100\}\).
+\label{fig:rate-collapse}}
+\end{figure}
+\unskip
+
+\section{Discussion}
+\subsection{Regularity Mismatch versus Heterogeneity Magnitude}
+The equal smoothness analysis shows that larger strong convexity heterogeneity is associated with slower predicted contraction and that communication compression amplifies this effect. The full regularity analysis provides a more refined interpretation. When smoothness and strong convexity vary independently, the contraction prediction depends not only on the magnitude of heterogeneity but also on the alignment of local regularity structures.
+
+This distinction is captured by the mismatch measure \(\Psi=K_1-K_2\). Along the path \(\tau_L=\tau_\mu\), workers may differ substantially in their individual values of \(L_i\) and \(\mu_i\), yet their regularity ratios remain identical. Consequently, \(\Psi=0\), and the reproduced cubic predicts the same contraction behavior as the aligned configuration. Away from this path, the mismatch becomes positive and the predicted contraction factor increases. Thus, the reproduced law distinguishes heterogeneity magnitude from regularity mismatch, with contraction degradation governed primarily by the latter.
+
+\subsection{Interpretation and Generalizability}
+The identity \(\Psi=K_1-K_2\) follows directly from an algebraic rewriting of the cubic coefficients and identifies \(\Psi\) as the weighted variance of the local regularity ratios. Under the fixed average parameterization, the mismatch factorization makes the alignment condition explicit through the squared term \((\tau_L-\tau_\mu)^2\).
+
+The symbolic sensitivity analysis further shows that increasing mismatch worsens the predicted contraction behavior. Together with the invariance of the empirical step size and \(K_2\), this result establishes a direct link between regularity mismatch and contraction degradation.
+
+The weighted moment representation itself is not restricted to two agents. For any collection of regularity ratios and normalized weights, the same variance interpretation remains valid. However, the mismatch factorization and root sensitivity results developed here rely on the reproduced two-agent cubic relation. Extending these results to larger numbers of workers would require either a corresponding empirical law or an independent convergence analysis.
+
+\subsection{Practical Interpretation}
+From the perspective of the reproduced cubic relation, proportional variation of smoothness and strong convexity introduces no mismatch penalty even when workers remain heterogeneous. In contrast, disagreement between the two heterogeneity ratios increases the mismatch measure, worsens the predicted contraction factor, and reduces the available contraction margin.
+
+This interpretation should be viewed as a characterization of contraction rates rather than a complete system design principle. The reproduced cubic does not explicitly model communication cost, stochastic gradients, asynchronous execution, or implementation dependent effects. Its main contribution is to reveal that heterogeneous regularity influences the predicted contraction behavior through a low dimensional mismatch structure rather than through heterogeneity magnitude alone.
+
+\section{Conclusion} 
+This paper investigated the sensitivity of two-agent EF$^{21}$ to heterogeneous local regularity through the reproduced Heterogeneity-Aware Convergence Law (HAC Law). An independent reproduction over the complete 10,500-configuration evaluation grid confirmed consistency with the reported cubic relation, the homogeneous theoretical limit, and the reference implementation, providing a numerical basis for the subsequent analysis. The equal smoothness study showed that strong convexity heterogeneity reduces the available contraction margin and that communication compression amplifies its relative effect. Extending the analysis to jointly varying smoothness and strong convexity revealed a simpler underlying structure. Under a fixed average parameterization, the empirical step size and the coefficient \(K_2\) remain invariant, while all remaining regularity dependence is captured by the mismatch measure \(\Psi=K_1-K_2\), which is the weighted variance of local regularity ratios. A central finding of this work is that contraction degradation is governed by regularity mismatch rather than by heterogeneity magnitude alone. When the smoothness and strong convexity heterogeneity ratios are aligned, the mismatch vanishes and the reproduced cubic becomes insensitive to proportional regularity scaling, even though workers remain heterogeneous. In contrast, misalignment produces a positive mismatch and worsens the predicted contraction factor. The symbolic sensitivity analysis further shows that the selected largest root increases monotonically with the coefficient carrying the mismatch term, providing a theoretical explanation for this behavior. Overall, the analysis reduces a two dimensional regularity space to a single mismatch coordinate and provides a structural interpretation of how heterogeneous regularity influences the contraction prediction of EF$^{21}$ under compression. Future work includes extending the analysis beyond two agents and investigating whether similar mismatch structures arise in convergence analysis, performance estimation frameworks, or large-scale stochastic settings.
+
+\dataavailability{
+The analysis code, numerical summaries, symbolic verification materials,
+and reproducibility scripts supporting this study are available in the
+public GitHub repository at
+\href{https://github.com/Jaycee871/Sensitivity-of-TwoAgent-EF21-to-Heterogeneous-Regularity-under-Compression}
+{Sensitivity of Two-Agent EF$^{21}$ to Heterogeneous Regularity under Compression}.
+}
+
+
+\conflictsofinterest{Fu-Hsing Wang serves as a Guest Editor of the Special Issue ``Artificial Intelligence and Algorithms'' in \emph{Mathematics}. The authors request that this manuscript be handled independently by an Academic Editor without a conflict of interest. The authors declare no other conflicts of interest.}
+
+
+\reftitle{References}
+\begin{thebibliography}{99}
+
+\bibitem{seide2014onebit}
+Seide, F.; Fu, H.; Droppo, J.; Li, G.; Yu, D.
+1-bit stochastic gradient descent and its application to data-parallel distributed training of speech DNNs.
+In \emph{Proceedings of Interspeech 2014};
+Singapore, 14--18 September 2014;
+pp. 1058--1062.
+\href{https://doi.org/10.21437/Interspeech.2014-274}
+{doi:10.21437/Interspeech.2014-274}.
+
+\bibitem{stich2018sparsified}
+Stich, S.U.; Cordonnier, J.-B.; Jaggi, M.
+Sparsified SGD with memory.
+In \emph{Advances in Neural Information Processing Systems};
+2018; Volume 31, pp. 4452--4463.
+
+\bibitem{karimireddy2019error}
+Karimireddy, S.P.; Rebjock, Q.; Stich, S.U.; Jaggi, M.
+Error feedback fixes SignSGD and other gradient compression schemes.
+In \emph{Proceedings of the 36th International Conference on Machine Learning};
+PMLR, 2019; Volume 97, pp. 3252--3261.
+
+\bibitem{richtarik2021ef21}
+Richt\'arik, P.; Sokolov, I.; Fatkhullin, I.
+EF$^{21}$: A new, simpler, theoretically better, and practically faster error feedback.
+In \emph{Advances in Neural Information Processing Systems};
+2021; Volume 34, pp. 4384--4396.
+
+\bibitem{thomsen2026tight}
+Berg Thomsen, D.; Taylor, A.B.; Dieuleveut, A.
+A Tight Theory of Error Feedback Algorithms in Distributed Optimization.
+\emph{arXiv} \textbf{2026}, arXiv:2605.31594.
+\href{https://doi.org/10.48550/arXiv.2605.31594}
+{\nolinkurl{doi:10.48550/arXiv.2605.31594}}.
+
+\bibitem{drori2014performance}
+Drori, Y.; Teboulle, M.
+Performance of first-order methods for smooth convex minimization: A novel approach.
+\emph{Math. Program.} \textbf{2014}, \emph{145}, 451--482.
+\href{https://doi.org/10.1007/s10107-013-0653-0}
+{doi:10.1007/s10107-013-0653-0}.
+
+\bibitem{taylor2017exact}
+Taylor, A.B.; Hendrickx, J.M.; Glineur, F.
+Exact worst-case performance of first-order methods for composite convex optimization.
+\emph{SIAM J. Optim.} \textbf{2017}, \emph{27}, 1283--1313.
+\href{https://doi.org/10.1137/16M108104X}
+{doi:10.1137/16M108104X}.
+
+\bibitem{goujaud2024pepit}
+Goujaud, B.; Moucer, C.; Glineur, F.; Hendrickx, J.M.; Taylor, A.B.; Dieuleveut, A.
+PEPit: Computer-assisted worst-case analyses of first-order optimization methods in Python.
+\emph{Math. Program. Comput.} \textbf{2024}, \emph{16}, 337--367.
+\href{https://doi.org/10.1007/s12532-024-00259-7}
+{doi:10.1007/s12532-024-00259-7}.
+
+
+
+\end{thebibliography}
+\end{document}
+
