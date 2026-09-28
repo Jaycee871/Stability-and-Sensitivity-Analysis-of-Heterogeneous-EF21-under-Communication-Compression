@@ -2,19 +2,23 @@
 
 Dear Editors of *Mathematics*,
 
-Please consider our manuscript, **“Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 (EF$^{21}$) under Communication Compression,”** for publication as an Article in the Special Issue **“Artificial Intelligence and Algorithms.”**
+Please consider our manuscript, **“Sensitivity of Two-Agent Error Feedback 21 to Heterogeneous Regularity under Compression,”** for publication as an Article in the Special Issue **“Artificial Intelligence and Algorithms.”**
 
-The manuscript builds on the recent two-agent heterogeneous error-feedback Empirical Law 4.3 reported in *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. Rather than proposing a new algorithm or claiming a general convergence theorem, we independently reproduce and analyze the inherited cubic contraction prediction under controlled heterogeneous regularity and communication compression.
+The manuscript examines the two-agent heterogeneous cubic relation reported as Empirical Law 4.3 in *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. We independently reproduced the relation across the complete 10,500-configuration source grid and assessed numerical consistency through polynomial residuals, agreement with the homogeneous theoretical limit, comparison with the reference implementation, and negative controls.
 
-The study first isolates strong-convexity heterogeneity at fixed average conditioning over a 216,027-cell baseline and then extends the controlled design so local smoothness and local strong convexity vary independently while both arithmetic means remain fixed. In the full-regularity parameterization, the inherited empirical step size and `K2` remain invariant. We separate an inherited algebraic reinterpretation, `K1-K2 = Var_w(q_i)`, from the project-derived fixed-average factorization in which the mismatch dependence is carried explicitly by `(tau_L-tau_mu)^2`. We further show that proportional regularity heterogeneity leaves the inherited cubic unchanged and, conditional on Empirical Law 4.3, use a generic symbolic root and sensitivity audit to establish positive sensitivity of the selected largest root to `K1` on the stated cubic-coordinate domain.
+Building on this numerical reproduction, the study analyzes how communication compression interacts with heterogeneous local regularity. The equal smoothness analysis evaluates 216,027 controlled configurations. The full regularity analysis then allows local smoothness and strong convexity to vary independently while their arithmetic means remain fixed. In this parameterization, the empirical step size and the average regularity coefficient remain invariant, and the remaining dependence reduces to the nonnegative mismatch measure $\Psi=K_1-K_2$, equal to the weighted variance of local regularity ratios. Proportional variation produces zero mismatch even when the agents remain heterogeneous. Symbolic analysis further shows that, conditional on the reproduced cubic relation and for positive compression error, the selected contraction root increases with mismatch.
 
-The numerical, algebraic, symbolic, and literature-audit evidence layers are kept explicitly separate. The manuscript retains the two-agent scope and does not promote Empirical Law 4.3 into a proved general EF$^{21}$ convergence theorem. The complete computational workflow, Claim Registry, symbolic-verification materials, and publication-figure pipeline are version controlled and are being prepared for permanent OSF archival release.
+The manuscript maintains a strict scope distinction throughout. It does not present the inherited empirical relation as a newly proved general EF$^{21}$ convergence theorem. Instead, it provides a reproducible numerical, algebraic, and symbolic characterization of the relation in the stated two-agent setting.
 
-We believe the manuscript is well aligned with the Special Issue because it combines applied mathematical analysis, distributed optimization, algorithmic sensitivity, computational verification, and communication-efficient learning.
+The repository containing the analysis code, numerical summaries, symbolic verification materials, and reproducibility scripts is publicly available at:
 
-We confirm that neither this manuscript nor any part of its substantive content is currently under consideration for publication in another journal, and the manuscript has not been published previously in journal form. All authors will approve the final submitted version and accept responsibility for the integrity of the work.
+https://github.com/Jaycee871/Stability-and-Sensitivity-Analysis-of-Heterogeneous-EF21-under-Communication-Compression
 
-**Editorial independence.** Prof. Dr. Fu-Hsing Wang is both a co-author/corresponding author of this manuscript and a Guest Editor of the Special Issue “Artificial Intelligence and Algorithms.” He is also the academic advisor of Pack Kwan Low. We therefore respectfully request fully independent editorial handling by an independent Editorial Board Member or other Academic Editor without a conflict of interest. Prof. Wang should have no role in reviewer selection, peer-review access beyond his role as an author, recommendation, or editorial decision-making for this submission.
+We believe the manuscript is appropriate for the Special Issue because it combines distributed optimization, communication compression, numerical reproduction, symbolic analysis, and sensitivity analysis.
+
+We confirm that the manuscript is not under consideration by another journal and has not been published previously in journal form. All authors will approve the submitted version and accept responsibility for the work.
+
+**Editorial independence.** Fu-Hsing Wang is a co-author and corresponding author of this manuscript, serves as a Guest Editor of the Special Issue “Artificial Intelligence and Algorithms,” and is the academic advisor of Pack Kwan Low. We respectfully request that the manuscript be handled by an independent Editorial Board Member or another Academic Editor without a conflict of interest. Fu-Hsing Wang should have no role in reviewer selection or the editorial decision for this submission.
 
 Thank you for your consideration.
 
@@ -24,5 +28,4 @@ Sincerely,
 Corresponding Author  
 Department of Information Management, Chinese Culture University  
 55 Hwa-Kang Rd., Yang-Ming-Shan, Taipei 11114, Taiwan  
-[Correspondence e-mail to be confirmed]  
-[ORCID to be confirmed]
+wfx2@ulive.pccu.edu.tw

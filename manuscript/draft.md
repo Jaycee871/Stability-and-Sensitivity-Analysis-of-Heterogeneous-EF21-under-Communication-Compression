@@ -2,6 +2,8 @@
 
 **Working manuscript draft — Phase 20**
 
+> **Archive notice:** This Phase 20 Markdown draft is retained to document the development history. It is not the current submission manuscript. The authoritative author-reviewed source is [`manuscript/manuscript.tex`](manuscript.tex), titled **“Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression.”**
+
 > Status: full-regularity manuscript and publication-figure integration with audited numerical, algebraic, symbolic, and primary-source evidence. Bibliography source: `manuscript/references.bib`. Empirical Law 4.3, its cubic, and its coefficients are inherited from Thomsen, Taylor, and Dieuleveut; this manuscript analyzes that inherited object and does not present it as a newly proved EF21 convergence theorem.
 
 ## Abstract

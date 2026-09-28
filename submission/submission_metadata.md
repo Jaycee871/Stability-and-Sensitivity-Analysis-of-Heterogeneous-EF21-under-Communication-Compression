@@ -5,73 +5,53 @@
 - **Journal:** Mathematics (MDPI)
 - **Section:** Mathematics and Computer Science
 - **Special Issue:** Artificial Intelligence and Algorithms
-- **Guest Editor (MDPI profile):** Prof. Dr. Fuhsing Wang
-- **Manuscript author name:** Fu-Hsing Wang
+- **Guest Editor profile name:** Prof. Dr. Fuhsing Wang
 - **Current manuscript deadline:** 30 November 2026
 - **Article type:** Article
 
-## Working title
+## Current title
 
-**Stability and Sensitivity Analysis of Heterogeneous Error Feedback 21 (EF$^{21}$) under Communication Compression**
+**Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression**
 
-## Current author order
+## Authors
 
-1. **Pack Kwan Low** — first author
+1. **Pack Kwan Low** — first author; ORCID: 0000-0002-7292-0100
 2. **Fu-Hsing Wang** — second author and corresponding author
 
-## Shared affiliation
+## Affiliation
 
 Department of Information Management, Chinese Culture University, 55 Hwa-Kang Rd., Yang-Ming-Shan, Taipei 11114, Taiwan.
 
-## Corresponding-author metadata
+## Correspondence
 
 - **Fu-Hsing Wang**
-- **E-mail:** wang.fuhsing@gmail.com
-- **ORCID:** 0000-0003-3337-5821
+- **E-mail:** wfx2@ulive.pccu.edu.tw
 
-## Suggested keywords
+## Keywords
 
 1. distributed optimization
 2. error feedback
-3. EF21
-4. communication compression
-5. heterogeneous optimization
-6. convergence analysis
-7. stability analysis
-8. sensitivity analysis
+3. communication compression
+4. regularity heterogeneity
+5. performance estimation
+6. sensitivity analysis
 
-`EF21` is retained as plain-text keyword metadata for indexing/search stability; the manuscript typesets the algorithm abbreviation as `EF$^{21}$` after the first-use expansion **Error Feedback 21 (EF$^{21}$)**.
+## Scope statement
 
-## Short research question
+The manuscript studies the reproduced two-agent Heterogeneity-Aware Convergence Law, an empirical cubic relation inherited from Empirical Law 4.3 of the source paper. Its conclusions are conditional on that reproduced relation and are not presented as a new general EF21 convergence theorem.
 
-How do local regularity heterogeneity and communication compression jointly affect the inherited optimal contraction prediction of two-agent heterogeneous EF$^{21}$ when average conditioning is held fixed?
+## Main evidence
 
-## One-sentence contribution statement
+- complete 10,500-configuration source-grid reproduction;
+- 216,027 equal smoothness sensitivity configurations;
+- 273,885 requested full regularity cells, including 258,400 admissible cells;
+- grid-refinement and off-grid robustness checks;
+- symbolic mismatch factorization and selected-root sensitivity analysis.
 
-This study converts an independently reproduced two-agent empirical cubic law into a controlled computational, algebraic, and symbolic stability/sensitivity characterization, including a fixed-average full-regularity mismatch factorization, aligned-path invariance, and conditional largest-root sensitivity while retaining the inherited law's empirical status.
+## Current source of record
 
-## Scope-fit statement
+The authoritative author-reviewed source is `manuscript/manuscript.tex`. Older Markdown and compressed LaTeX snapshots are retained only as development records.
 
-The manuscript fits the Special Issue because it studies the mathematical and computational behavior of a communication-efficient distributed optimization method, combining algorithmic parameter sensitivity, numerical verification, symbolic analysis, and optimization theory.
+## Public repository
 
-## Phase 24 LaTeX source
-
-The official-template manuscript source is staged under `submission/mdpi_latex/`. The exact Phase 23c source is preserved and Phase 24 author-review transforms are applied deterministically through `scripts/materialize_phase24_mdpi_latex.py`. These transforms currently cover author order, corresponding-author preservation, `EF$^{21}$` typography, first-use expansion to **Error Feedback 21 (EF$^{21}$)**, and preservation of formal bibliographic titles.
-
-## Files expected at submission
-
-- MDPI LaTeX manuscript source and compiled PDF
-- Figures 1--8
-- Supplementary Figure S1
-- Table 1
-- bibliography / reference source
-- cover letter
-- independent-editorial-handling disclosure
-- public code/data availability URL or DOI
-
-## Items that must still be confirmed before submission
-
-- final CRediT author contributions
-- funding statement
-- final public GitHub release / OSF Registration URL or DOI
-- final conflict-of-interest wording approved by both authors
+https://github.com/Jaycee871/Stability-and-Sensitivity-Analysis-of-Heterogeneous-EF21-under-Communication-Compression

@@ -1,43 +1,30 @@
-# Manuscript Terminology Guardrails
+# Current manuscript terminology guardrails
 
-These definitions prevent a scoped computational/symbolic characterization from being read as a broader theorem.
+These terms follow the author-reviewed manuscript.
 
-## Stability analysis
+## Preferred terms
 
-In this manuscript, **stability analysis** means analysis of the robustness and sensitivity of the inherited contraction-rate characterization under changes in heterogeneity and compression. It includes:
+- **Heterogeneity-Aware Convergence Law (HAC Law):** the reproduced two-agent cubic relation reported as Empirical Law 4.3 in the source paper.
+- **independent numerical reproduction:** the 10,500-configuration replay and its numerical consistency checks.
+- **equal smoothness setting / equal smoothness analysis:** the controlled setting with `L1=L2=1` and fixed average strong convexity.
+- **full regularity setting / full regularity analysis:** the setting in which local smoothness and local strong convexity vary independently.
+- **fixed average parameterization:** the full regularity construction holding the arithmetic means of smoothness and strong convexity fixed.
+- **homogeneous theoretical limit:** the comparison with the proved homogeneous EF21 contraction rate.
+- **regularity mismatch:** `Psi=K1-K2`, the weighted variance of the local regularity ratios.
+- **alignment invariance:** insensitivity of the reproduced cubic to proportional regularity scaling along `tau_L=tau_mu`.
 
-- variation of the admissible contraction factor `rho_star`;
-- loss and retention of homogeneous contraction margin;
-- stability of numerical operating boundaries under grid refinement;
-- off-grid robustness checks;
-- root-multiplicity structure of the inherited cubic.
+Do not use hyphenated labels such as `equal-smoothness`, `full-regularity`, `fixed-average`, or `homogeneous-limit` as manuscript terminology.
 
-It does **not** mean that the manuscript establishes a new Lyapunov-stability, asymptotic-stability, or global convergence theorem for EF21.
+## Evidence language
 
-## Operating boundary
+Use **reproduced**, **numerical consistency**, **conditional on the reproduced empirical relation**, and **predicted contraction factor**. Do not describe the reproduction as an independent proof of the heterogeneous EF21 convergence law.
 
-A **retention operating boundary** is a parameter-selection boundary induced by a chosen contraction-margin criterion such as 99% retention. It is conditional on the inherited cubic, audited conditioning stratum, and parameter domain.
+The polynomial residual, source-helper agreement, homogeneous theoretical limit, and negative controls support numerical consistency of the implementation. They do not convert Empirical Law 4.3 into a theorem.
 
-It is not a universal stability threshold, feasibility boundary, or communication-complexity lower bound.
+## Exact transmission
 
-## Monotonicity
+At `epsilon=0`, `Q(rho)=rho^2(rho-K2)`. If `K2>0`, the selected largest root is `K2` and its derivative with respect to `K1` is zero. If `K2=0`, zero is a triple root. Therefore the later strict mismatch-sensitivity statement applies only to `0<epsilon<1`.
 
-The manuscript may state that a quantity is monotone **on the audited grid** or that deterministic off-grid checks **support the same ordering within numerical tolerance**.
+## Historical records
 
-It must not state global analytic monotonicity unless a separate proof is added.
-
-## Symbolic result
-
-The positive-discriminant result is an **analytic root-structure statement for the fixed strata `kappa_bar in {2,10,100}`**. It establishes three distinct real roots of the inherited cubic on the tested open controlled domains.
-
-It does not establish that the cubic itself is the true convergence law outside the status already assigned to Empirical Law 4.3 by the source paper.
-
-## Robustness
-
-When referring to `kappa_bar=100`, avoid saying the method is “more robust” merely because the normalized heterogeneity penalty is smaller. The baseline contraction factor is already close to one. Prefer:
-
-> “The incremental heterogeneity penalty is smaller relative to a baseline that is already slow.”
-
-## Recommended novelty sentence
-
-> “The novelty of this study lies not in re-deriving the inherited cubic law, but in converting it into a controlled fixed-average sensitivity map, contraction-margin operating guidelines, off-grid and grid-resolution robustness checks, and a fixed-stratum symbolic characterization of its root structure.”
+Phase-numbered files document the development process and may contain older wording. The authoritative manuscript terminology is the wording in `manuscript/manuscript.tex`.

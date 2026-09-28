@@ -10,7 +10,7 @@
 - [x] Limitations explicitly reject overgeneralization
 - [x] Core citations and bibliography present
 - [x] Publication-style figure captions drafted
-- [x] Figures 1--8 + Figure S1 + Table 1 reproducibly generated/integrated
+- [x] Figures 1--8 + Table 1 integrated in the current manuscript
 - [x] Current author names, order, shared affiliation, and corresponding-author role staged
 - [x] MDPI Mathematics LaTeX manuscript compiled successfully in Phase 23 staging
 - [x] Phase 24 author-review order recorded: Pack Kwan Low first; Fu-Hsing Wang second/corresponding
@@ -29,7 +29,7 @@
 - [x] Named primary-source chain closure recorded with universal novelty explicitly uncertified
 - [x] Exact Phase 23b manuscript/reference source payloads preserved with SHA-256 checks
 - [x] Phase 24 authorship transform deterministically preserves the Phase 23c scientific source
-- [ ] Create permanent public GitHub release/tag for submitted version
+- [x] Public GitHub repository available and linked in the manuscript
 - [ ] Finalize public OSF snapshot/Registration
 - [ ] Insert permanent archive URL/DOI in Data Availability Statement
 
@@ -42,10 +42,10 @@
 - [x] Editorial-independence note updated for Guest Editor co-authorship
 - [x] Current author list/order staged: Pack Kwan Low; Fu-Hsing Wang
 - [x] Corresponding author staged: Fu-Hsing Wang
-- [ ] Confirm final ORCID metadata as applicable
+- [x] Pack Kwan Low ORCID included: 0000-0002-7292-0100
 - [ ] Finalize CRediT author contributions
 - [ ] Confirm funding statement
-- [ ] Finalize Conflicts of Interest statement with both authors
+- [x] Conflict of Interest statement requests independent Academic Editor handling
 
 ## Special Issue integrity check
 
