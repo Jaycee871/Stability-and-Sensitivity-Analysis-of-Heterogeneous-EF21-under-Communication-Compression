@@ -1,6 +1,11 @@
 # Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression
 
-This repository contains the analysis code, numerical summaries, symbolic verification materials, and reproducibility scripts supporting the manuscript **“Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression.”**
+> **Submitted manuscript title:** **Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression**  
+> **GitHub repository name:** `Stability-and-Sensitivity-Analysis-of-Heterogeneous-EF21-under-Communication-Compression`
+
+The repository name reflects an earlier working title of the project and is intentionally retained for continuity of the public repository history. The **submitted paper title is different from the repository name** and should be cited as **“Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression.”**
+
+This repository contains the analysis code, numerical summaries, symbolic verification materials, and reproducibility scripts supporting the submitted manuscript **“Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression.”**
 
 The study analyzes the two-agent cubic relation reported as Empirical Law 4.3 in Berg Thomsen, Taylor, and Dieuleveut, *A Tight Theory of Error Feedback Algorithms in Distributed Optimization*. In the manuscript, this reproduced relation is called the **Heterogeneity-Aware Convergence Law (HAC Law)**.
 
