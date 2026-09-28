@@ -6,13 +6,24 @@ The study analyzes the two-agent cubic relation reported as Empirical Law 4.3 in
 
 > **Scope guardrail:** the cubic relation and its empirical step size are inherited from the source paper. This repository reproduces and analyzes their consequences. It does not claim a new general convergence theorem for EF21.
 
-## Current manuscript
+## Submission status
 
-The current author-reviewed LaTeX source is:
+- **Status:** Submitted
+- **Journal:** *Mathematics* (MDPI)
+- **Submission date:** 28 September 2026
+- **Submitted title:** **Sensitivity of Two-Agent EF21 to Heterogeneous Regularity under Compression**
+- **Authors:** Pack Kwan Low and Fu-Hsing Wang
+
+The submitted PDF is stamped **“Version September 28, 2026 submitted to Mathematics.”** This repository now treats that submission as the manuscript version of record. Acceptance, publication details, and DOI are not yet recorded here.
+
+## Submitted manuscript
+
+The submitted LaTeX source of record is:
 
 - [`manuscript/manuscript.tex`](manuscript/manuscript.tex)
+- [`submission/manuscript_submitted_2026-09-28.tex`](submission/manuscript_submitted_2026-09-28.tex) — frozen submission snapshot
 
-The older [`manuscript/draft.md`](manuscript/draft.md) and phase-numbered documents are retained as development records. When wording differs, `manuscript/manuscript.tex` is authoritative.
+The older [`manuscript/draft.md`](manuscript/draft.md) and phase-numbered documents are retained as development records. For the 28 September 2026 submission, the frozen snapshot above is the archival source of record; `manuscript/manuscript.tex` is the maintained working copy.
 
 ## Study design
 
@@ -106,7 +117,7 @@ results/                        numerical and symbolic summary files
 wolfram/                        independent symbolic verification
 claims/                         scoped claim registry
 docs/                           development and audit records
-submission/                     submission-support materials
+submission/                     submitted-source snapshot, status, and support materials
 tests/                          unit and regression tests
 ```
 
